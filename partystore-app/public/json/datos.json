@@ -7,6 +7,21 @@
 
 ],
 "usuarios":[
-
+    {
+        "id": 1,
+        "nombreCompleto": "Michael Aroca",
+        "correo": "Michael.Aroca@gmail.com",
+        "telefono": "0991234567",
+        "rol": "cliente",
+        "estado": true
+      },
+      {
+        "id": 2,
+        "nombreCompleto": "María Gómez",
+        "correo": "maria.gomez@gmail.com",
+        "telefono": "0987654321",
+        "rol": "administrador",
+        "estado": true
+      }
 ]
 }

@@ -7,7 +7,7 @@ import { Usuario } from '../models/Usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = '../json/usuarios.json';
+  private apiUrl = '../json/datos.json';
 
   constructor(private http: HttpClient) {}
 
