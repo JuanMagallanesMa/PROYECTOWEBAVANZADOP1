@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
   declarations: [],
   imports: [HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: []
 })
 export class AppModule {}
 
