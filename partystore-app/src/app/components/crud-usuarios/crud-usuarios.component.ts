@@ -19,7 +19,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './crud-usuarios.component.html',
   styleUrls: ['./crud-usuarios.component.css'],
-  imports: [MatSortModule, ]
+  imports: [MatSortModule,MatPaginatorModule, MatIconModule, MatInputModule, MatButtonModule, 
+    MatTableModule, FormsModule, MatSelectModule, MatFormFieldModule, CommonModule ]
 })
 export class UsuariosComponent implements OnInit {
 cancelarEdicion() {
@@ -63,40 +64,40 @@ throw new Error('Method not implemented.');
   }
 
   editarusuario(usuario: Usuario): void {
-    this.usuarioSeleccionado = { ...usuario }; // Crea una copia para no modificar directamente
+    this.usuarioSeleccionado = { ...usuario };
   }
   
   guardarusuario(): void {
     const index = this.usuarios.findIndex((u) => u.idUsuario === this.usuarioSeleccionado.id);
     if (index !== -1) {
-      this.usuarios[index] = this.usuarioSeleccionado; // Actualiza el usuario en la lista
-      this.usuarioSeleccionado = null; // Limpia el formulario
-      this.applyFilter(); // Aplica el filtro para actualizar la tabla
+      this.usuarios[index] = this.usuarioSeleccionado; 
+      this.usuarioSeleccionado = null; 
+      this.applyFilter(); 
     }
   }
   
   cancelaredicion(): void {
-    this.usuarioSeleccionado = null; // Oculta el formulario
+    this.usuarioSeleccionado = null;
   }
   
   saveUser() {
     if (!this.usuarioSeleccionado.id) {
-      // Crear nuevo usuario
-      this.usuarioSeleccionado.id = this.usuarios.length + 1; // Generar un ID simple
-      this.usuarios.push({ ...this.usuarioSeleccionado }); // Agregar al array
+    
+      this.usuarioSeleccionado.id = this.usuarios.length + 1;
+      this.usuarios.push({ ...this.usuarioSeleccionado }); 
       alert('Usuario creado con éxito');
     } else {
-      // Editar usuario existente
+      
       const index = this.usuarios.findIndex(user => user.idUsuario === this.usuarioSeleccionado.id);
       if (index !== -1) {
-        this.usuarios[index] = { ...this.usuarioSeleccionado }; // Actualizar usuario
+        this.usuarios[index] = { ...this.usuarioSeleccionado }; 
         alert('Usuario actualizado con éxito');
       }
     }
   
-    // Resetear selección y actualizar la lista
+    
     this.usuarioSeleccionado = { id: 0, nombre: '', correo: '', rol: '' }; 
-    this.saveToJSON(); // Actualizar archivo JSON
+    this.saveToJSON(); 
   }
   saveToJSON() {
     throw new Error('Method not implemented.');
