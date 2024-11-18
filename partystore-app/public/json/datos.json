@@ -23,5 +23,103 @@
         "rol": "administrador",
         "estado": true
       }
+],
+"productos":[
+  {
+    "id": 001,
+    "nombre": "Globos de Helio Unicornio",
+    "categoria": "Decoraciones",
+    "tematica": "Unicornios",
+    "precio": "$15",
+    "descuento": "10%"
+  },
+  {
+    "id": 002,
+    "nombre": "Guirnalda 'Feliz Cumpleaños'",
+    "categoria": "Decoraciones",
+    "tematica": "Cumpleaños",
+    "precio": "$8",
+    "descuento": "5%"
+  },
+  {
+    "id": 003,
+    "nombre": "Invitación Animada Superhéroes",
+    "categoria": "Invitaciones",
+    "tematica": "Superhéroes",
+    "precio": "$2",
+    "descuento": "0%"
+  },
+  {
+    "id": 004,
+    "nombre": "Disfraz de Princesa Bella",
+    "categoria": "Disfraces",
+    "tematica": "Princesas",
+    "precio": "$30",
+    "descuento": "20%"
+  },
+  {
+    "id": 005,
+    "nombre": "Juego de Bingo Infantil",
+    "categoria": "Juegos",
+    "tematica": "General",
+    "precio": "$12",
+    "descuento": "15%"
+  },
+  {
+    "id": 006,
+    "nombre": "Kit de Manualidades Pulseras",
+    "categoria": "Actividades",
+    "tematica": "Manualidades",
+    "precio": "$10",
+    "descuento": "10%"
+  },
+  {
+    "id": 007,
+    "nombre": "Piñata Avengers",
+    "categoria": "Juegos",
+    "tematica": "Avengers",
+    "precio": "$25",
+    "descuento": "5%"
+  },
+  {
+    "id": 008,
+    "nombre": "Pastel de Fondant de Dinosaurios",
+    "categoria": "Pasteles",
+    "tematica": "Dinosaurios",
+    "precio": "$50",
+    "descuento": "10%"
+  },
+  {
+    "id": 009,
+    "nombre": "Vasos Temáticos de Princesas",
+    "categoria": "Suministros",
+    "tematica": "Princesas",
+    "precio": "$5",
+    "descuento": "0%"
+  },
+  {
+    "id": 010,
+    "nombre": "Cajitas de Dulces Personalizadas",
+    "categoria": "Suministros",
+    "tematica": "Cumpleaños",
+    "precio": "$10",
+    "descuento": "5%"
+  },
+  {
+    "id": 011,
+    "nombre": "Fondos para Photobooth Espacial",
+    "categoria": "Decoraciones",
+    "tematica": "Espacial",
+    "precio": "$20",
+    "descuento": "10%"
+  },
+  {
+    "id": 012,
+    "nombre": "Máscaras de Superhéroes",
+    "categoria": "Disfraces",
+    "tematica": "Superhéroes",
+    "precio": "$8",
+    "descuento": "10%"
+  }
 ]
 }
