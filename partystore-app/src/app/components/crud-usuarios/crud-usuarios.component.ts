@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-usuarios',
   templateUrl: './crud-usuarios.component.html',
   styleUrls: ['./crud-usuarios.component.css'],
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule, FormsModule, MatFormFieldModule, MatSelectModule, CommonModule]
+  imports: [MatSortModule, ]
 })
 export class UsuariosComponent implements OnInit {
 cancelarEdicion() {
