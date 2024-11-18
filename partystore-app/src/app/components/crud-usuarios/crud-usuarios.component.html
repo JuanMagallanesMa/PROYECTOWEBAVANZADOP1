@@ -1,1 +1,83 @@
-<p>crud-usuarios works!</p>
+<div class="container">
+
+    <mat-form-field appearance="outline" class="search-box">
+      <mat-label>Buscar usuario</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Nombre o correo"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilter()"
+      />
+    </mat-form-field>
+  
+    <mat-table [dataSource]="filteredUsuarios" class="mat-elevation-z8">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let usuario"> {{ usuario.nombreCompleto }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="correo">
+        <mat-header-cell *matHeaderCellDef> Correo </mat-header-cell>
+        <mat-cell *matCellDef="let usuario"> {{ usuario.correo }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
+        <mat-cell *matCellDef="let usuario"> {{ usuario.telefono }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="rol">
+        <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+        <mat-cell *matCellDef="let usuario"> {{ usuario.rol }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let usuario">
+          <button mat-icon-button color="primary" (click)="editarUsuario(usuario)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="eliminarUsuario(usuario.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+    <div class="form-container" *ngIf="usuarioSeleccionado">
+      <h2>Editar Usuario</h2>
+      <form (ngSubmit)="guardarUsuario()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput [(ngModel)]="usuarioSeleccionado.nombreCompleto" name="nombreCompleto" required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput type="email" [(ngModel)]="usuarioSeleccionado.correo" name="correo" required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput type="tel" [(ngModel)]="usuarioSeleccionado.telefono" name="telefono" required />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Rol</mat-label>
+          <mat-select [(ngModel)]="usuarioSeleccionado.rol" name="rol" required>
+            <mat-option value="Administrador">Administrador</mat-option>
+            <mat-option value="Cliente">Cliente</mat-option>
+            <mat-option value="Vendedor">Vendedor</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="saveUser()">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cancelarEdicion()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  
