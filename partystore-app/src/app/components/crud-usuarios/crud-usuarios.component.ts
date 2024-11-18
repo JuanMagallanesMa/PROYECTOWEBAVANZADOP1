@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuarios',
+  standalone: true,
   templateUrl: './crud-usuarios.component.html',
   styleUrls: ['./crud-usuarios.component.css'],
   imports: [MatSortModule, ]
