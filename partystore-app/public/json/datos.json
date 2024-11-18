@@ -1,4 +1,19 @@
-{"detailPedido":[
+{
+  "categorias":[
+  {
+    "id": 1,
+    "nombre": "Cumpleaños",
+    "descripcion": "Productos ideales para cumpleaños.",
+    "urlImagen": "",
+    "estado": "activo",
+    "rangoPopularidad": 1,
+    "edadesAplicables": ["0-5", "6-12"],
+    "tiposEvento": ["Fiestas Infantiles", "Cumpleaños"]
+  }
+],
+  
+  
+  "detailPedido":[
 {
      
 }

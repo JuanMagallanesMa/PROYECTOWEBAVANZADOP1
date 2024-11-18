@@ -22,8 +22,6 @@ import { Usuario } from '../../models/Usuario';
 export class CrudPedidosComponent implements OnInit , AfterViewInit {
   form!:FormGroup;
   usuarios: Usuario[]=[] ;
-  
-
 
   //datasource (fuente de datos para la tabla detail Pedido)
   dataSourceDetailPedido = new MatTableDataSource<DetailPedido>();
