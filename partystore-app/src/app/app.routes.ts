@@ -5,9 +5,9 @@ import { UsuariosComponent } from './components/crud-usuarios/crud-usuarios.comp
 export const routes: Routes = [
 
     {path:"pedidos", component: CrudPedidosComponent},
-    {path: "usuario",component:UsuariosComponent}
+    {path: "usuario",component:UsuariosComponent},
 
     //rutas por defecto
-    {path: " ", redirectTo:"pedidos", pathMatch: 'full'},
-    {path:"**", redirectTo:"pedidos"}, //** representa cualquier otra ruta */
+    {path: " ", redirectTo:"usuario", pathMatch: 'full'},
+    {path:"**", redirectTo:"usuario"}, //** representa cualquier otra ruta */
 ];
