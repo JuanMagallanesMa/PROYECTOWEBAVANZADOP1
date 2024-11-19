@@ -1,37 +1,33 @@
 import { TestBed } from '@angular/core/testing';
 import { ProductoService } from './producto.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Producto } from '../models/Producto';
 
 describe('ProductoService', () => {
   let service: ProductoService;
-  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ProductoService]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(ProductoService);
-    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should retrieve productos from the JSON file', () => {
-    const mockProductos: Producto[] = [
-      { id: 1, nombre: 'Globos', categoriaId: 1, precio: 10, descuento: 0 }
-    ];
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 
-    service.getProductos().subscribe((productos) => {
-      expect(productos.length).toBe(1);
-      expect(productos).toEqual(mockProductos);
+  it('should add a product', () => {
+    const initialLength = service.getProductos().length;
+    service.addProducto({
+      id: 3,
+      nombre: 'Galletas Temáticas',
+      precio: 25,
+      categoriaId: 1,
+      descuento: 10
     });
-
-    const req = httpMock.expectOne('assets/json/productos.json');
-    expect(req.request.method).toBe('GET');
-    req.flush(mockProductos);
+    expect(service.getProductos().length).toBe(initialLength + 1);
   });
 
-  afterEach(() => {
-    httpMock.verify();
+  it('should delete a product', () => {
+    const initialLength = service.getProductos().length;
+    service.deleteProducto(1);
+    expect(service.getProductos().length).toBe(initialLength - 1);
   });
 });
