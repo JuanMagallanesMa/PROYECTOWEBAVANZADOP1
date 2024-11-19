@@ -8,6 +8,6 @@ export const routes: Routes = [
     {path:"usuario", component: UsuariosComponent},
 
     //rutas por defecto
-    {path: " ", redirectTo:"usuario", pathMatch: 'full'},
-    {path:"**", redirectTo:"usuario"}, 
+    {path: " ", redirectTo:"pedidos", pathMatch: 'full'},
+    {path:"**", redirectTo:"pedidos"}, 
 ];
