@@ -1,0 +1,55 @@
+<div class="product-form">
+    <form [formGroup]="productoForm" (ngSubmit)="selectedProducto ? updateProducto() : createProducto()">
+      <div>
+        <label for="nombre">Nombre</label>
+        <input id="nombre" formControlName="nombre" type="text" required />
+      </div>
+  
+      <div>
+        <label for="precio">Precio</label>
+        <input id="precio" formControlName="precio" type="number" required />
+      </div>
+  
+      <div>
+        <label for="categoria">Categoría</label>
+        <select id="categoria" formControlName="categoria" required>
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="descuento">Descuento</label>
+        <input id="descuento" formControlName="descuento" type="number" />
+      </div>
+  
+      <button type="submit">{{ selectedProducto ? 'Actualizar' : 'Crear' }} Producto</button>
+    </form>
+  </div>
+  
+  <div class="product-list">
+    <h2>Lista de Productos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Categoría</th>
+          <th>Descuento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.precio | currency }}</td>
+          <td>{{ producto.categoria?.nombre }}</td>
+          <td>{{ producto.descuento }}%</td>
+          <td>
+            <button (click)="editProducto(producto)">Editar</button>
+            <button (click)="deleteProducto(producto.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
