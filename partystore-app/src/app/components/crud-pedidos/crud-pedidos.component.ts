@@ -10,7 +10,7 @@ import { DetailPedido } from '../../models/DetailPedido';
 import { HeaderPedido } from '../../models/HeaderPedido';
 import { MatSelectModule } from '@angular/material/select';
 import { Usuario } from '../../models/Usuario';
-
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -23,7 +23,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit {
   form!:FormGroup;
   usuarios: Usuario[]=[] ;
   
-
+  constructor(private usuarioService: UsuarioService) {}
 
   //datasource (fuente de datos para la tabla detail Pedido)
   dataSourceDetailPedido = new MatTableDataSource<DetailPedido>();
@@ -33,8 +33,14 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   ngOnInit(): void {
     this.ngAfterViewInit();
+    this.obtenerUsuarios();
   }
- 
+  obtenerUsuarios(): void {
+    this.usuarioService.getUsuarios().subscribe((data) => {
+      this.usuarios = data;
+    });
+  }
+
   ngAfterViewInit(): void {
     this.dataSourceDetailPedido.paginator = this.paginator;
   }
