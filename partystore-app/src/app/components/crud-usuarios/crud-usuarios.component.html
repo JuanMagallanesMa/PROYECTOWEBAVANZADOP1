@@ -50,7 +50,7 @@
   
     <div class="form-container" *ngIf="usuarioSeleccionado">
       <h2>Editar Usuario</h2>
-      <form (ngSubmit)="guardarUsuario()">
+      <form (ngSubmit)="guardarusuario()">
         <mat-form-field appearance="outline">
           <mat-label>Nombre Completo</mat-label>
           <input matInput [(ngModel)]="usuarioSeleccionado.nombreCompleto" name="nombreCompleto" required />
