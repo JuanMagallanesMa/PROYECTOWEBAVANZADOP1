@@ -1,36 +1,74 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../../services/producto.service';
-import { Producto } from '../../models/Producto';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { ProductoService, Producto } from '../../services/producto.service';
+import { CategoriaService, Categoria } from '../../services/categoria.service';
 
 @Component({
-  selector: 'app-crud-product',
   standalone: true,
-  imports: [],
-  templateUrl: './crud-product.component.html',
-  styleUrl: './crud-product.component.css'
+  selector: 'app-crud-producto',
+  templateUrl: './crud-producto.component.html',
+  styleUrls: ['./crud-producto.component.css'],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSelectModule],
+  providers: [ProductoService, CategoriaService]
 })
-export class CrudProductComponent implements OnInit{
-createProducto() {
-throw new Error('Method not implemented.');
-}
-updateProducto() {
-throw new Error('Method not implemented.');
-}
-productoForm: any;
-deleteProducto(arg0: any) {
-throw new Error('Method not implemented.');
-}
-editProducto(_t31: any) {
-throw new Error('Method not implemented.');
-}
+export class CrudProductoComponent implements OnInit {
   productos: Producto[] = [];
-selectedProducto: any;
+  categorias: Categoria[] = [];
+  nombreProducto: string = '';
+  precioProducto: number = 0;
+  categoriaProducto: number = 0;
+  descuentoProducto: number = 0;
 
-  constructor(private productoService: ProductoService) {}
+  constructor(
+    private productoService: ProductoService,
+    private categoriaService: CategoriaService
+  ) {}
 
   ngOnInit(): void {
-    this.productoService.getProductos().subscribe(data => {
-      this.productos = data;
-    });
+    this.obtenerProductos();
+    this.obtenerCategorias();
+  }
+
+  obtenerProductos(): void {
+    this.productos = this.productoService.getProductos();
+  }
+
+  obtenerCategorias(): void {
+    this.categorias = this.categoriaService.getCategorias();
+  }
+
+  crearProducto(): void {
+    if (
+      this.nombreProducto.trim() &&
+      this.precioProducto > 0 &&
+      this.categoriaProducto &&
+      this.descuentoProducto >= 0
+    ) {
+      const nuevoProducto: Producto = {
+        id: Date.now(),
+        nombre: this.nombreProducto,
+        precio: this.precioProducto,
+        categoriaId: this.categoriaProducto,
+        descuento: this.descuentoProducto
+      };
+      this.productoService.addProducto(nuevoProducto);
+      this.obtenerProductos();
+      this.limpiarFormulario();
+    }
+  }
+
+  eliminarProducto(producto: Producto): void {
+    this.productoService.deleteProducto(producto.id);
+    this.obtenerProductos();
+  }
+
+  limpiarFormulario(): void {
+    this.nombreProducto = '';
+    this.precioProducto = 0;
+    this.categoriaProducto = 0;
+    this.descuentoProducto = 0;
   }
 }
