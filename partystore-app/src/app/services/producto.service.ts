@@ -8,7 +8,7 @@ import { Producto } from '../models/Producto';
 })
 export class ProductoService {
 
-  private apiUrl = 'assets/json/productos.json';  // Ruta del archivo JSON local
+  private apiUrl = 'http://localhost:3000/products';  // Ruta del archivo JSON local
 
   constructor(private http: HttpClient) { }
 
