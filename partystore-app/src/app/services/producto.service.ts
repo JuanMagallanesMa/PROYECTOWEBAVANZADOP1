@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Producto } from '../models/Producto';
+
+export interface Producto {
+  id: number;
+  nombre: string;
+  precio: number;
+  categoriaId: number;
+  descuento: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
+  private productos: Producto[] = [
+    { id: 1, nombre: 'Globos Temáticos', precio: 20, categoriaId: 1, descuento: 10 },
+    { id: 2, nombre: 'Invitaciones Personalizadas', precio: 50, categoriaId: 2, descuento: 5 }
+  ];
 
-  private apiUrl = 'http://localhost:3000/products';  // Ruta del archivo JSON local
-
-  constructor(private http: HttpClient) { }
-
-  // Obtener todos los productos
-  getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiUrl);
+  getProductos(): Producto[] {
+    return this.productos;
   }
 
-  // Crear un nuevo producto (simulado)
-  createProducto(producto: Producto): Observable<Producto> {
-    // Lógica para agregar el producto al JSON (simulada)
-    return this.http.post<Producto>(this.apiUrl, producto);
+  addProducto(producto: Producto): void {
+    this.productos.push(producto);
   }
 
-  // Actualizar un producto (simulado)
-  updateProducto(id: number, producto: Producto): Observable<Producto> {
-    // Lógica para actualizar el producto en el JSON (simulada)
-    return this.http.put<Producto>(`${this.apiUrl}/${id}`, producto);
-  }
-
-  // Eliminar un producto (simulado)
-  deleteProducto(id: number): Observable<void> {
-    // Lógica para eliminar el producto del JSON (simulada)
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteProducto(id: number): void {
+    this.productos = this.productos.filter(producto => producto.id !== id);
   }
 }
