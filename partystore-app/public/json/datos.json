@@ -6,7 +6,7 @@
 "headerPedido":[
 
 ],
-"usuarios":[
+"usuario":[
     {
         "idUsuario": 1,
         "nombreCompleto": "Michael Aroca",
