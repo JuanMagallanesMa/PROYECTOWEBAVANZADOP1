@@ -7,12 +7,8 @@ import { Usuario } from '../models/Usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  getUsuario() {
-    throw new Error('Method not implemented.');
-  }
-  getusuario() {
-    throw new Error('Method not implemented.');
-  }
+  [x: string]: any;
+
   private apiUrl = 'http://localhost:3000/usuarios';
 
   constructor(private http: HttpClient) {}

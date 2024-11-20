@@ -36,7 +36,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit {
     this.obtenerUsuarios();
   }
   obtenerUsuarios(): void {
-    this.usuarioService.getUsuarios().subscribe((data) => {
+    this.usuarioService.obtenerUsuarios().subscribe((data) => {
       this.usuarios = data;
     });
   }
