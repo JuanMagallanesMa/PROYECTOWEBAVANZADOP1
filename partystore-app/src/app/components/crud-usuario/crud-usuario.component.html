@@ -99,18 +99,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let usuario of usuarios">
-              <td>{{ usuario.nombreCompleto }}</td>
-              <td>{{ usuario.correo }}</td>
-              <td>{{ usuario.telefono }}</td>
-              <td>{{ usuario.rol }}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">
-                    Modificar
-                  </button>
-                <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.idUsuario)">Eliminar</button>
-              </td>
-            </tr>
+            @for (usuario of usuarios; track $index) {
+              <tr>
+                <td>{{ usuario.nombreCompleto }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.telefono }}</td>
+                <td>{{ usuario.rol }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">
+                      Modificar
+                    </button>
+                  <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.idUsuario)">Eliminar</button>
+                </td>
+              </tr>
+            }
+            
           </tbody>
         </table>
       </div>

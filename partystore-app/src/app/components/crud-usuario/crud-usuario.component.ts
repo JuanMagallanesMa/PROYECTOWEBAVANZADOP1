@@ -29,7 +29,7 @@ export class CrudUsuarioComponent {
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit() {
-    this.usuarioService.obtenerUsuarios().subscribe(usuarios => {
+    this.usuarioService.getUsuarios().subscribe(usuarios => {
       console.log('Usuarios:', usuarios);
       this.usuarios = usuarios;
     });
@@ -38,7 +38,7 @@ export class CrudUsuarioComponent {
   
 
   cargarUsuarios(): void {
-    this.usuarioService.obtenerUsuarios().subscribe(usuarios => {
+    this.usuarioService.getUsuarios().subscribe(usuarios => {
       this.usuarios = usuarios;
     });
   }

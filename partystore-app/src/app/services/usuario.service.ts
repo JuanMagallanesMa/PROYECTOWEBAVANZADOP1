@@ -9,7 +9,7 @@ import { Usuario } from '../models/Usuario';
 export class UsuarioService {
   [x: string]: any;
 
-  private apiUrl = 'http://localhost:3000/usuarios';
+  private apiUrl = 'http://localhost:3000/usuario';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,9 @@ export class UsuarioService {
       })
     );
   }
-  
+  getUsuarios(): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.apiUrl);
+  }
 
   agregarUsuario(usuario: Usuario): Observable<Usuario> {
     return of(usuario).pipe(
