@@ -1,29 +1,13 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
-    <mat-form-field>
-        <mat-label>Buscar: </mat-label>
-        <input matInput type="search" placeholder="Marca o categoria" #searchInput 
-        />
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select>
-          @for (usuario of usuarios; track $index) {
-            <mat-option [value]="usuario.nombreCompleto">{{usuario.nombreCompleto}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-
-<!-- </form>-->
-
-
-
-<div class="search-container">
-    <mat-form-field>
-        <mat-label>Buscar: </mat-label>
-        <input matInput type="search" placeholder="Marca o categoria" #searchInput 
-        />
-    </mat-form-field>
-    <button >Buscar</button>
-
-</div>
+    
+    
+  <mat-form-field appearance="fill">
+    <mat-label>Opciones</mat-label>
+    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombreCompleto">
+        {{ option.nombreCompleto }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  

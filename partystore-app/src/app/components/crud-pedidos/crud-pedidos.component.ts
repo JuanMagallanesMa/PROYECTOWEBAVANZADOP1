@@ -1,51 +1,61 @@
 
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { FormGroup } from '@angular/forms';
-import { DetailPedido } from '../../models/DetailPedido';
-import { HeaderPedido } from '../../models/HeaderPedido';
-import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Usuario } from '../../models/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-crud-pedidos',
   standalone: true,
-  imports: [MatFormField, MatLabel, MatPaginator, MatTableModule, MatInputModule, MatButtonModule, MatSelectModule],
   templateUrl: './crud-pedidos.component.html',
-  styleUrl: './crud-pedidos.component.css'
+  styleUrls: ['./crud-pedidos.component.css'],
+  imports: [
+    CommonModule,          
+    ReactiveFormsModule,  
+    MatAutocompleteModule,
+    MatFormFieldModule,    
+    MatInputModule,       
+  ]
 })
-export class CrudPedidosComponent implements OnInit , AfterViewInit {
-  form!:FormGroup;
-  usuarios: Usuario[]=[] ;
-  
-  constructor(private usuarioService: UsuarioService) {}
+export class CrudPedidosComponent implements OnInit {
+  // Control para el input del autocompletado
+  myControl = new FormControl('');
 
-  //datasource (fuente de datos para la tabla detail Pedido)
-  dataSourceDetailPedido = new MatTableDataSource<DetailPedido>();
-   //datasource (fuente de datos para la tabla header Pedido)
-   dataSourceHeaderPedido = new MatTableDataSource<HeaderPedido>();
+  // Opciones disponibles para el autocompletado
+  options: Usuario[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  ngOnInit(): void {
-    this.ngAfterViewInit();
-    this.obtenerUsuarios();
+  // Propiedad para las opciones filtradas
+  filteredOptions!: Observable<Usuario[]>;
+
+  //constructor
+  constructor(private servicioUsuario : UsuarioService){
+
   }
-  obtenerUsuarios(): void {
-    this.usuarioService.obtenerUsuarios().subscribe((data) => {
-      this.usuarios = data;
+  ngOnInit() {
+    // Inicializamos filteredOptions en ngOnInit
+    this.getUsuarios();
+  }
+  getUsuarios():void{
+    this.servicioUsuario.getUsuarios().subscribe((data:Usuario[])=>{
+      this.options=data;
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),  // Cuando el input está vacío, se muestran todas las opciones
+        map(value => this._filter(value||''))  // Filtramos las opciones según el valor
+      );
+      console.log(this.options[0]);
     });
+    
   }
-
-  ngAfterViewInit(): void {
-    this.dataSourceDetailPedido.paginator = this.paginator;
-  }
-  
-  onSubmit():void{
-
+  // Función de filtro para las opciones
+  private _filter(value: string): Usuario[] {
+    const filterValue = value.toLowerCase();  // Comparamos sin importar mayúsculas/minúsculas
+    return this.options.filter(option => option.nombreCompleto.toLowerCase().includes(filterValue));
   }
 }
