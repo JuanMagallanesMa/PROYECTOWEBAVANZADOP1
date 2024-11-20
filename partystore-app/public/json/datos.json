@@ -10,7 +10,7 @@
     {
         "idUsuario": 1,
         "nombreCompleto": "Michael Aroca",
-        "correo": "Michael.Aroca@gmail.com",
+        "correo": "Michael.Aroca@hotmail.com",
         "telefono": "0991234567",
         "rol": "cliente",
         "estado": true

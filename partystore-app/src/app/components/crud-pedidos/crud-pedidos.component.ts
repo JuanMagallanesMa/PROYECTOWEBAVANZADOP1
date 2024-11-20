@@ -39,7 +39,7 @@ export class CrudPedidosComponent implements OnInit {
 
   }
   ngOnInit() {
-    // Inicializamos filteredOptions en ngOnInit
+    
     this.getUsuarios();
   }
   getUsuarios():void{
@@ -49,13 +49,16 @@ export class CrudPedidosComponent implements OnInit {
         startWith(''),  // Cuando el input está vacío, se muestran todas las opciones
         map(value => this._filter(value||''))  // Filtramos las opciones según el valor
       );
-      console.log(this.options[0]);
+      console.log("Se muestra el autocomplete de usuarios");
     });
     
   }
   // Función de filtro para las opciones
   private _filter(value: string): Usuario[] {
     const filterValue = value.toLowerCase();  // Comparamos sin importar mayúsculas/minúsculas
-    return this.options.filter(option => option.nombreCompleto.toLowerCase().includes(filterValue));
+    return this.options.filter(option => 
+      
+      option.correo.toLowerCase().includes(filterValue)
+    );
   }
 }

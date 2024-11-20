@@ -9,7 +9,7 @@ import { Usuario } from '../models/Usuario';
 export class UsuarioService {
   [x: string]: any;
 
-  private apiUrl = 'http://localhost:3000/usuario';
+  private apiUrl = 'http://localhost:3000/usuarios';
 
   constructor(private http: HttpClient) {}
 
