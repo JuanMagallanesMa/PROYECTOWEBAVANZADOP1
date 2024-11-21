@@ -1,31 +1,19 @@
 import { Injectable } from '@angular/core';
-
-export interface Producto {
-  id: number;
-  nombre: string;
-  precio: number;
-  categoriaId: number;
-  descuento: number;
-}
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
-  private productos: Producto[] = [
-    { id: 1, nombre: 'Globos Temáticos', precio: 20, categoriaId: 1, descuento: 10 },
-    { id: 2, nombre: 'Invitaciones Personalizadas', precio: 50, categoriaId: 2, descuento: 5 }
-  ];
-
-  getProductos(): Producto[] {
-    return this.productos;
+  getProductos() {
+    throw new Error('Method not implemented.');
   }
 
-  addProducto(producto: Producto): void {
-    this.productos.push(producto);
-  }
+  constructor(private http: HttpClient) { }
 
-  deleteProducto(id: number): void {
-    this.productos = this.productos.filter(producto => producto.id !== id);
+  // Método para cargar los datos desde el archivo JSON
+  getDatos(): Observable<any> {
+    return this.http.get<any>('/assets/datos.json'); // Asegúrate de que el archivo JSON esté en la carpeta 'assets'
   }
 }

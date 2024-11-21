@@ -1,0 +1,90 @@
+<div class="container">
+  <!-- Barra de búsqueda -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Buscar producto"
+      class="form-control"
+      #searchInput
+    />
+    <button class="btn btn-primary" (click)="buscarProducto(searchInput.value)">
+      Buscar
+    </button>
+  </div>
+
+  <!-- Combo box para filtrar por categorías -->
+  <div class="category-filter">
+    <label for="categorySelect">Filtrar por categorías</label>
+    <select
+      class="form-control"
+      id="categorySelect"
+      multiple
+      (change)="filtrarPorCategorias($event)"
+    >
+      <option *ngFor="let categoria of categorias" [value]="categoria.id">
+        {{ categoria.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Icono del carrito -->
+  <div class="cart-icon">
+    <button class="btn btn-success" (click)="toggleCarrito()">
+      🛒 Carrito 
+    </button>
+  </div>
+
+  <!-- Tabla de productos -->
+  <h2>Lista de Productos</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productosFiltrados">
+        <td>{{ producto.id }}</td>
+        <td>{{ getCategoriaNombre(producto.categoriaId) }}</td>
+        <td>{{ producto.descripcion }}</td>
+        <td>{{ producto.precio | currency }}</td>
+        <td>{{ producto.disponible ? 'Sí' : 'No' }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">
+            Agregar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Ventana modal del carrito -->
+  <div class="modal-backdrop" *ngIf="mostrarCarrito">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Productos Seleccionados</h3>
+        <button class="close-btn" (click)="toggleCarrito()">✖</button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="carrito.length === 0">Carrito vacío</div>
+        <ul *ngIf="carrito.length > 0">
+          <li *ngFor="let producto of carrito; let i = index">
+            {{ producto.nombre }} - {{ producto.precio | currency }}
+            <button
+              class="delete-btn"
+              (click)="eliminarDelCarrito(i)"
+              title="Eliminar producto"
+            >
+              🗑️
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
