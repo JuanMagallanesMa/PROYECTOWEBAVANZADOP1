@@ -57,7 +57,7 @@ export class CrudPedidosComponent implements OnInit {
   private _filter(value: string): Usuario[] {
     const filterValue = value.toLowerCase();  // Comparamos sin importar mayúsculas/minúsculas
     return this.options.filter(option => 
-      
+      option.nombreCompleto.toLowerCase().includes(filterValue) ||
       option.correo.toLowerCase().includes(filterValue)
     );
   }

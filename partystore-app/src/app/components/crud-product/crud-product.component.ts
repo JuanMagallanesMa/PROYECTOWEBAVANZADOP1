@@ -3,19 +3,22 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { ProductoService, Producto } from '../../services/producto.service';
-import { CategoriaService, Categoria } from '../../services/categoria.service';
+import { ProductoService } from '../../services/producto.service';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   standalone: true,
   selector: 'app-crud-producto',
-  templateUrl: './crud-producto.component.html',
-  styleUrls: ['./crud-producto.component.css'],
+  templateUrl: './crud-product.component.html',
+  styleUrls: ['./crud-product.component.css'],
   imports: [CommonModule, FormsModule, MatTableModule, MatSelectModule],
   providers: [ProductoService, CategoriaService]
 })
 export class CrudProductoComponent implements OnInit {
-  productos: Producto[] = [];
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  /**productos: Producto[] = [];
   categorias: Categoria[] = [];
   nombreProducto: string = '';
   precioProducto: number = 0;
@@ -71,4 +74,5 @@ export class CrudProductoComponent implements OnInit {
     this.categoriaProducto = 0;
     this.descuentoProducto = 0;
   }
+    */
 }
