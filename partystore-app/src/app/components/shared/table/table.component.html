@@ -1,10 +1,23 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort> <!-- Definición de columnas --> 
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column"> 
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th> 
-        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td> 
-    </ng-container> <!-- Filas --> 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> 
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> 
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-</table>
+    <!-- Definición de columnas -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnAliases[column] || column }} </th>
+        @if (column === "acciones") {
+            <td mat-cell *matCellDef="let element"> 
+                <button mat-raised-button color="accent" (click)="onEdit.emit(element)">Editar</button> 
+                <button mat-raised-button color="warn" (click)="onDelete.emit(element)">Eliminar</button>
+            </td>  
+        }@else {
+            <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+        }
+
+    </ng-container>
+  
+    <!-- Filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>   

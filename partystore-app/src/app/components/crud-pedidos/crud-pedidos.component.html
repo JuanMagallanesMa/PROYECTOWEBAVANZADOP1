@@ -13,7 +13,16 @@
       
     </mat-autocomplete>
   </mat-form-field>
-
-  <app-table [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-table>
+  <app-table 
+    [dataSource]="dataSource" 
+    [displayedColumns]="displayedColumns" 
+    [columnAliases]="columnAliases" 
+    (onEdit)="handleEdit($event)" 
+    (onDelete)="handleDelete($event)"
+    >
+  </app-table>
+ 
+  
+  
   
   
