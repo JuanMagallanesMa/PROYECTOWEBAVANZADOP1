@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,6 +10,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Usuario } from '../../models/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { TableComponent } from '../shared/table/table.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Producto, ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -21,7 +25,9 @@ import { UsuarioService } from '../../services/usuario.service';
     ReactiveFormsModule,  
     MatAutocompleteModule,
     MatFormFieldModule,    
-    MatInputModule,       
+    MatInputModule, 
+    TableComponent,
+    MatPaginatorModule     
   ]
 })
 export class CrudPedidosComponent implements OnInit {
@@ -33,15 +39,26 @@ export class CrudPedidosComponent implements OnInit {
 
   // Propiedad para las opciones filtradas
   filteredOptions!: Observable<Usuario[]>;
+  
+  //datasource para la tabla
+  dataSource = new MatTableDataSource<Usuario>;
+  
+  //definir las columnas
+ displayedColumns: string[] = ['nombreCompleto', 'correo', 'telefono'];
 
   //constructor
   constructor(private servicioUsuario : UsuarioService){
 
   }
+  
   ngOnInit() {
-    
+    this.cargarTabla();
     this.getUsuarios();
   }
+  cargarTabla():void{
+    this.servicioUsuario.getUsuarios().subscribe(data => { this.dataSource.data = data; });
+  }
+
   getUsuarios():void{
     this.servicioUsuario.getUsuarios().subscribe((data:Usuario[])=>{
       this.options=data;
