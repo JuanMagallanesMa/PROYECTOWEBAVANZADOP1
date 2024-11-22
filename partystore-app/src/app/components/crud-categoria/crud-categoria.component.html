@@ -79,6 +79,8 @@ Búsqueda
     <mat-label>Edades Aplicables</mat-label>
     <mat-select #edadSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
       <mat-option value="">Todas</mat-option>
+      <mat-option value="Meses">Meses</mat-option>
+      <mat-option value="1-2 años">1-2 años</mat-option>
       <mat-option value="3-5 años">3-5 años</mat-option>
       <mat-option value="6-8 años">6-8 años</mat-option>
       <mat-option value="9-12 años">9-12 años</mat-option>
@@ -112,21 +114,45 @@ Búsqueda
 
 <!-- Tabla para listar categorías -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Columna: Nombre -->
   <ng-container matColumnDef="nombre">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
     <td mat-cell *matCellDef="let categoria"> {{ categoria.nombre }} </td>
   </ng-container>
 
+  <!-- Columna: Descripción -->
   <ng-container matColumnDef="descripcion">
     <th mat-header-cell *matHeaderCellDef> Descripción </th>
     <td mat-cell *matCellDef="let categoria"> {{ categoria.descripcion }} </td>
   </ng-container>
 
+  <!-- Columna: URL Imagen -->
+  <ng-container matColumnDef="urlImagen">
+    <th mat-header-cell *matHeaderCellDef> Imagen </th>
+    <td mat-cell *matCellDef="let categoria">
+      <img [src]="categoria.urlImagen" alt="Imagen de {{ categoria.nombre }}" width="80" height="50" />
+    </td>
+  </ng-container>
+
+  <!-- Columna: Tipos de Evento -->
+  <ng-container matColumnDef="tiposEvento">
+    <th mat-header-cell *matHeaderCellDef> Tipos de Evento </th>
+    <td mat-cell *matCellDef="let categoria"> {{ categoria.tiposEvento.join(', ') }} </td>
+  </ng-container>
+
+  <!-- Columna: Edades Aplicables -->
+  <ng-container matColumnDef="edadesAplicables">
+    <th mat-header-cell *matHeaderCellDef> Edades Aplicables </th>
+    <td mat-cell *matCellDef="let categoria"> {{ categoria.edadesAplicables.join(', ') }} </td>
+  </ng-container>
+
+  <!-- Columna: Estado -->
   <ng-container matColumnDef="estado">
     <th mat-header-cell *matHeaderCellDef> Estado </th>
     <td mat-cell *matCellDef="let categoria"> {{ categoria.estado }} </td>
   </ng-container>
 
+  <!-- Columna: Acciones -->
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let categoria">
@@ -135,8 +161,12 @@ Búsqueda
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['nombre', 'descripcion', 'estado', 'acciones']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['nombre', 'descripcion', 'estado', 'acciones'];"></tr>
+  <!-- Fila de Encabezados -->
+  <tr mat-header-row *matHeaderRowDef="['nombre', 'descripcion', 'urlImagen', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones']"></tr>
+  
+  <!-- Fila de Datos -->
+  <tr mat-row *matRowDef="let row; columns: ['nombre', 'descripcion', 'urlImagen', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones'];"></tr>
 </table>
+
 
 <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>

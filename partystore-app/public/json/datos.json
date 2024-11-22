@@ -1,32 +1,93 @@
 {
   "categoria": [
     {
-      "nombre": "Fiestas 2423423423",
-      "descripcion": "Suministros para fiestas temáticas como superhéroes, princesas, y más.",
-      "urlImagen": "https://example.com/images/tematicas.jpg",
+      "id": "5",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
+      "urlImagen": "https://example.com/images/superheroes.jpg",
       "estado": "activo",
       "edadesAplicables": [
         "3-5 años",
-        "9-12 años",
-        "13-15 años"
+        "6-8 años",
+        "9-12 años"
       ],
       "tiposEvento": [
         "cumpleaños",
-        "eventos especiales"
-      ],
-      "id": "3"
+        "fiestas temáticas"
+      ]
     },
     {
-      "id": "4",
-      "nombre": "Baby Showers",
-      "descripcion": "Decoraciones y detalles para baby showers.",
-      "urlImagen": "https://example.com/images/babyshowers.jpg",
-      "estado": "inactivo",
+      "id": "6",
+      "nombre": "Fiestas de Princesas",
+      "descripcion": "Vestidos, coronas, y decoraciones encantadas para fiestas de princesas.",
+      "urlImagen": "https://example.com/images/princesas.jpg",
+      "estado": "activo",
       "edadesAplicables": [
-        "recién nacidos"
+        "3-5 años",
+        "6-8 años"
       ],
       "tiposEvento": [
-        "baby showers"
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "7",
+      "nombre": "Fiestas de Animales",
+      "descripcion": "Decoración con temas de zoológico y granja, incluyendo globos, platos y actividades temáticas.",
+      "urlImagen": "https://example.com/images/animales.jpg",
+      "estado": "activo",
+      "edadesAplicables": [
+        "3-5 años",
+        "6-8 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "8",
+      "nombre": "Fiestas de Bautizo",
+      "descripcion": "Detalles y decoraciones elegantes para celebraciones de bautizos.",
+      "urlImagen": "https://example.com/images/bautizo.jpg",
+      "estado": "activo",
+      "edadesAplicables": [
+        "recién nacidos",
+        "0-2 años"
+      ],
+      "tiposEvento": [
+        "bautizos"
+      ]
+    },
+    {
+      "id": "9",
+      "nombre": "Fiestas Unicornios",
+      "descripcion": "Temática de unicornios con pastelillos, globos, y decoración mágica.",
+      "urlImagen": "https://example.com/images/unicornio.jpg",
+      "estado": "activo",
+      "edadesAplicables": [
+        "3-5 años",
+        "6-8 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "10",
+      "nombre": "Fiestas de Piratas",
+      "descripcion": "Accesorios de piratas como sombreros, espadas y decoración temática.",
+      "urlImagen": "https://example.com/images/piratas.jpg",
+      "estado": "activo",
+      "edadesAplicables": [
+        "6-8 años",
+        "9-12 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
       ]
     }
   ],
