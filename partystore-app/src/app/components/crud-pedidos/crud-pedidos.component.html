@@ -1,5 +1,57 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
+  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
+    <div  class="column1">
+      <mat-form-field>
+        <mat-label>Nombres Completos</mat-label>
+        <input matInput
+          required>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Cédula</mat-label>
+        <input matInput
+          required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput
+          required>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Ingresa tu email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          [formControl]="email"
+          (blur)="updateErrorMessage()"
+          required
+        />
+        @if (email.invalid) {
+          <mat-error>{{errorMessage()}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Provincia</mat-label>
+        <mat-select>
+          <mat-option value="Guayas">Guayas</mat-option>
+          <mat-option value="Pichincha">Pichincha</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Ciudad</mat-label>
+        <mat-select>
+          @if () {}
+          <mat-option value="Guayaquil">Guayas</mat-option>
+          <mat-option value="Pichincha">Pichincha</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     
+  </form>
     
   <mat-form-field appearance="fill">
     <mat-label>Usuario</mat-label>

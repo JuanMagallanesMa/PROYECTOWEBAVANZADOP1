@@ -1,17 +1,22 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import {ChangeDetectionStrategy,  signal} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { FormsModule,  Validators} from '@angular/forms';
 
+import {merge} from 'rxjs';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/Usuario';
 import { TableComponent } from '../shared/table/table.component';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { map, Observable, startWith } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -25,13 +30,16 @@ import { map, Observable, startWith } from 'rxjs';
     MatFormFieldModule,    
     MatInputModule, 
     TableComponent  ,
-    MatPaginatorModule,     
+    MatPaginatorModule,
+    MatFormField,
+    FormsModule,
+    MatSelect    
   ]
 })
 export class CrudPedidosComponent implements OnInit {
   // Control para el input del autocompletado
   myControl = new FormControl('');
-
+ form!: FormGroup;
   // Opciones disponibles para el autocompletado
   options: Usuario[] = [];
 
@@ -45,16 +53,32 @@ export class CrudPedidosComponent implements OnInit {
   displayedColumns: string[] = ['nombreCompleto', 'correo', 'telefono', 'acciones']; // No incluir 'acciones' aquí 
   columnAliases = { nombreCompleto: 'Nombre Completo', correo: 'Correo Electrónico', telefono: 'Teléfono', acciones:'Acciones' }; 
 
-
-  constructor(private servicioUsuario : UsuarioService) { }
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
+ 
+  errorMessage = signal('');
+  constructor(private servicioUsuario : UsuarioService) { 
+    merge(this.email.statusChanges, this.email.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+  }
 
   ngOnInit() {
     
     this.getUsuarios();
   }
 
-  
+  onSubmit():void{
 
+  }
+  updateErrorMessage() {
+    if (this.email.hasError('required')) {
+      this.errorMessage.set('You must enter a value');
+    } else if (this.email.hasError('email')) {
+      this.errorMessage.set('Not a valid email');
+    } else {
+      this.errorMessage.set('');
+    }
+  }
   getUsuarios(): void {
     this.servicioUsuario.getUsuarios().subscribe((data: Usuario[]) => {
       this.options = data;
