@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {ChangeDetectionStrategy,  signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -37,12 +37,15 @@ import { MatSelect } from '@angular/material/select';
   ]
 })
 export class CrudPedidosComponent implements OnInit {
+  provinciaSeleccionada: string = '';
+  @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Control para el input del autocompletado
   myControl = new FormControl('');
  form!: FormGroup;
   // Opciones disponibles para el autocompletado
   options: Usuario[] = [];
-
+  optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
+  filteredOptionsZIP!: string[];
   // Propiedad para las opciones filtradas
   filteredOptions!: Observable<Usuario[]>;
   
@@ -60,6 +63,7 @@ export class CrudPedidosComponent implements OnInit {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
+      this.filteredOptionsZIP = this.optionsZIP.slice();
   }
 
   ngOnInit() {
@@ -108,5 +112,9 @@ export class CrudPedidosComponent implements OnInit {
   handleDelete(usuario: Usuario) { 
     // Lógica para eliminar el usuario 
     console.log('Eliminar usuario:', usuario);
+  }
+  filter(): void {
+    const filterValue = this.input.nativeElement.value.toLowerCase();
+    this.filteredOptionsZIP = this.optionsZIP.filter(o => o.toLowerCase().includes(filterValue));
   }
 }

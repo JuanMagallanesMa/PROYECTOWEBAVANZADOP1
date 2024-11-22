@@ -35,36 +35,52 @@
     <div>
       <mat-form-field>
         <mat-label>Provincia</mat-label>
-        <mat-select>
+        <mat-select [(value)]="provinciaSeleccionada">
           <mat-option value="Guayas">Guayas</mat-option>
           <mat-option value="Pichincha">Pichincha</mat-option>
         </mat-select>
       </mat-form-field>
-
+      
       <mat-form-field>
         <mat-label>Ciudad</mat-label>
-        <mat-select>
-          @if () {}
-          <mat-option value="Guayaquil">Guayas</mat-option>
-          <mat-option value="Pichincha">Pichincha</mat-option>
+        <mat-select >
+          <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Guayaquil">Guayaquil</mat-option> 
+          <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Nobol">Nobol</mat-option> 
+          <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Cayambe">Cayambe</mat-option> 
+          <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
         </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Código Postal</mat-label>
+        <input #input
+               type="text"
+               placeholder="Escoge un código postal"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto"
+               (input)="filter()"
+               (focus)="filter()">
+        <mat-autocomplete requireSelection #auto="matAutocomplete">
+          @for (option of filteredOptionsZIP; track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Dirección</mat-label>
+        <textarea matInput placeholder="Ej... Mapasingue  Este"></textarea>
       </mat-form-field>
     </div>
     
   </form>
     
-  <mat-form-field appearance="fill">
-    <mat-label>Usuario</mat-label>
-    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of filteredOptions | async; track $index) {
-        <mat-option  [value]="option.nombreCompleto">
-          {{ option.nombreCompleto }} -- {{option.correo}}
-        </mat-option>
-      }
-      
-    </mat-autocomplete>
-  </mat-form-field>
+  <!--
+  
+  
+
   <app-table 
     [dataSource]="dataSource" 
     [displayedColumns]="displayedColumns" 
@@ -73,7 +89,7 @@
     (onDelete)="handleDelete($event)"
     >
   </app-table>
- 
+   -->
   
   
   
