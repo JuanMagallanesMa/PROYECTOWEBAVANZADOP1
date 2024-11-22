@@ -19,39 +19,50 @@
     <button type="submit" class="btn btn-secondary" (click)="actualizarProducto()" [disabled]="!productoForm.valid">
       Actualizar Producto
     </button>
-    <button class="btn btn-danger" (click)="eliminarProducto(producto.id)"> 
+    <button class="btn btn-danger" (click)="eliminarProducto(0)"> 
       Eliminar Producto
     </button>
-    <button type="button" class="btn btn-search" (click)="cancelarEdicion()">
+    <button (click)="buscarProducto()">
       Buscar Producto
     </button>
   </div>
 
   <!-- Listado de productos -->
   <h3>Listado de Productos</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Nombre del Producto</th>
-        <th>Categoría</th>
-        <th>Precio</th>
-        <th>Descripción</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let producto of productos">
-        <td>{{ producto.id }}</td>
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.categoria }}</td>
-        <td>{{ producto.precio | currency:'USD' }}</td>
-        <td>{{ producto.descripcion }}</td>
-      </tr>
-    </tbody>
+  <table mat-table [dataSource]="productos">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let producto">{{ producto.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let producto">{{ producto.nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef>Categoría</th>
+      <td mat-cell *matCellDef="let producto">{{ producto.categoria }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef>Precio</th>
+      <td mat-cell *matCellDef="let producto">{{ producto.precio | currency:'USD' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let producto">{{ producto.descripcion }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   
 </div>
+
+
+
 
 
 

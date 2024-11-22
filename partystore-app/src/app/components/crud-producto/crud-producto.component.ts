@@ -3,26 +3,40 @@ import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../models/Producto'; 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-crud-producto',
   templateUrl: './crud-producto.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatTableModule],
   styleUrls: ['./crud-producto.component.css']
 })
 
 export class CrudProductoComponent implements OnInit {
-  productos: any[] = [];
+  productos: Producto[] = [];
+  nuevoProducto: Producto={
+    id:0,
+    nombre:'',
+    categoria:'',
+    precio: 0,
+    descripcion: '',
+  };
+
   productoForm: any;  
   searchText: string = '';
   productoSeleccionado: Producto | null = null;
 
+  displayedColumns: string[] = ['id', 'nombre', 'categoria', 'precio', 'descripcion', 'acciones'];
+
   constructor(private productoService: ProductoService) {}
 
   ngOnInit(): void {
-    this.cargarProductos();
+    this.productoService.obtenerProductos().subscribe((data) => {
+      this.productos = data;
+    });
   }
+  
 
   cargarProductos(): void {
     this.productoService.obtenerProductos().subscribe(productos => {
@@ -89,9 +103,14 @@ export class CrudProductoComponent implements OnInit {
     });
   }
 
-  cancelarEdicion(): void {
-    this.productoForm.reset();
-    this.productoSeleccionado = null;
+  buscarProducto():void{
+    if (this.searchText.trim()) {
+      this.productos = this.productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.searchText.toLowerCase())    
+      );
+      } else {
+    this.cargarProductos();
   }
+}
 }
 
