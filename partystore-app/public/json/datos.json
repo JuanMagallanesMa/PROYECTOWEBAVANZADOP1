@@ -1,25 +1,10 @@
 {
-"categoria": [
-    {
-      "nombre": "Bautizos",
-      "descripcion": "Artículos y decoraciones ideales para bautizos y eventos religiosos.",
-      "urlImagen": "https://example.com/images/bautizos.jpg",
-      "estado": "inactivo",
-      "edadesAplicables": [
-        "recién nacidos",
-        "1-2 años"
-      ],
-      "tiposEvento": [
-        "cumpleaños",
-        "bautizos"
-      ],
-      "id": "2"
-    },
+  "categoria": [
     {
       "nombre": "Fiestas 2423423423",
       "descripcion": "Suministros para fiestas temáticas como superhéroes, princesas, y más.",
       "urlImagen": "https://example.com/images/tematicas.jpg",
-      "estado": "inactivo",
+      "estado": "activo",
       "edadesAplicables": [
         "3-5 años",
         "9-12 años",
@@ -45,92 +30,63 @@
       ]
     }
   ],
-  
-  
-  "detailPedido":[
-{
-     
-}
-],
-"headerPedido":[
-
-],
-"usuarios":[
+  "detailPedido": [
+    {}
+  ],
+  "headerPedido": [],
+  "usuarios": [
     {
-        "idUsuario": 1,
-        "nombreCompleto": "Michael Aroca",
-        "correo": "Michael.Aroca@hotmail.com",
-        "telefono": "0991234567",
-        "rol": "cliente",
-        "estado": true
-      },
-      {
-        "idUsuario": 2,
-        "nombreCompleto": "María Gómez",
-        "correo": "maria.gomez@gmail.com",
-        "telefono": "0987654321",
-        "rol": "administrador",
-        "estado": true
-      }
-],
-"productos": [
-  {
-    "id": 1,
-    "nombre": "Globo de cumpleaños",
-    "categoria": "decoraciones",
-    "precio": 5.00,
-    "descripcion": "Globo de helio para fiestas."
-  },
-  {
-    "id": 2,
-    "nombre": "Tarjetas de invitación",
-    "categoria": "invitaciones",
-    "precio": 2.50,
-    "descripcion": "Paquete de 10 tarjetas."
-  },
-  {
-    "id": 3,
-    "nombre": "Disfraz de pirata",
-    "categoria": "disfraces",
-    "precio": 15.00,
-    "descripcion": "Incluye sombrero y parche."
-  },
-  {
-    "id": 4,
-    "nombre": "Jenga clásico",
-    "categoria": "juegos",
-    "precio": 20.00,
-    "descripcion": "Juego de bloques de madera."
-  },
-  {
-    "id": 5,
-    "nombre": "Marcadores no tóxicos",
-    "categoria": "suministros para actividades",
-    "precio": 10.00,
-    "descripcion": "Paquete de 12 colores."
-  }
-],
-
-"categorias": [
-{
-    "id": 1,
-    "nombre": "Decoraciones"
-},
-{
-    "id": 2,
-    "nombre": "Invitaciones"
-},
-{
-  "id": 3,
-  "nombre": "Disfraces"
-},
-{
-  "id": 4,
-  "nombre": "Juegos"
-},
-{
-  "id": 5,
-  "nombre": "Suministro para actividades"
-}
-]
+      "idUsuario": 1,
+      "nombreCompleto": "Michael Aroca",
+      "correo": "Michael.Aroca@hotmail.com",
+      "telefono": "0991234567",
+      "rol": "cliente",
+      "estado": true
+    },
+    {
+      "idUsuario": 2,
+      "nombreCompleto": "María Gómez",
+      "correo": "maria.gomez@gmail.com",
+      "telefono": "0987654321",
+      "rol": "administrador",
+      "estado": true
+    }
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Globo de cumpleaños",
+      "categoria": "decoraciones",
+      "precio": 5,
+      "descripcion": "Globo de helio para fiestas."
+    },
+    {
+      "id": 2,
+      "nombre": "Tarjetas de invitación",
+      "categoria": "invitaciones",
+      "precio": 2.5,
+      "descripcion": "Paquete de 10 tarjetas."
+    },
+    {
+      "id": 3,
+      "nombre": "Disfraz de pirata",
+      "categoria": "disfraces",
+      "precio": 15,
+      "descripcion": "Incluye sombrero y parche."
+    },
+    {
+      "id": 4,
+      "nombre": "Jenga clásico",
+      "categoria": "juegos",
+      "precio": 20,
+      "descripcion": "Juego de bloques de madera."
+    },
+    {
+      "id": 5,
+      "nombre": "Marcadores no tóxicos",
+      "categoria": "suministros para actividades",
+      "precio": 10,
+      "descripcion": "Paquete de 12 colores."
+    }
+  ]
 }
