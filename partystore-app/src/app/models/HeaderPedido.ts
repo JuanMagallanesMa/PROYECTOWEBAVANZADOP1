@@ -1,8 +1,8 @@
 export interface HeaderPedido{
     idHeaderPedido ?: number;
-    idDeatailPedido: number;
-    idProduct: number;
-    unitPrice: number;
-    idDiscount: number;
-    lineTotal: number;
+    idUsuario: number;
+    date: Date;
+    SubTotal: number;
+    IVA: 0.15;
+    totalDue: number;
 }

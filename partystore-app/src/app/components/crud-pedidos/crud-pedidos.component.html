@@ -1,5 +1,21 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
+
+  <h6>Datos personales</h6>
   <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Usuario</mat-label>
+        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (option of filteredOptions | async; track $index) {
+            <mat-option  [value]="option.nombreCompleto">
+              {{ option.nombreCompleto }} -- {{option.correo}}
+            </mat-option>
+          }
+          
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
     <div  class="column1">
       <mat-form-field>
         <mat-label>Nombres Completos</mat-label>
@@ -32,7 +48,7 @@
         }
       </mat-form-field>
     </div>
-    <div>
+    <div class="column1">
       <mat-form-field>
         <mat-label>Provincia</mat-label>
         <mat-select [(value)]="provinciaSeleccionada">
@@ -57,18 +73,17 @@
                type="text"
                placeholder="Escoge un código postal"
                matInput
-               [formControl]="myControl"
-               [matAutocomplete]="auto"
-               (input)="filter()"
-               (focus)="filter()">
-        <mat-autocomplete requireSelection #auto="matAutocomplete">
-          @for (option of filteredOptionsZIP; track option) {
-            <mat-option [value]="option">{{option}}</mat-option>
+               [formControl]="myControlzip"
+               [matAutocomplete]="auto2"
+               >
+        <mat-autocomplete requireSelection #auto2="matAutocomplete">
+          @for (optionZIP of filteredOptionsZIP | async; track optionZIP) {
+            <mat-option [value]="optionZIP">{{optionZIP}}</mat-option>
           }
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div>
+    <div class="column1">
       <mat-form-field class="example-full-width">
         <mat-label>Dirección</mat-label>
         <textarea matInput placeholder="Ej... Mapasingue  Este"></textarea>

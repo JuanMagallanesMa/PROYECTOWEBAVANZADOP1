@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {ChangeDetectionStrategy,  signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import { FormsModule,  Validators} from '@angular/forms';
+import { FormBuilder, FormsModule,  Validators} from '@angular/forms';
 
 import {merge} from 'rxjs';
 import { UsuarioService } from '../../services/usuario.service';
@@ -29,7 +29,6 @@ import { MatSelect } from '@angular/material/select';
     MatAutocompleteModule,
     MatFormFieldModule,    
     MatInputModule, 
-    TableComponent  ,
     MatPaginatorModule,
     MatFormField,
     FormsModule,
@@ -41,11 +40,12 @@ export class CrudPedidosComponent implements OnInit {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Control para el input del autocompletado
   myControl = new FormControl('');
- form!: FormGroup;
+  myControlzip = new FormControl('');
+  form!: FormGroup;
   // Opciones disponibles para el autocompletado
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
-  filteredOptionsZIP!: string[];
+  filteredOptionsZIP!: Observable<string[]>;
   // Propiedad para las opciones filtradas
   filteredOptions!: Observable<Usuario[]>;
   
@@ -53,22 +53,36 @@ export class CrudPedidosComponent implements OnInit {
   dataSource = new MatTableDataSource<Usuario>();
   
   //definir las columnas
-  displayedColumns: string[] = ['nombreCompleto', 'correo', 'telefono', 'acciones']; // No incluir 'acciones' aquí 
-  columnAliases = { nombreCompleto: 'Nombre Completo', correo: 'Correo Electrónico', telefono: 'Teléfono', acciones:'Acciones' }; 
+  displayedColumns: string[] = [
+    'nombreCompleto', 
+    'correo', 
+    'telefono', 
+    'acciones']; // No incluir 'acciones' aquí 
+  columnAliases = { 
+    nombreCompleto: 'Nombre Completo', 
+    correo: 'Correo Electrónico', 
+    telefono: 'Teléfono', 
+    acciones:'Acciones' 
+  }; 
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
  
   errorMessage = signal('');
-  constructor(private servicioUsuario : UsuarioService) { 
+  constructor(private servicioUsuario : UsuarioService, private fb: FormBuilder) { 
+    
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
-      this.filteredOptionsZIP = this.optionsZIP.slice();
+      
   }
 
   ngOnInit() {
     
     this.getUsuarios();
+    this.getZip();
+    this.form = this.fb.group({
+
+    });
   }
 
   onSubmit():void{
@@ -94,7 +108,12 @@ export class CrudPedidosComponent implements OnInit {
       console.log("Se muestra el autocomplete de usuarios");
     });
   }
-
+  getZip():void{
+    this.filteredOptionsZIP = this.myControlzip.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterZip(value || '')),
+    );
+  }
   // Función de filtro para las opciones
   private _filter(value: string): Usuario[] {
     const filterValue = value.toLowerCase();  // Comparamos sin importar mayúsculas/minúsculas
@@ -102,6 +121,11 @@ export class CrudPedidosComponent implements OnInit {
       option.nombreCompleto.toLowerCase().includes(filterValue) ||
       option.correo.toLowerCase().includes(filterValue)
     );
+  }
+  private _filterZip(value: string): string[] {
+    const filterValuezip = value.toLowerCase();
+
+    return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
   }
 
   handleEdit(usuario: Usuario) { 
@@ -113,8 +137,5 @@ export class CrudPedidosComponent implements OnInit {
     // Lógica para eliminar el usuario 
     console.log('Eliminar usuario:', usuario);
   }
-  filter(): void {
-    const filterValue = this.input.nativeElement.value.toLowerCase();
-    this.filteredOptionsZIP = this.optionsZIP.filter(o => o.toLowerCase().includes(filterValue));
-  }
+  
 }
