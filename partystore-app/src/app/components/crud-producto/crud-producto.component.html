@@ -1,90 +1,57 @@
 <div class="container">
-  <!-- Barra de búsqueda -->
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Buscar producto"
-      class="form-control"
-      #searchInput
-    />
-    <button class="btn btn-primary" (click)="buscarProducto(searchInput.value)">
-      Buscar
+  <h2>Productos</h2>
+  
+  <!-- Buscador -->
+  <div class="search-container">
+    <input 
+      type="text" 
+      class="search-input" 
+      placeholder="Buscar producto por nombre..." 
+      [(ngModel)]="searchText" 
+      (ngModelChange)="onSearchChange()">
+  </div>
+
+  <!-- Botones -->
+  <div class="form-group button-container">
+    <button type="submit" class="btn btn-primary" (click)="crearProducto()" [disabled]="!productoForm.valid">
+      Crear Producto
+    </button>
+    <button type="submit" class="btn btn-secondary" (click)="actualizarProducto()" [disabled]="!productoForm.valid">
+      Actualizar Producto
+    </button>
+    <button class="btn btn-danger" (click)="eliminarProducto(producto.id)"> 
+      Eliminar Producto
+    </button>
+    <button type="button" class="btn btn-search" (click)="cancelarEdicion()">
+      Buscar Producto
     </button>
   </div>
 
-  <!-- Combo box para filtrar por categorías -->
-  <div class="category-filter">
-    <label for="categorySelect">Filtrar por categorías</label>
-    <select
-      class="form-control"
-      id="categorySelect"
-      multiple
-      (change)="filtrarPorCategorias($event)"
-    >
-      <option *ngFor="let categoria of categorias" [value]="categoria.id">
-        {{ categoria.nombre }}
-      </option>
-    </select>
-  </div>
-
-  <!-- Icono del carrito -->
-  <div class="cart-icon">
-    <button class="btn btn-success" (click)="toggleCarrito()">
-      🛒 Carrito 
-    </button>
-  </div>
-
-  <!-- Tabla de productos -->
-  <h2>Lista de Productos</h2>
+  <!-- Listado de productos -->
+  <h3>Listado de Productos</h3>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>Id</th>
+        <th>Nombre del Producto</th>
         <th>Categoría</th>
-        <th>Descripción</th>
         <th>Precio</th>
-        <th>Disponible</th>
+        <th>Descripción</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let producto of productosFiltrados">
+      <tr *ngFor="let producto of productos">
         <td>{{ producto.id }}</td>
-        <td>{{ getCategoriaNombre(producto.categoriaId) }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.categoria }}</td>
+        <td>{{ producto.precio | currency:'USD' }}</td>
         <td>{{ producto.descripcion }}</td>
-        <td>{{ producto.precio | currency }}</td>
-        <td>{{ producto.disponible ? 'Sí' : 'No' }}</td>
-        <td>
-          <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">
-            Agregar
-          </button>
-        </td>
       </tr>
     </tbody>
   </table>
-
-  <!-- Ventana modal del carrito -->
-  <div class="modal-backdrop" *ngIf="mostrarCarrito">
-    <div class="modal">
-      <div class="modal-header">
-        <h3>Productos Seleccionados</h3>
-        <button class="close-btn" (click)="toggleCarrito()">✖</button>
-      </div>
-      <div class="modal-body">
-        <div *ngIf="carrito.length === 0">Carrito vacío</div>
-        <ul *ngIf="carrito.length > 0">
-          <li *ngFor="let producto of carrito; let i = index">
-            {{ producto.nombre }} - {{ producto.precio | currency }}
-            <button
-              class="delete-btn"
-              (click)="eliminarDelCarrito(i)"
-              title="Eliminar producto"
-            >
-              🗑️
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  
 </div>
+
+
+
