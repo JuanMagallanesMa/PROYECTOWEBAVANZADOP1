@@ -49,7 +49,7 @@ export class CrudProductoComponent{
   // Método para guardar o crear un producto
   guardarProducto(): void {
     if (this.productoEnEdicion) {
-      this.productoService.actualizarProducto(this.nuevoProducto).subscribe(() => {
+      this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
         const index = this.productos.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
         if (index > -1) {
           this.productos[index] = { ...this.nuevoProducto };
@@ -67,10 +67,11 @@ export class CrudProductoComponent{
 
   guardarProducto1(): void {
     if (this.productoEnEdicion) {
-      this.productoService.actualizarProducto(this.nuevoProducto).subscribe(() => {
-        const index = this.productos.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
+      this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
+        const index = this.dataSource.data.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
         if (index > -1) {
-          this.productos[index] = { ...this.nuevoProducto };
+          this.dataSource.data[index]={...this.nuevoProducto};
+          this.dataSource.data=[...this.dataSource.data];
         }
         this.productoEnEdicion = null;
         this.resetProducto();
@@ -142,4 +143,3 @@ export class CrudProductoComponent{
     console.log('Eliminar producto:', id);
   }
 }
-
