@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CategoriasjsonService } from './services/categoriasjson.service';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { CrudCategoriaComponent  } from "./components//crud-categoria/crud-categoria.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,  RouterLink,RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -4,13 +4,17 @@
 </div>
 <div>
   <nav>
-    <a href="">Lista Productos</a>
-    <a href="">Productos</a>
-    <a href="">Categorias</a>
-    <a href="">Descuentos</a>
-    <a routerLink="/pedidos" routerLinkActive="active">Pedidos</a>
-    <a routerLink="/usuario" routerLinkActive="active">Usuarios</a>
+    <div>
+      <a href="">Lista Productos</a>
+      <a routerLink="/producto" routerLinkActive="active">Productos</a>
+      <a href="">Categorias</a>
+      <a href="">Descuentos</a>
+      <a routerLink="/pedidos" routerLinkActive="active">Pedidos</a>
+      <a routerLink="/usuario" routerLinkActive="active">Usuarios</a>
+      <a routerLink="/crud-categoria" routerLinkActive="active">Categorías</a>
+    </div>
+    
   </nav>
 </div>
 
-<router-outlet></router-outlet>
+<router-outlet/>

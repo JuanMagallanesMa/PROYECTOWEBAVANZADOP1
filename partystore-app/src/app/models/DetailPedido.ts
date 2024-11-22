@@ -1,8 +1,8 @@
 export interface DetailPedido{
     idDetailPedido ?: number;
-    idUsuario: number;
-    date: Date;
-    SubTotal: number;
-    IVA: 0.15;
-    totalDue: number;
+    idHeaderPedido: number;
+    idProduct: number;
+    unitPrice: number;
+    idDiscount: number;
+    lineTotal: number;
 }

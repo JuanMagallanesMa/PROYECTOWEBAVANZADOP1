@@ -1,5 +1,5 @@
 {
-  "categorias":[
+  "categoria":[
   {
     "id": 1,
     "nombre": "Cumpleaños",
@@ -25,7 +25,7 @@
     {
         "idUsuario": 1,
         "nombreCompleto": "Michael Aroca",
-        "correo": "Michael.Aroca@gmail.com",
+        "correo": "Michael.Aroca@hotmail.com",
         "telefono": "0991234567",
         "rol": "cliente",
         "estado": true
@@ -39,21 +39,42 @@
         "estado": true
       }
 ],
-"productos":[
+"productos": [
   {
     "id": 1,
-    "nombre": "Globos Temáticos",
-    "precio": 20,
-    "categoriaId": 1,
-    "descuento": 10
-},
-{
+    "nombre": "Globo de cumpleaños",
+    "categoria": "decoraciones",
+    "precio": 5.00,
+    "descripcion": "Globo de helio para fiestas."
+  },
+  {
     "id": 2,
-    "nombre": "Invitaciones Personalizadas",
-    "precio": 50,
-    "categoriaId": 2,
-    "descuento": 5
-}
+    "nombre": "Tarjetas de invitación",
+    "categoria": "invitaciones",
+    "precio": 2.50,
+    "descripcion": "Paquete de 10 tarjetas."
+  },
+  {
+    "id": 3,
+    "nombre": "Disfraz de pirata",
+    "categoria": "disfraces",
+    "precio": 15.00,
+    "descripcion": "Incluye sombrero y parche."
+  },
+  {
+    "id": 4,
+    "nombre": "Jenga clásico",
+    "categoria": "juegos",
+    "precio": 20.00,
+    "descripcion": "Juego de bloques de madera."
+  },
+  {
+    "id": 5,
+    "nombre": "Marcadores no tóxicos",
+    "categoria": "suministros para actividades",
+    "precio": 10.00,
+    "descripcion": "Paquete de 12 colores."
+  }
 ],
 
 "categorias": [
@@ -64,6 +85,18 @@
 {
     "id": 2,
     "nombre": "Invitaciones"
+},
+{
+  "id": 3,
+  "nombre": "Disfraces"
+},
+{
+  "id": 4,
+  "nombre": "Juegos"
+},
+{
+  "id": 5,
+  "nombre": "Suministro para actividades"
 }
 ]
 }
