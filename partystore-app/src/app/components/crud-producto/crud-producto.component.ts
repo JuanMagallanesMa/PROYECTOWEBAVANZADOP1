@@ -1,67 +1,97 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
+import { Producto } from '../../models/Producto'; 
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-crud-producto',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './crud-producto.component.html',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   styleUrls: ['./crud-producto.component.css']
 })
-export class CrudProductoComponent {
-  productos: any[] = [];
-  categorias: any[] = [];
-  productosFiltrados: any[] = [];
-  carrito: any[] = [];
-  mostrarCarrito: boolean = false;
-  categoriasSeleccionadas: Set<number> = new Set();
 
-  constructor(private productoService: ProductoService) {
-    this.cargarDatos();
+export class CrudProductoComponent implements OnInit {
+  productos: any[] = [];
+  productoForm: any;  
+  searchText: string = '';
+  productoSeleccionado: Producto | null = null;
+
+  constructor(private productoService: ProductoService) {}
+
+  ngOnInit(): void {
+    this.cargarProductos();
   }
 
-  cargarDatos() {
-    this.productoService.getDatos().subscribe((datos) => {
-      this.productos = datos.productos;
-      this.categorias = datos.categorias;
-      this.productosFiltrados = [...this.productos];
+  cargarProductos(): void {
+    this.productoService.obtenerProductos().subscribe(productos => {
+      this.productos = productos;
     });
   }
 
-  getCategoriaNombre(categoriaId: number): string {
-    const categoria = this.categorias.find((cat) => cat.id === categoriaId);
-    return categoria ? categoria.nombre : 'Desconocida';
+  onSearchChange(): void {
+    if (this.searchText.trim()) {
+      this.productos = this.productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.cargarProductos();
+    }
   }
 
-  buscarProducto(searchTerm: string) {
-    this.productosFiltrados = this.productos.filter(
-      (producto) =>
-        producto.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (this.categoriasSeleccionadas.size === 0 ||
-          this.categoriasSeleccionadas.has(producto.categoriaId))
-    );
+  crearProducto(): void {
+    if (this.productoForm.valid) {
+      const nuevoProducto: Producto = this.productoForm.value;
+      this.productoService.crearProducto(nuevoProducto).subscribe(producto => {
+        this.productos.push(producto);
+        this.productoForm.reset();
+      });
+    }
   }
 
-  filtrarPorCategorias(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.categoriasSeleccionadas = new Set(
-      Array.from(selectElement.selectedOptions, (option) =>
-        parseInt(option.value)
-      )
-    );
-    this.buscarProducto('');
+  actualizarProducto(): void {
+    if (this.productoForm.valid && this.productoSeleccionado) {
+      const productoActualizado: Producto = this.productoForm.value;
+      productoActualizado.id = this.productoSeleccionado.id; 
+      this.productoService.actualizarProducto(productoActualizado).subscribe(() => {
+        const index = this.productos.findIndex(p => p.id === productoActualizado.id);
+        if (index !== -1) {
+          this.productos[index] = productoActualizado;
+        }
+        this.productoForm.reset();
+        this.productoSeleccionado = null;
+      });
+    }
   }
 
-  agregarAlCarrito(producto: any) {
-    this.carrito.push(producto);
+  eliminarProducto(id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este producto?')){
+      this.productoService.eliminarProducto(id).subscribe({
+        next:()=>{
+          this.productos=this.productos.filter(producto=>producto.id !==id);
+          console.log('Producto eliminado');
+        },
+        error:(err)=>{
+          console.error('Error al eliminar producto:',err);
+        }
+      });
+    }
   }
 
-  eliminarDelCarrito(index: number) {
-    this.carrito.splice(index, 1);
+  seleccionarProducto(producto: Producto): void {
+    this.productoSeleccionado = producto;
+    this.productoForm.setValue({
+      nombre: producto.nombre,
+      categoria: producto.categoria,
+      precio: producto.precio,
+      descripcion: producto.descripcion
+    });
   }
 
-  toggleCarrito() {
-    this.mostrarCarrito = !this.mostrarCarrito;
+  cancelarEdicion(): void {
+    this.productoForm.reset();
+    this.productoSeleccionado = null;
   }
 }
+
