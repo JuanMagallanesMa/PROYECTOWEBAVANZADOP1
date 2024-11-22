@@ -1,99 +1,116 @@
-import { Component } from '@angular/core';
-import { Usuario } from '../../models/Usuario';
-import { UsuarioService } from '../../services/usuario.service';
+import { Component, OnInit } from '@angular/core';
+import { ProductoService } from '../../services/producto.service';
+import { Producto } from '../../models/Producto'; 
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
-  selector: 'app-crud-usuario',
+  selector: 'app-crud-producto',
+  templateUrl: './crud-producto.component.html',
   standalone: true,
-  imports: [FormsModule, RouterModule],
-  templateUrl: './crud-usuario.component.html',
-  styleUrl: './crud-usuario.component.css'
+  imports: [FormsModule, CommonModule, MatTableModule],
+  styleUrls: ['./crud-producto.component.css']
 })
-export class CrudUsuarioComponent {
 
-  usuarios: Usuario[] = [];
-  nuevoUsuario: Usuario = {
-    idUsuario: 0,
-    nombreCompleto: '',
-    correo: '',
-    telefono: '',
-    rol: 'cliente',
-    estado: true,
-    contrasena: undefined
+export class CrudProductoComponent implements OnInit {
+  productos: Producto[] = [];
+  nuevoProducto: Producto={
+    id:0,
+    nombre:'',
+    categoria:'',
+    precio: 0,
+    descripcion: '',
   };
-  buscador: string = '';
-  usuarioEnEdicion: Usuario | null = null;
 
-  constructor(private usuarioService: UsuarioService) {}
+  productoForm: any;  
+  searchText: string = '';
+  productoSeleccionado: Producto | null = null;
 
-  ngOnInit() {
-    this.usuarioService.getUsuarios().subscribe(usuarios => {
-      console.log('Usuarios:', usuarios);
-      this.usuarios = usuarios;
+  displayedColumns: string[] = ['id', 'nombre', 'categoria', 'precio', 'descripcion', 'acciones'];
+
+  constructor(private productoService: ProductoService) {}
+
+  ngOnInit(): void {
+    this.productoService.obtenerProductos().subscribe((data) => {
+      this.productos = data;
     });
   }
   
-  
 
-  cargarUsuarios(): void {
-    this.usuarioService.getUsuarios().subscribe(usuarios => {
-      this.usuarios = usuarios;
+  cargarProductos(): void {
+    this.productoService.obtenerProductos().subscribe(productos => {
+      this.productos = productos;
     });
   }
 
-  guardarUsuario(): void {
-    if (this.usuarioEnEdicion) {
-      this.usuarioService.editarUsuario(this.nuevoUsuario).subscribe(() => {
-        const index = this.usuarios.findIndex(u => u.idUsuario === this.nuevoUsuario.idUsuario);
-        if (index > -1) {
-          this.usuarios[index] = { ...this.nuevoUsuario };
-        }
-        this.usuarioEnEdicion = null;
-        this.resetUsuario();
-      });
+  onSearchChange(): void {
+    if (this.searchText.trim()) {
+      this.productos = this.productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
     } else {
-      this.usuarioService.agregarUsuario(this.nuevoUsuario).subscribe(nuevoUsuario => {
-        this.usuarios.push(nuevoUsuario);
-        this.resetUsuario();
+      this.cargarProductos();
+    }
+  }
+
+  crearProducto(): void {
+    if (this.productoForm.valid) {
+      const nuevoProducto: Producto = this.productoForm.value;
+      this.productoService.crearProducto(nuevoProducto).subscribe(producto => {
+        this.productos.push(producto);
+        this.productoForm.reset();
       });
     }
   }
-  
-  
 
-  eliminarUsuario(id: number): void {
-    this.usuarioService.eliminarUsuario(id).subscribe(() => {
-      this.cargarUsuarios();
+  actualizarProducto(): void {
+    if (this.productoForm.valid && this.productoSeleccionado) {
+      const productoActualizado: Producto = this.productoForm.value;
+      productoActualizado.id = this.productoSeleccionado.id; 
+      this.productoService.actualizarProducto(productoActualizado).subscribe(() => {
+        const index = this.productos.findIndex(p => p.id === productoActualizado.id);
+        if (index !== -1) {
+          this.productos[index] = productoActualizado;
+        }
+        this.productoForm.reset();
+        this.productoSeleccionado = null;
+      });
+    }
+  }
+
+  eliminarProducto(id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este producto?')){
+      this.productoService.eliminarProducto(id).subscribe({
+        next:()=>{
+          this.productos=this.productos.filter(producto=>producto.id !==id);
+          console.log('Producto eliminado');
+        },
+        error:(err)=>{
+          console.error('Error al eliminar producto:',err);
+        }
+      });
+    }
+  }
+
+  seleccionarProducto(producto: Producto): void {
+    this.productoSeleccionado = producto;
+    this.productoForm.setValue({
+      nombre: producto.nombre,
+      categoria: producto.categoria,
+      precio: producto.precio,
+      descripcion: producto.descripcion
     });
   }
 
-  resetUsuario(): void {
-    this.nuevoUsuario = {
-      idUsuario: 0,
-      nombreCompleto: '',
-      correo: '',
-      contrasena: '',
-      telefono: '',
-      rol: 'cliente',
-      estado: true,
-    };
+  buscarProducto():void{
+    if (this.searchText.trim()) {
+      this.productos = this.productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.searchText.toLowerCase())    
+      );
+      } else {
+    this.cargarProductos();
   }
-   // Buscar usuarios
-buscarUsuarios() {
-  if (this.buscador.trim() !== '') {
-    this.usuarios = this.usuarios.filter(usuario =>
-      usuario.nombreCompleto.toLowerCase().includes(this.buscador.toLowerCase()) ||
-      usuario.correo.toLowerCase().includes(this.buscador.toLowerCase())
-    );
-  } else{
-    this.resetUsuario();
-  }
-}
-editarUsuario(usuario: Usuario) {
-  this.usuarioEnEdicion = { ...usuario }; 
-  this.nuevoUsuario = { ...usuario }; 
 }
 }
 
