@@ -108,37 +108,6 @@
               </button>
             </div>
 
-      <!-- 
-        <table class="table table-striped table-hover">
-          <thead class="table-dark">
-            <tr>
-             
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (usuario of usuarios; track $index) {
-              <tr>
-                <td>{{ usuario.nombreCompleto }}</td>
-                <td>{{ usuario.correo }}</td>
-                <td>{{ usuario.telefono }}</td>
-                <td>{{ usuario.rol }}</td>
-                <td>
-                  <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">
-                      Modificar
-                    </button>
-                  <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.idUsuario)">Eliminar</button>
-                </td>
-              </tr>
-            }
-            
-          </tbody>
-        </table>
-      -->
       <app-table 
       [dataSource]="dataSource" 
       [displayedColumns]="displayedColumns" 
@@ -149,7 +118,7 @@
     </app-table>
       </div>
     </div>
-  </div>
+</div>
   
   
   <br> <br> <br>
