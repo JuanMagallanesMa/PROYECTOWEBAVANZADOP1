@@ -1,16 +1,50 @@
 {
-  "categoria":[
-  {
-    "id": 1,
-    "nombre": "Cumpleaños",
-    "descripcion": "Productos ideales para cumpleaños.",
-    "urlImagen": "",
-    "estado": "activo",
-    "rangoPopularidad": 1,
-    "edadesAplicables": ["0-5", "6-12"],
-    "tiposEvento": ["Fiestas Infantiles", "Cumpleaños"]
-  }
-],
+"categoria": [
+    {
+      "nombre": "Bautizos",
+      "descripcion": "Artículos y decoraciones ideales para bautizos y eventos religiosos.",
+      "urlImagen": "https://example.com/images/bautizos.jpg",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "recién nacidos",
+        "1-2 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "bautizos"
+      ],
+      "id": "2"
+    },
+    {
+      "nombre": "Fiestas 2423423423",
+      "descripcion": "Suministros para fiestas temáticas como superhéroes, princesas, y más.",
+      "urlImagen": "https://example.com/images/tematicas.jpg",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "3-5 años",
+        "9-12 años",
+        "13-15 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "eventos especiales"
+      ],
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "nombre": "Baby Showers",
+      "descripcion": "Decoraciones y detalles para baby showers.",
+      "urlImagen": "https://example.com/images/babyshowers.jpg",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "recién nacidos"
+      ],
+      "tiposEvento": [
+        "baby showers"
+      ]
+    }
+  ],
   
   
   "detailPedido":[
