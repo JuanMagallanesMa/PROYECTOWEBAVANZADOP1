@@ -67,7 +67,7 @@
                 <option value="vendedor">Vendedor</option>
               </select>
             </div>
-            <button type="button" class="btn btn-primary w-100" (click)="guardarUsuario()">
+            <button type="button" class="btn btn-primary w-100" (click)="guardarUsuario1()">
               {{ usuarioEnEdicion ? 'Guardar cambios' : 'Registrar' }}
             </button>
           </form>
@@ -85,8 +85,10 @@
           [(ngModel)]="buscador"
           placeholder="Buscar usuario"
         />
-        <button class="btn btn-secondary" (click)="buscarUsuarios()">Buscar</button>
+        <button class="btn btn-secondary" (click)="buscarUsuarios1()">Buscar</button>
       </div>
+
+      <!-- 
         <table class="table table-striped table-hover">
           <thead class="table-dark">
             <tr>
@@ -116,6 +118,15 @@
             
           </tbody>
         </table>
+      -->
+      <app-table 
+      [dataSource]="dataSource" 
+      [displayedColumns]="displayedColumns" 
+      [columnAliases]="columnAliases" 
+      (onEdit)="handleEdit($event)" 
+      (onDelete)="handleDelete($event)"
+      >
+    </app-table>
       </div>
     </div>
   </div>

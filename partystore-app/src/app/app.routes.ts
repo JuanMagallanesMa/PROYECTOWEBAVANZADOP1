@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { CrudPedidosComponent } from './components/crud-pedidos/crud-pedidos.component';
 import { CrudUsuarioComponent } from './components/crud-usuario/crud-usuario.component';
-import { CrudProductoComponent } from './components/crud-product/crud-product.component';
+import { CrudProductoComponent } from './components/crud-producto/crud-producto.component';
+
 
 export const routes: Routes = [
 

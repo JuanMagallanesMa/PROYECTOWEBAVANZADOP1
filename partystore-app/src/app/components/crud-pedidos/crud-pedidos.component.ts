@@ -24,7 +24,7 @@ import { map, Observable, startWith } from 'rxjs';
     MatAutocompleteModule,
     MatFormFieldModule,    
     MatInputModule, 
-  TableComponent  ,
+    TableComponent  ,
     MatPaginatorModule,     
   ]
 })
