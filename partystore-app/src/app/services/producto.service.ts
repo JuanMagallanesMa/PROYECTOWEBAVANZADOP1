@@ -12,8 +12,8 @@ export class ProductoService {
 
   constructor(private http: HttpClient) { }
 
-  // Método para cargar los datos desde el archivo JSON
+  
   getDatos(): Observable<any> {
-    return this.http.get<any>('/assets/datos.json'); // Asegúrate de que el archivo JSON esté en la carpeta 'assets'
+    return this.http.get<any>('/public/jason/datos.json'); 
   }
 }
