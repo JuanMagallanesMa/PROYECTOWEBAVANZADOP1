@@ -27,107 +27,38 @@
 "productos": [
   {
     "id": 1,
-    "nombre": "Globos Tematicos",
-    "categoriaId": 1,
-    "descripcion": "Decorativos y resistentes, perfectos para eventos temáticos.",
-    "precio": 5,
-    "disponible": true
+    "nombre": "Globo de cumpleaños",
+    "categoria": "decoraciones",
+    "precio": 5.00,
+    "descripcion": "Globo de helio para fiestas."
   },
   {
     "id": 2,
-    "nombre": "Guirnaldas de Papel",
-    "categoriaId": 1,
-    "descripcion": "Coloridas guirnaldas de papel de alta calidad, ideales para decorar fiestas y eventos especiales.",
-    "precio": 24,
-    "disponible": true
+    "nombre": "Tarjetas de invitación",
+    "categoria": "invitaciones",
+    "precio": 2.50,
+    "descripcion": "Paquete de 10 tarjetas."
   },
   {
     "id": 3,
-    "nombre": "Confeti Brillante",
-    "categoriaId": 1,
-    "descripcion": "Confeti metálico en colores brillantes, perfecto para añadir un toque festivo a tus celebraciones.",
-    "precio": 30,
-    "disponible": false
+    "nombre": "Disfraz de pirata",
+    "categoria": "disfraces",
+    "precio": 15.00,
+    "descripcion": "Incluye sombrero y parche."
   },
   {
     "id": 4,
-    "nombre": "Centro de Mesa Floral",
-    "categoriaId": 1,
-    "descripcion": "Hermoso centro de mesa con flores artificiales temáticas.",
-    "precio": 15,
-    "disponible": true
+    "nombre": "Jenga clásico",
+    "categoria": "juegos",
+    "precio": 20.00,
+    "descripcion": "Juego de bloques de madera."
   },
   {
     "id": 5,
-    "nombre": "Letreros Luminosos",
-    "categoriaId": 1,
-    "descripcion": "Letreros con luces LED personalizables para eventos.",
-    "precio": 25,
-    "disponible": true
-  },
-  {
-    "id": 6,
-    "nombre": "Invitaciones Digitales Personalizadas",
-    "categoriaId": 2,
-    "descripcion": "Invitaciones electrónicas diseñadas a medida.",
-    "precio": 10,
-    "disponible": true
-  },
-  {
-    "id": 7,
-    "nombre": "Tarjetas de Agradecimiento",
-    "categoriaId": 2,
-    "descripcion": "Elegantes tarjetas para agradecer a tus invitados.",
-    "precio": 8,
-    "disponible": true
-  },
-  {
-    "id": 8,
-    "nombre": "Disfraz de Superhéroe",
-    "categoriaId": 3,
-    "descripcion": "Traje completo de superhéroe para niños y adultos.",
-    "precio": 35,
-    "disponible": true
-  },
-  {
-    "id": 9,
-    "nombre": "Máscaras de Animales",
-    "categoriaId": 3,
-    "descripcion": "Máscaras de animales de alta calidad para fiestas temáticas.",
-    "precio": 12,
-    "disponible": true
-  },
-  {
-    "id": 10,
-    "nombre": "Jenga Gigante",
-    "categoriaId": 4,
-    "descripcion": "Juego de bloques de madera en tamaño grande para exteriores.",
-    "precio": 40,
-    "disponible": true
-  },
-  {
-    "id": 11,
-    "nombre": "Kit de Pintura Facial",
-    "categoriaId": 5,
-    "descripcion": "Set completo de pinturas seguras para actividades creativas.",
-    "precio": 18,
-    "disponible": true
-  },
-  {
-    "id": 12,
-    "nombre": "Herramientas de Manualidades",
-    "categoriaId": 5,
-    "descripcion": "Kit con tijeras, pegamento y materiales variados para manualidades.",
-    "precio": 22,
-    "disponible": true
-  },
-  {
-    "id": 13,
-    "nombre": "Juego de Pesca Magnético",
-    "categoriaId": 4,
-    "descripcion": "Divertido juego para niños con cañas y peces magnéticos.",
-    "precio": 20,
-    "disponible": true
+    "nombre": "Marcadores no tóxicos",
+    "categoria": "suministros para actividades",
+    "precio": 10.00,
+    "descripcion": "Paquete de 12 colores."
   }
 ],
 
