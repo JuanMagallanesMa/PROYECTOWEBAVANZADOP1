@@ -1,113 +1,132 @@
-  .search-container {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
+/* General */
+.container {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* Títulos */
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #343a40; 
+}
+
+/* Formularios */
+.form-label {
+  font-weight: 500;
+  color: #495057; 
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-control:focus {
+  border-color: #007bff; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+/* Botón del formulario */
+button.btn-primary {
+  background-color: #007bff; 
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3; 
+}
+
+button.btn-secondary {
+  background-color: #6c757d; 
+  color: white;
+  border: none;
+  font-size: 0.9rem;
+}
+
+button.btn-secondary:hover {
+  background-color: #5a6268; 
+}
+
+/* Buscador */
+.d-flex {
+  gap: 0.5rem;
+}
+
+input.form-control.me-2 {
+  flex-grow: 1;
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa; 
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e9ecef; 
+}
+
+.table-dark th {
+  background-color: #343a40; 
+  color: white;
+}
+
+.table td, .table th {
+  padding: 0.75rem;
+  text-align: left;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Botones dentro de la tabla */
+button.btn-warning {
+  background-color: #ffc107; 
+  color: #212529;
+  border: none;
+  font-size: 0.8rem;
+}
+
+button.btn-warning:hover {
+  background-color: #e0a800; 
+}
+
+button.btn-danger {
+  background-color: #dc3545; 
+  color: white;
+  border: none;
+  font-size: 0.8rem;
+}
+
+button.btn-danger:hover {
+  background-color: #bd2130;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
   }
 
-  .search-input {
-    width: 100%;
-    max-width: 500px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 20px;
+  h4 {
+    font-size: 1.25rem;
   }
 
-  .search-input::placeholder {
-    color: #aaa;
+  button {
+    font-size: 0.85rem;
   }
-
-  .button-container {
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    gap: 10px;                
-    margin-top: 20px;         
-  }
-
-  .btn {
-    padding: 10px 15px;  
-    font-size: 14px;      
-    background-color: #007BFF;  
-    color: white;               
-    border: none;               
-    border-radius: 5px;         
-    cursor: pointer;           
-    transition: background-color 0.3s;  
-  }
-
-  .btn:hover {
-    background-color: #0056b3;  
-  }
-
-  /* Estilos generales para la tabla */
-  .table {
-    width: 100%;
-    border-collapse: collapse; 
-    margin: 20px 0; 
-    background-color: #f9f9f9; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    border-radius: 8px; 
-  }
-
-  /* Estilos para los encabezados */
-  .table thead {
-    background-color: #007BFF; 
-    color: #ffffff; 
-  }
-
-  .table th {
-    padding: 12px 15px; 
-    text-align: left; 
-    font-size: 16px; 
-    font-weight: bold; 
-  }
-
-  /* Estilos para las filas del cuerpo */
-  .table tbody {
-    background-color: #ffffff; 
-  }
-
-  .table td {
-    padding: 12px 15px; 
-    text-align: left; 
-    font-size: 14px; 
-    color: #333333; 
-    border-bottom: 1px solid #ddd; 
-  }
-
-  /* Estilo para las filas al pasar el ratón (hover) */
-  .table tbody tr:hover {
-    background-color: #f1f1f1; 
-    cursor: pointer; 
-  }
-
-  /* Estilo para las filas de la tabla de tipo "striped" (rayadas) */
-  .table-striped tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; 
-  }
-
-  /* Ajustes para las celdas con valores monetarios */
-  .table td:last-child {
-    color: #28a745; 
-    font-weight: bold; 
-  }
-
-  /* Bordes para los contornos de la tabla */
-  .table {
-    border: 1px solid #ddd;
-  }
-
-  .table th, .table td {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-  }
-
-  .table td:first-child, .table th:first-child {
-    border-left: none; 
-  }
-
-  .table td:last-child, .table th:last-child {
-    border-right: none; 
-  }
+}
