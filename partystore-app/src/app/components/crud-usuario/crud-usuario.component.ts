@@ -5,11 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '../shared/table/table.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-crud-usuario',
   standalone: true,
-  imports: [FormsModule, RouterModule, TableComponent],
+  imports: [FormsModule, RouterModule, TableComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule],
   templateUrl: './crud-usuario.component.html',
   styleUrl: './crud-usuario.component.css'
 })
