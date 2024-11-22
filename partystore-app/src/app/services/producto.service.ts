@@ -42,14 +42,14 @@ export class ProductoService {
   }
 
   // Actualizar un producto
-  actualizarProducto(producto: Producto): Observable<Producto> {
+  editarProducto(producto: Producto): Observable<Producto> {
     return of(producto).pipe(
       map(updatedProduct => {
         console.log('Producto actualizado:', updatedProduct);
         return updatedProduct; 
       }),
       catchError(err => {
-        console.error('Error al actualizar producto:', err);
+        console.error('Error al editar producto:', err);
         return of(producto); 
       })
     );
@@ -69,4 +69,3 @@ export class ProductoService {
     );
   }
 }
-
