@@ -35,11 +35,6 @@ import { MatSelect } from '@angular/material/select';
     MatSelect    
   ]
 })
-<<<<<<< HEAD
-export class CrudPedidosComponent implements OnInit , AfterViewInit {
-  form!:FormGroup;
-  usuarios: Usuario[]=[] ;
-=======
 export class CrudPedidosComponent implements OnInit {
   provinciaSeleccionada: string = '';
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
@@ -69,7 +64,6 @@ export class CrudPedidosComponent implements OnInit {
     telefono: 'Teléfono', 
     acciones:'Acciones' 
   }; 
->>>>>>> 0cda16ee5bec7dbca79455b78297170672d90bde
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
  
