@@ -7,12 +7,19 @@ div{
 }
 .container-pedido {
   display: flex;
-  justify-content: space-between; /* Espacio entre los bloques */
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .row {
-  flex: 1; /* Cada bloque toma el mismo espacio */
-  margin: 10px; /* Espacio alrededor de cada bloque */
+  flex: 1;
+  margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex: 100%;
+  }
 }
 
 .oneInputs mat-form-field{
@@ -21,4 +28,10 @@ div{
 
 .twoInputs mat-form-field{
   width: calc(50% - 8px);
+}
+.card-footer {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 16px; 
 }

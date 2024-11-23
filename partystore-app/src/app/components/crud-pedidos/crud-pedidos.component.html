@@ -1,8 +1,9 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
 <div class="container-pedido">
   <div class="row">
-    <h6>Datos personales</h6>
+    
   <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
+    <div mat-subheader>Datos Personales</div>
     <div class="oneInputs">
       <mat-form-field appearance="fill" class="usuario">
         <mat-label>Usuario</mat-label>
@@ -97,7 +98,37 @@
   </form>
   </div>
   <div class="row">
-    <h1>Productos</h1>
+    <mat-list>
+      <div mat-subheader>Productos</div>
+      @for (folder of product; track folder) {
+        <mat-card class="card-productos" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title-group>
+              <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+              <mat-card-title>{{folder.nombre}}</mat-card-title>
+              <mat-card-subtitle>{{folder.precio}}</mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            {{folder.descripcion}}
+          </mat-card-content>
+          <mat-card-footer class="card-footer">
+            <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <mat-icon>add</mat-icon>
+            </button>
+            <mat-form-field>
+              <mat-label>Cantidad</mat-label>
+              <input matInput value="0">
+            </mat-form-field>
+            <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </mat-card-footer>
+        </mat-card>
+        
+    }
+    </mat-list>
+
   </div>
 </div>
   
