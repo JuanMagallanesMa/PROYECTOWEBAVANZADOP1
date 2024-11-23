@@ -111,7 +111,7 @@ export class CrudPedidosComponent implements OnInit {
   getZip():void{
     this.filteredOptionsZIP = this.myControlzip.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterZip(value || '')),
+      map(value => this._filterZip(value || ''))
     );
   }
   // Función de filtro para las opciones

@@ -1,9 +1,10 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
-
-  <h6>Datos personales</h6>
+<div class="container-pedido">
+  <div class="row">
+    <h6>Datos personales</h6>
   <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
-    <div>
-      <mat-form-field appearance="fill">
+    <div class="oneInputs">
+      <mat-form-field appearance="fill" class="usuario">
         <mat-label>Usuario</mat-label>
         <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
@@ -16,7 +17,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div  class="column1">
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Nombres Completos</mat-label>
         <input matInput
@@ -28,6 +29,8 @@
         <input matInput
           required>
       </mat-form-field>
+    </div>
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Teléfono</mat-label>
         <input matInput
@@ -48,7 +51,7 @@
         }
       </mat-form-field>
     </div>
-    <div class="column1">
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Provincia</mat-label>
         <mat-select [(value)]="provinciaSeleccionada">
@@ -66,7 +69,8 @@
           <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
         </mat-select>
       </mat-form-field>
-      
+    </div>
+    <div class="oneInputs">
       <mat-form-field class="example-full-width">
         <mat-label>Código Postal</mat-label>
         <input #input
@@ -83,7 +87,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="column1">
+    <div class="oneInputs">
       <mat-form-field class="example-full-width">
         <mat-label>Dirección</mat-label>
         <textarea matInput placeholder="Ej... Mapasingue  Este"></textarea>
@@ -91,6 +95,12 @@
     </div>
     
   </form>
+  </div>
+  <div class="row">
+    <h1>Productos</h1>
+  </div>
+</div>
+  
     
   <!--
   
