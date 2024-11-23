@@ -4,7 +4,19 @@
     <div class="col-md-5">
       <h4>{{ productoEnEdicion ? 'Editar Producto' : 'Registrar Producto' }}</h4>
       <form (ngSubmit)="guardarProducto()" #productoForm="ngForm" class="form-container">
-        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>ID</mat-label>
+          <input
+            matInput
+            type="text"
+            id="id"
+            [(ngModel)]="nuevoProducto.idProdcuto"
+            name="id"
+            placeholder="ID del producto"
+            required
+          />
+        </mat-form-field>
+
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Nombre</mat-label>
           <input
