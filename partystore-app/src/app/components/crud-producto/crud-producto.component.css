@@ -1,132 +1,52 @@
-/* General */
 .container {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #f8f9fa; 
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Títulos */
 h4 {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 1rem;
-  color: #343a40; 
 }
 
-/* Formularios */
-.form-label {
-  font-weight: 500;
-  color: #495057; 
+.form-container {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form-control {
-  border-radius: 5px;
-  border: 1px solid #ced4da;
-  padding: 0.5rem;
-  font-size: 0.9rem;
+.form-field {
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-.form-control:focus {
-  border-color: #007bff; 
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
-}
-
-/* Botón del formulario */
-button.btn-primary {
-  background-color: #007bff; 
-  border: none;
+.submit-button {
+  width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
 }
 
-button.btn-primary:hover {
-  background-color: #0056b3; 
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-button.btn-secondary {
-  background-color: #6c757d; 
-  color: white;
-  border: none;
+.search-field {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
 }
 
-button.btn-secondary:hover {
-  background-color: #5a6268; 
-}
-
-/* Buscador */
-.d-flex {
-  gap: 0.5rem;
-}
-
-input.form-control.me-2 {
-  flex-grow: 1;
-}
-
-/* Tabla */
-.table {
-  width: 100%;
-  border-collapse: collapse;
+.app-table {
   margin-top: 1rem;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f8f9fa; 
-}
-
-.table-hover tbody tr:hover {
-  background-color: #e9ecef; 
-}
-
-.table-dark th {
-  background-color: #343a40; 
-  color: white;
-}
-
-.table td, .table th {
-  padding: 0.75rem;
-  text-align: left;
-  border-top: 1px solid #dee2e6;
-}
-
-/* Botones dentro de la tabla */
-button.btn-warning {
-  background-color: #ffc107; 
-  color: #212529;
-  border: none;
-  font-size: 0.8rem;
-}
-
-button.btn-warning:hover {
-  background-color: #e0a800; 
-}
-
-button.btn-danger {
-  background-color: #dc3545; 
-  color: white;
-  border: none;
-  font-size: 0.8rem;
-}
-
-button.btn-danger:hover {
-  background-color: #bd2130;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .container {
-    padding: 0.5rem;
-  }
-
-  h4 {
-    font-size: 1.25rem;
-  }
-
-  button {
-    font-size: 0.85rem;
-  }
+.mat-raised-button {
+  text-transform: capitalize;
 }
