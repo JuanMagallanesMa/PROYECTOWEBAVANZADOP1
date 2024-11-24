@@ -35,9 +35,6 @@ import { Categoria } from '../../models/Categoria';
         MatNativeDateModule,
         ReactiveFormsModule,
         CommonModule,
-        
-        
-        
     ],
   templateUrl: './crud-categoria.component.html',
   styleUrls: ['./crud-categoria.component.css']
@@ -61,7 +58,6 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
-      urlImagen: ['', Validators.required],
       estado: ['activo', Validators.required],
       edadesAplicables: [[], Validators.required],
       tiposEvento: [[], Validators.required]
@@ -104,7 +100,6 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form.setValue({
       nombre: categoria.nombre,
       descripcion: categoria.descripcion,
-      urlImagen: categoria.urlImagen,
       estado: categoria.estado,
       edadesAplicables: categoria.edadesAplicables,
       tiposEvento: categoria.tiposEvento
@@ -138,7 +133,6 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form.reset({
       nombre: '',
       descripcion: '',
-      urlImagen: '',
       estado: 'activo',
       edadesAplicables: [],
       tiposEvento: []
