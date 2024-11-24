@@ -66,10 +66,5 @@ export class CategoriajsonService {
     const urlCategoria = `${this.jsonURL}/${id}`; // URL: http://localhost:3000/categoria/id
     return this.http.delete<void>(urlCategoria);
   }
-
-
-
-
-
   
 }

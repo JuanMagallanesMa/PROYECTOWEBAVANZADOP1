@@ -1,53 +1,51 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { Categoria } from '../../models/Categoria';
+import { CategoriajsonService } from '../../services/categoriajson.service';
+import { TableComponent } from '../shared/table/table.component';
 import { CommonModule } from '@angular/common';
-import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
-import { CategoriajsonService } from '../../services/categoriajson.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { filter } from 'rxjs';
-import { Categoria } from '../../models/Categoria';
 
 @Component({
   selector: 'app-crud-categoria',
   standalone: true,
-    imports: [MatFormField,
-        MatLabel,
-        MatButtonModule,
-        MatInputModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatDatepickerModule,
-        MatOptionModule,
-        MatFormFieldModule,
-        MatNativeDateModule,
-        ReactiveFormsModule,
-        CommonModule,
-        
-        
-        
-    ],
   templateUrl: './crud-categoria.component.html',
-  styleUrls: ['./crud-categoria.component.css']
+  styleUrls: ['./crud-categoria.component.css'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatRadioModule,
+    TableComponent,
+  ],
 })
-export class CrudCategoriaComponent implements OnInit, AfterViewInit {
+export class CrudCategoriaComponent implements OnInit {
   form!: FormGroup;
   isEditMode = false;
   currentID!: number;
   dataSource = new MatTableDataSource<Categoria>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns: string[] = ['nombre', 'descripcion', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones'];
+  columnAliases = {
+    nombre: 'Nombre',
+    descripcion: 'Descripción',
+    tiposEvento: 'Tipos de Evento',
+    edadesAplicables: 'Edades Aplicables',
+    estado: 'Estado',
+    acciones: 'Acciones',
+  };
 
   constructor(
     private categoriaService: CategoriajsonService,
@@ -61,15 +59,10 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
-      urlImagen: ['', Validators.required],
       estado: ['activo', Validators.required],
       edadesAplicables: [[], Validators.required],
-      tiposEvento: [[], Validators.required]
+      tiposEvento: [[], Validators.required],
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
 
   getCategorias(): void {
@@ -82,11 +75,11 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(MyDialogComponent, {
       data: {
         titulo: 'Eliminación de Categoría',
-        contenido: `¿Estás seguro de eliminar la categoría ${categoria.nombre}?`
-      }
+        contenido: `¿Estás seguro de eliminar la categoría ${categoria.nombre}?`,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'aceptar') {
         this.categoriaService.eliminarCategoria(categoria.id).subscribe(() => {
           alert('Categoría eliminada exitosamente');
@@ -96,7 +89,6 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   editar(categoria: Categoria): void {
     this.isEditMode = true;
     this.currentID = categoria.id;
@@ -104,10 +96,9 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form.setValue({
       nombre: categoria.nombre,
       descripcion: categoria.descripcion,
-      urlImagen: categoria.urlImagen,
       estado: categoria.estado,
       edadesAplicables: categoria.edadesAplicables,
-      tiposEvento: categoria.tiposEvento
+      tiposEvento: categoria.tiposEvento,
     });
   }
 
@@ -138,15 +129,14 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     this.form.reset({
       nombre: '',
       descripcion: '',
-      urlImagen: '',
       estado: 'activo',
       edadesAplicables: [],
-      tiposEvento: []
+      tiposEvento: [],
     });
     this.currentID = 0;
     this.isEditMode = false;
   }
-  
+
   search(
     searchInput: HTMLInputElement,
     edadesAplicables?: string,
@@ -154,16 +144,11 @@ export class CrudCategoriaComponent implements OnInit, AfterViewInit {
     estado?: string
   ): void {
     const searchTerm = searchInput.value.trim();
-  
+
     this.categoriaService
       .buscarCategorias(searchTerm, edadesAplicables, tiposEvento, estado)
       .subscribe((categorias: Categoria[]) => {
         this.dataSource.data = categorias;
       });
   }
-  
-  
-
-
-  
 }

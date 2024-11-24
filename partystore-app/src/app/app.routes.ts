@@ -9,8 +9,8 @@ export const routes: Routes = [
     {path:"pedidos", component: CrudPedidosComponent},
     {path:"usuario", component: CrudUsuarioComponent},
     {path:"producto", component: CrudProductoComponent},
-    {path:"categoria", component: CrudCategoriaComponent},
-    
+    {path: "categoria",component:CrudCategoriaComponent},
+
     //rutas por defecto
     {path: " ", redirectTo:"pedidos", pathMatch: 'full'},
     {path:"**", redirectTo:"pedidos"}, 

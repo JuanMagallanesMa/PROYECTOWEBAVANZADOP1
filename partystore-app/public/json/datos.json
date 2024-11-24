@@ -1,11 +1,9 @@
 {
   "categoria": [
     {
-      "id": "5",
       "nombre": "Fiestas de Superhéroes",
       "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
-      "urlImagen": "https://example.com/images/superheroes.jpg",
-      "estado": "activo",
+      "estado": "inactivo",
       "edadesAplicables": [
         "3-5 años",
         "6-8 años",
@@ -14,57 +12,52 @@
       "tiposEvento": [
         "cumpleaños",
         "fiestas temáticas"
-      ]
+      ],
+      "id": "5"
     },
     {
-      "id": "6",
       "nombre": "Fiestas de Princesas",
       "descripcion": "Vestidos, coronas, y decoraciones encantadas para fiestas de princesas.",
-      "urlImagen": "https://example.com/images/princesas.jpg",
-      "estado": "activo",
+      "estado": "inactivo",
       "edadesAplicables": [
         "3-5 años",
         "6-8 años"
       ],
       "tiposEvento": [
-        "cumpleaños",
-        "fiestas temáticas"
-      ]
+        "baby showers"
+      ],
+      "id": "6"
     },
     {
-      "id": "7",
       "nombre": "Fiestas de Animales",
       "descripcion": "Decoración con temas de zoológico y granja, incluyendo globos, platos y actividades temáticas.",
-      "urlImagen": "https://example.com/images/animales.jpg",
       "estado": "activo",
       "edadesAplicables": [
         "3-5 años",
         "6-8 años"
-      ],
-      "tiposEvento": [
-        "cumpleaños",
-        "fiestas temáticas"
-      ]
-    },
-    {
-      "id": "8",
-      "nombre": "Fiestas de Bautizo",
-      "descripcion": "Detalles y decoraciones elegantes para celebraciones de bautizos.",
-      "urlImagen": "https://example.com/images/bautizo.jpg",
-      "estado": "activo",
-      "edadesAplicables": [
-        "recién nacidos",
-        "0-2 años"
       ],
       "tiposEvento": [
         "bautizos"
-      ]
+      ],
+      "id": "7"
+    },
+    {
+      "nombre": "Fiestas de Bautizo",
+      "descripcion": "Detalles y decoraciones elegantes para celebraciones de bautizos.",
+      "estado": "activo",
+      "edadesAplicables": [
+        ""
+      ],
+      "tiposEvento": [
+        "bautizos",
+        "fiestas temáticas"
+      ],
+      "id": "8"
     },
     {
       "id": "9",
       "nombre": "Fiestas Unicornios",
       "descripcion": "Temática de unicornios con pastelillos, globos, y decoración mágica.",
-      "urlImagen": "https://example.com/images/unicornio.jpg",
       "estado": "activo",
       "edadesAplicables": [
         "3-5 años",
@@ -79,9 +72,36 @@
       "id": "10",
       "nombre": "Fiestas de Piratas",
       "descripcion": "Accesorios de piratas como sombreros, espadas y decoración temática.",
-      "urlImagen": "https://example.com/images/piratas.jpg",
       "estado": "activo",
       "edadesAplicables": [
+        "6-8 años",
+        "9-12 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "f23d",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "9-12 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "37b9",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
+      "estado": "activo",
+      "edadesAplicables": [
+        "3-5 años",
         "6-8 años",
         "9-12 años"
       ],
@@ -92,7 +112,9 @@
     }
   ],
   "detailPedido": [
-    {}
+    {
+      "id": "5d54"
+    }
   ],
   "headerPedido": [],
   "usuarios": [
@@ -102,7 +124,8 @@
       "correo": "michaelaroca@hotmail.com",
       "telefono": "0991234567",
       "rol": "cliente",
-      "estado": true
+      "estado": true,
+      "id": "d521"
     },
     {
       "idUsuario": 2,
@@ -110,7 +133,8 @@
       "correo": "maria.gomez@gmail.com",
       "telefono": "0987654321",
       "rol": "administrador",
-      "estado": true
+      "estado": true,
+      "id": "8c06"
     },
     {
       "idUsuario": 3,
@@ -118,7 +142,8 @@
       "correo": "carlosperez2002@gmail.com",
       "telefono": "0999876543",
       "rol": "vendedor",
-      "estado": true
+      "estado": true,
+      "id": "82b9"
     },
     {
       "idUsuario": 4,
@@ -126,7 +151,8 @@
       "correo": "andrea.lopez@yahoo.com",
       "telefono": "0998765432",
       "rol": "cliente",
-      "estado": false
+      "estado": false,
+      "id": "7d3c"
     },
     {
       "idUsuario": 5,
@@ -134,7 +160,8 @@
       "correo": "luis_24sanchez@outlook.com",
       "telefono": "0997654321",
       "rol": "administrador",
-      "estado": true
+      "estado": true,
+      "id": "bd9b"
     },
     {
       "idUsuario": 6,
@@ -142,7 +169,8 @@
       "correo": "gabriela-torres@hotmail.com",
       "telefono": "0996543210",
       "rol": "vendedor",
-      "estado": false
+      "estado": false,
+      "id": "bed0"
     },
     {
       "idUsuario": 7,
@@ -150,7 +178,8 @@
       "correo": "fernando20ramirez@gmail.com",
       "telefono": "0995432109",
       "rol": "cliente",
-      "estado": true
+      "estado": true,
+      "id": "fc83"
     },
     {
       "idUsuario": 8,
@@ -158,7 +187,8 @@
       "correo": "sofia.castillo@yahoo.com",
       "telefono": "0994321098",
       "rol": "administrador",
-      "estado": true
+      "estado": true,
+      "id": "ac3c"
     },
     {
       "idUsuario": 9,
@@ -166,7 +196,8 @@
       "correo": "ricardovazquez@gmail.com",
       "telefono": "0993210987",
       "rol": "vendedor",
-      "estado": true
+      "estado": true,
+      "id": "b6fa"
     },
     {
       "idUsuario": 10,
@@ -174,40 +205,41 @@
       "correo": "paolamendoza_2024@hotmail.com",
       "telefono": "0992109876",
       "rol": "cliente",
-      "estado": false
+      "estado": false,
+      "id": "eb74"
     }
   ],
   "productos": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Globo de cumpleaños",
       "categoria": "decoraciones",
       "precio": 5,
       "descripcion": "Globo de helio para fiestas."
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Tarjetas de invitación",
       "categoria": "invitaciones",
       "precio": 2.5,
       "descripcion": "Paquete de 10 tarjetas."
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Disfraz de pirata",
       "categoria": "disfraces",
       "precio": 15,
       "descripcion": "Incluye sombrero y parche."
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Jenga clásico",
       "categoria": "juegos",
       "precio": 20,
       "descripcion": "Juego de bloques de madera."
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Marcadores no tóxicos",
       "categoria": "suministros para actividades",
       "precio": 10,
