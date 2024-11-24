@@ -14,6 +14,7 @@ div{
 .row {
   flex: 1;
   margin: 10px;
+  border: 1px solid black;
 }
 
 @media (max-width: 768px) {
@@ -34,4 +35,17 @@ div{
   justify-content: center; 
   align-items: center;
   gap: 16px; 
+}
+.card-productos{
+  width: 250px;
+  margin: 8px;
+}
+.Cantidad{
+  width: 100px;
+}
+.centered-list { 
+  width: 100%; /* Ajusta el ancho según sea necesario */ 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; /* Centra horizontalmente los elementos dentro de la lista */
 }

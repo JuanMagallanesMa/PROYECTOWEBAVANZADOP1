@@ -1,136 +1,114 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
-<div class="container-pedido">
-  <div class="row">
-    
-  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
-    <div mat-subheader>Datos Personales</div>
-    <div class="oneInputs">
-      <mat-form-field appearance="fill" class="usuario">
-        <mat-label>Usuario</mat-label>
-        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          @for (option of filteredOptions | async; track $index) {
-            <mat-option  [value]="option.nombreCompleto">
-              {{ option.nombreCompleto }} -- {{option.correo}}
-            </mat-option>
-          }
-          
-        </mat-autocomplete>
-      </mat-form-field>
+  <div class="container-pedido">
+    <div class="row">
+      <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
+        <div mat-subheader>Datos Personales</div>
+        <div class="oneInputs">
+          <mat-form-field appearance="fill" class="usuario">
+            <mat-label>Usuario</mat-label>
+            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of filteredOptions | async; track $index) {
+                <mat-option [value]="option.nombreCompleto">
+                  {{ option.nombreCompleto }} -- {{option.correo}}
+                </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="twoInputs">
+          <mat-form-field>
+            <mat-label>Nombres Completos</mat-label>
+            <input matInput required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Cédula</mat-label>
+            <input matInput required>
+          </mat-form-field>
+        </div>
+        <div class="twoInputs">
+          <mat-form-field>
+            <mat-label>Teléfono</mat-label>
+            <input matInput required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Ingresa tu email</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="email" (blur)="updateErrorMessage()" required>
+            @if (email.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="twoInputs">
+          <mat-form-field>
+            <mat-label>Provincia</mat-label>
+            <mat-select [(value)]="provinciaSeleccionada">
+              <mat-option value="Guayas">Guayas</mat-option>
+              <mat-option value="Pichincha">Pichincha</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Ciudad</mat-label>
+            <mat-select>
+              <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Guayaquil">Guayaquil</mat-option>
+              <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Nobol">Nobol</mat-option>
+              <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Cayambe">Cayambe</mat-option>
+              <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="oneInputs">
+          <mat-form-field class="example-full-width">
+            <mat-label>Código Postal</mat-label>
+            <input #input type="text" placeholder="Escoge un código postal" matInput [formControl]="myControlzip" [matAutocomplete]="auto2">
+            <mat-autocomplete requireSelection #auto2="matAutocomplete">
+              @for (optionZIP of filteredOptionsZIP | async; track optionZIP) {
+                <mat-option [value]="optionZIP">{{optionZIP}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="oneInputs">
+          <mat-form-field class="example-full-width">
+            <mat-label>Dirección</mat-label>
+            <textarea matInput placeholder="Ej... Mapasingue Este"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
     </div>
-    <div class="twoInputs">
-      <mat-form-field>
-        <mat-label>Nombres Completos</mat-label>
-        <input matInput
-          required>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Cédula</mat-label>
-        <input matInput
-          required>
-      </mat-form-field>
-    </div>
-    <div class="twoInputs">
-      <mat-form-field>
-        <mat-label>Teléfono</mat-label>
-        <input matInput
-          required>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Ingresa tu email</mat-label>
-        <input
-          matInput
-          placeholder="pat@example.com"
-          [formControl]="email"
-          (blur)="updateErrorMessage()"
-          required
-        />
-        @if (email.invalid) {
-          <mat-error>{{errorMessage()}}</mat-error>
+    <div class="row">
+      <mat-list class="centered-list">
+        <div mat-subheader>Carrito</div>
+        @for (prod of product; track prod) {
+          <mat-card class="card-productos" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title-group>
+                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                <mat-card-title>{{prod.nombre}}</mat-card-title>
+                <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              {{prod.descripcion}}
+            </mat-card-content>
+            <mat-card-footer class="card-footer">
+              <button mat-mini-fab aria-label="Example icon button with a menu icon">
+                <mat-icon>add</mat-icon>
+              </button>
+              <mat-form-field class="Cantidad">
+                <mat-label>Cantidad</mat-label>
+                <input matInput value="0">
+              </mat-form-field>
+              <button mat-mini-fab aria-label="Example icon button with a menu icon">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </mat-card-footer>
+          </mat-card>
         }
-      </mat-form-field>
+      </mat-list>
     </div>
-    <div class="twoInputs">
-      <mat-form-field>
-        <mat-label>Provincia</mat-label>
-        <mat-select [(value)]="provinciaSeleccionada">
-          <mat-option value="Guayas">Guayas</mat-option>
-          <mat-option value="Pichincha">Pichincha</mat-option>
-        </mat-select>
-      </mat-form-field>
-      
-      <mat-form-field>
-        <mat-label>Ciudad</mat-label>
-        <mat-select >
-          <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Guayaquil">Guayaquil</mat-option> 
-          <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Nobol">Nobol</mat-option> 
-          <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Cayambe">Cayambe</mat-option> 
-          <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="oneInputs">
-      <mat-form-field class="example-full-width">
-        <mat-label>Código Postal</mat-label>
-        <input #input
-               type="text"
-               placeholder="Escoge un código postal"
-               matInput
-               [formControl]="myControlzip"
-               [matAutocomplete]="auto2"
-               >
-        <mat-autocomplete requireSelection #auto2="matAutocomplete">
-          @for (optionZIP of filteredOptionsZIP | async; track optionZIP) {
-            <mat-option [value]="optionZIP">{{optionZIP}}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-    <div class="oneInputs">
-      <mat-form-field class="example-full-width">
-        <mat-label>Dirección</mat-label>
-        <textarea matInput placeholder="Ej... Mapasingue  Este"></textarea>
-      </mat-form-field>
-    </div>
-    
-  </form>
   </div>
-  <div class="row">
-    <mat-list>
-      <div mat-subheader>Productos</div>
-      @for (folder of product; track folder) {
-        <mat-card class="card-productos" appearance="outlined">
-          <mat-card-header>
-            <mat-card-title-group>
-              <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-              <mat-card-title>{{folder.nombre}}</mat-card-title>
-              <mat-card-subtitle>{{folder.precio}}</mat-card-subtitle>
-            </mat-card-title-group>
-          </mat-card-header>
-          <mat-card-content>
-            {{folder.descripcion}}
-          </mat-card-content>
-          <mat-card-footer class="card-footer">
-            <button mat-mini-fab aria-label="Example icon button with a menu icon">
-              <mat-icon>add</mat-icon>
-            </button>
-            <mat-form-field>
-              <mat-label>Cantidad</mat-label>
-              <input matInput value="0">
-            </mat-form-field>
-            <button mat-mini-fab aria-label="Example icon button with a menu icon">
-              <mat-icon>remove</mat-icon>
-            </button>
-          </mat-card-footer>
-        </mat-card>
-        
-    }
-    </mat-list>
-
-  </div>
-</div>
+  
   
     
   <!--
