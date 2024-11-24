@@ -9,7 +9,7 @@ import {merge} from 'rxjs';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/Usuario';
 import { TableComponent } from '../shared/table/table.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
@@ -17,6 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { map, Observable, startWith } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { Producto } from '../../models/Producto';
+import { ProductoService } from '../../services/producto.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -32,62 +39,71 @@ import { MatSelect } from '@angular/material/select';
     MatPaginatorModule,
     MatFormField,
     FormsModule,
-    MatSelect    
+    MatSelect,
+    MatListModule, MatDividerModule, DatePipe,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule  
   ]
 })
 export class CrudPedidosComponent implements OnInit {
+  //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
-  @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Control para el input del autocompletado
   myControl = new FormControl('');
   myControlzip = new FormControl('');
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
+  //inicializacion del formgroup
   form!: FormGroup;
-  // Opciones disponibles para el autocompletado
+  //error de mensaje
+  errorMessage = signal('');
+  @ViewChild('input') input!: ElementRef<HTMLInputElement>;
+  // Opciones o llamado a otros modelos
+  product: Producto[]=[];
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
-  filteredOptionsZIP!: Observable<string[]>;
   // Propiedad para las opciones filtradas
+  filteredOptionsZIP!: Observable<string[]>;
   filteredOptions!: Observable<Usuario[]>;
-  
-  //datasource para la tabla
-  dataSource = new MatTableDataSource<Usuario>();
-  
-  //definir las columnas
+  //datasources para la tabla
+  dataSource = new MatTableDataSource<Usuario>(); 
+  //definir las columnas a mostrar en la tabla
   displayedColumns: string[] = [
     'nombreCompleto', 
     'correo', 
     'telefono', 
-    'acciones']; // No incluir 'acciones' aquí 
+    'acciones'
+  ];
+  //darle un nombre visual a cada columna definida
   columnAliases = { 
     nombreCompleto: 'Nombre Completo', 
     correo: 'Correo Electrónico', 
     telefono: 'Teléfono', 
     acciones:'Acciones' 
   }; 
-
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
- 
-  errorMessage = signal('');
-  constructor(private servicioUsuario : UsuarioService, private fb: FormBuilder) { 
-    
+  //constructor con los servicios
+  constructor(
+    private servicioUsuario : UsuarioService, 
+    private fb: FormBuilder,
+    private servicioProducto: ProductoService
+  ) { 
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
-      
   }
-
   ngOnInit() {
-    
     this.getUsuarios();
     this.getZip();
+    this.getProductos();
     this.form = this.fb.group({
 
     });
   }
-
   onSubmit():void{
 
   }
+
+  //mensaje de error  
   updateErrorMessage() {
     if (this.email.hasError('required')) {
       this.errorMessage.set('You must enter a value');
@@ -97,6 +113,13 @@ export class CrudPedidosComponent implements OnInit {
       this.errorMessage.set('');
     }
   }
+  //obtener productos
+  getProductos(): void {
+    this.servicioProducto.getProductos().subscribe((data: Producto[]) => {
+      this.product = data;
+    });
+  }
+  //obtener usuarios
   getUsuarios(): void {
     this.servicioUsuario.getUsuarios().subscribe((data: Usuario[]) => {
       this.options = data;
@@ -108,10 +131,11 @@ export class CrudPedidosComponent implements OnInit {
       console.log("Se muestra el autocomplete de usuarios");
     });
   }
+  //obtener codigo postal
   getZip():void{
     this.filteredOptionsZIP = this.myControlzip.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterZip(value || '')),
+      map(value => this._filterZip(value || ''))
     );
   }
   // Función de filtro para las opciones
@@ -124,15 +148,13 @@ export class CrudPedidosComponent implements OnInit {
   }
   private _filterZip(value: string): string[] {
     const filterValuezip = value.toLowerCase();
-
     return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
   }
-
+  //funciones para editar y eliminar
   handleEdit(usuario: Usuario) { 
     // Lógica para editar el usuario 
     console.log('Editar usuario:', usuario); 
   } 
-
   handleDelete(usuario: Usuario) { 
     // Lógica para eliminar el usuario 
     console.log('Eliminar usuario:', usuario);

@@ -90,10 +90,17 @@ export class CrudProductoComponent{
 
   // Método para eliminar un producto
   eliminarProducto(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe(() => {
-      this.cargarProductos();
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => {
+        console.log(`Producto con ID ${id} eliminado correctamente.`);
+        this.cargarProductos(); 
+      },
+      error: (err) => {
+        console.error('Error al eliminar el producto:', err);
+      }
     });
   }
+  
 
 
   // Método para reiniciar los campos del producto
@@ -143,8 +150,10 @@ export class CrudProductoComponent{
     console.log('Editar producto:', producto);
   }
 
-  handleDelete(id:number){
-    this.eliminarProducto(id);
-    console.log('Eliminar producto:', id);
+  handleDelete(id: number): void {
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => console.log(`Producto con ID ${id} eliminado.`),
+      error: (err) => console.error('Error al eliminar el producto:', err)
+    });
   }
 }

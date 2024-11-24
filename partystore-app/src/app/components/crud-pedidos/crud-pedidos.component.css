@@ -1,12 +1,37 @@
 mat-form-field{
-    padding: 8px;
-    margin: 8px;
-    border: 1px solid black;
+    padding: 4px;
+    margin: 4px;
 }
-.column1{
-    display: block;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-  align-items:center;
+div{
+  /*border: 1px solid black;*/
+}
+.container-pedido {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.row {
+  flex: 1;
+  margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex: 100%;
+  }
+}
+
+.oneInputs mat-form-field{
+  width: calc(100% - 8px);
+}
+
+.twoInputs mat-form-field{
+  width: calc(50% - 8px);
+}
+.card-footer {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 16px; 
 }

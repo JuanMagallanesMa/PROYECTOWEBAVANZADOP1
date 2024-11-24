@@ -56,15 +56,15 @@ export class ProductoService {
   }
 
   // Eliminar un producto
-  eliminarProducto(id: number): Observable<number> {
-    return of(id).pipe(
-      map(deletedId => {
-        console.log('Producto eliminado con ID:', deletedId);
-        return deletedId; 
+  eliminarProducto(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url).pipe(
+      map(() => {
+        console.log(`Producto con ID ${id} eliminado correctamente.`);
       }),
       catchError(err => {
         console.error('Error al eliminar producto:', err);
-        return of(id); 
+        return of(); 
       })
     );
   }

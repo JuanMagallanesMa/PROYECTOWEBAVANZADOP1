@@ -1,9 +1,11 @@
 <!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
-
-  <h6>Datos personales</h6>
+<div class="container-pedido">
+  <div class="row">
+    
   <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
-    <div>
-      <mat-form-field appearance="fill">
+    <div mat-subheader>Datos Personales</div>
+    <div class="oneInputs">
+      <mat-form-field appearance="fill" class="usuario">
         <mat-label>Usuario</mat-label>
         <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
@@ -16,7 +18,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div  class="column1">
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Nombres Completos</mat-label>
         <input matInput
@@ -28,6 +30,8 @@
         <input matInput
           required>
       </mat-form-field>
+    </div>
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Teléfono</mat-label>
         <input matInput
@@ -48,7 +52,7 @@
         }
       </mat-form-field>
     </div>
-    <div class="column1">
+    <div class="twoInputs">
       <mat-form-field>
         <mat-label>Provincia</mat-label>
         <mat-select [(value)]="provinciaSeleccionada">
@@ -66,7 +70,8 @@
           <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
         </mat-select>
       </mat-form-field>
-      
+    </div>
+    <div class="oneInputs">
       <mat-form-field class="example-full-width">
         <mat-label>Código Postal</mat-label>
         <input #input
@@ -83,7 +88,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="column1">
+    <div class="oneInputs">
       <mat-form-field class="example-full-width">
         <mat-label>Dirección</mat-label>
         <textarea matInput placeholder="Ej... Mapasingue  Este"></textarea>
@@ -91,6 +96,42 @@
     </div>
     
   </form>
+  </div>
+  <div class="row">
+    <mat-list>
+      <div mat-subheader>Productos</div>
+      @for (folder of product; track folder) {
+        <mat-card class="card-productos" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title-group>
+              <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+              <mat-card-title>{{folder.nombre}}</mat-card-title>
+              <mat-card-subtitle>{{folder.precio}}</mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            {{folder.descripcion}}
+          </mat-card-content>
+          <mat-card-footer class="card-footer">
+            <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <mat-icon>add</mat-icon>
+            </button>
+            <mat-form-field>
+              <mat-label>Cantidad</mat-label>
+              <input matInput value="0">
+            </mat-form-field>
+            <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </mat-card-footer>
+        </mat-card>
+        
+    }
+    </mat-list>
+
+  </div>
+</div>
+  
     
   <!--
   
