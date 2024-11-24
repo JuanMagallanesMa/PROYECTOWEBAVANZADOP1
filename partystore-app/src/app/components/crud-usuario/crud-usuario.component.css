@@ -1,0 +1,42 @@
+/* Contenedor del formulario */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Campos del formulario */
+  .form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .form-field input,
+  .form-field mat-select {
+    padding: 10px;
+  }
+  
+  /* Botón de envío */
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+  }
+
+/* Contenedor del buscador */
+.search-container {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+    margin-bottom: 3px;
+  }
+  
+  /* Campo de búsqueda */
+  .search-field {
+    flex: 1; 
+  }
+  
+  /* Botón de búsqueda */
+  .search-button {
+    padding: 8px 16px; 
+    height: 56px;
+  }

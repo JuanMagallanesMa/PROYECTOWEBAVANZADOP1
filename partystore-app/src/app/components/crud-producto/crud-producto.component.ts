@@ -5,11 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '../shared/table/table.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-crud-producto',
   standalone: true,
-  imports: [FormsModule, RouterModule, TableComponent],
+  imports: [FormsModule, RouterModule, TableComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule],
   templateUrl: './crud-producto.component.html',
   styleUrls: ['./crud-producto.component.css']
 })
@@ -78,7 +82,7 @@ export class CrudProductoComponent{
       });
     } else {
       this.productoService.agregarProducto(this.nuevoProducto).subscribe(nuevoProducto => {
-        this.productos.push(nuevoProducto);
+        this.dataSource.data = [...this.dataSource.data, nuevoProducto];
         this.resetProducto();
       });
     }
@@ -107,8 +111,8 @@ export class CrudProductoComponent{
   buscarProductos() {
     if (this.buscador.trim() !== '') {
       this.productos = this.productos.filter(producto =>
-        producto.nombre.toLocaleLowerCase().includes(this.buscador.toLocaleLowerCase())||
-        producto.categoria.toLocaleLowerCase().includes(this.buscador.toLocaleLowerCase())
+        producto.nombre.toLowerCase().includes(this.buscador.toLowerCase())||
+        producto.categoria.toLowerCase().includes(this.buscador.toLowerCase())
       );
     } else {
       this.resetProducto();
@@ -121,6 +125,7 @@ export class CrudProductoComponent{
         producto.nombre.toLowerCase().includes(this.buscador.toLowerCase()) ||
         producto.categoria.toLowerCase().includes(this.buscador.toLowerCase())
       );
+      this.dataSource.data = productosFiltrados;
     } else {
       this.resetProducto();
       this.dataSource.data = this.productos;

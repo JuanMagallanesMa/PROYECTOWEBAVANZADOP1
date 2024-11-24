@@ -99,7 +99,7 @@
     {
       "idUsuario": 1,
       "nombreCompleto": "Michael Aroca",
-      "correo": "Michael.Aroca@hotmail.com",
+      "correo": "michaelaroca@hotmail.com",
       "telefono": "0991234567",
       "rol": "cliente",
       "estado": true
@@ -111,6 +111,70 @@
       "telefono": "0987654321",
       "rol": "administrador",
       "estado": true
+    },
+    {
+      "idUsuario": 3,
+      "nombreCompleto": "Carlos Pérez",
+      "correo": "carlosperez2002@gmail.com",
+      "telefono": "0999876543",
+      "rol": "vendedor",
+      "estado": true
+    },
+    {
+      "idUsuario": 4,
+      "nombreCompleto": "Andrea López",
+      "correo": "andrea.lopez@yahoo.com",
+      "telefono": "0998765432",
+      "rol": "cliente",
+      "estado": false
+    },
+    {
+      "idUsuario": 5,
+      "nombreCompleto": "Luis Sánchez",
+      "correo": "luis_24sanchez@outlook.com",
+      "telefono": "0997654321",
+      "rol": "administrador",
+      "estado": true
+    },
+    {
+      "idUsuario": 6,
+      "nombreCompleto": "Gabriela Torres",
+      "correo": "gabriela-torres@hotmail.com",
+      "telefono": "0996543210",
+      "rol": "vendedor",
+      "estado": false
+    },
+    {
+      "idUsuario": 7,
+      "nombreCompleto": "Fernando Ramírez",
+      "correo": "fernando20ramirez@gmail.com",
+      "telefono": "0995432109",
+      "rol": "cliente",
+      "estado": true
+    },
+    {
+      "idUsuario": 8,
+      "nombreCompleto": "Sofía Castillo",
+      "correo": "sofia.castillo@yahoo.com",
+      "telefono": "0994321098",
+      "rol": "administrador",
+      "estado": true
+    },
+    {
+      "idUsuario": 9,
+      "nombreCompleto": "Ricardo Vázquez",
+      "correo": "ricardovazquez@gmail.com",
+      "telefono": "0993210987",
+      "rol": "vendedor",
+      "estado": true
+    },
+    {
+      "idUsuario": 10,
+      "nombreCompleto": "Paola Mendoza",
+      "correo": "paolamendoza_2024@hotmail.com",
+      "telefono": "0992109876",
+      "rol": "cliente",
+      "estado": false
     }
   ],
   "productos": [
