@@ -83,17 +83,31 @@
       ]
     },
     {
-      "id": "f6c8",
-      "nombre": "sssss",
-      "descripcion": "sssss",
+      "id": "f23d",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
       "estado": "inactivo",
       "edadesAplicables": [
-        "Meses",
-        "1-2 años"
+        "9-12 años"
       ],
       "tiposEvento": [
-        "bautizos",
-        "baby showers"
+        "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "37b9",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
+      "estado": "activo",
+      "edadesAplicables": [
+        "3-5 años",
+        "6-8 años",
+        "9-12 años"
+      ],
+      "tiposEvento": [
+        "cumpleaños",
+        "fiestas temáticas"
       ]
     }
   ],

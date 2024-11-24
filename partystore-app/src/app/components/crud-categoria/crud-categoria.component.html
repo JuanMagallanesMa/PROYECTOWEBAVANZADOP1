@@ -5,19 +5,11 @@
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Nombre de la Categoría</mat-label>
     <input matInput type="text" placeholder="Nombre" formControlName="nombre" />
-    <mat-error *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid">
-      <span *ngIf="form.get('nombre')?.errors?.['required']">El nombre es obligatorio.</span>
-      <span *ngIf="form.get('nombre')?.errors?.['minlength']">Mínimo 3 caracteres.</span>
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Descripción</mat-label>
     <textarea matInput placeholder="Descripción" formControlName="descripcion"></textarea>
-    <mat-error *ngIf="form.get('descripcion')?.touched && form.get('descripcion')?.invalid">
-      <span *ngIf="form.get('descripcion')?.errors?.['required']">La descripción es obligatoria.</span>
-      <span *ngIf="form.get('descripcion')?.errors?.['minlength']">Mínimo 5 caracteres.</span>
-    </mat-error>
   </mat-form-field>
 
   <mat-radio-group formControlName="estado" class="form-element">
@@ -53,15 +45,12 @@
   </div>
 </form>
 
-
 <div class="search-container">
-  <!-- Filtro por nombre/descripción -->
+  <!-- Filtros -->
   <mat-form-field>
     <mat-label>Buscar Categorías</mat-label>
     <input matInput #searchInput type="search" (keyup)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)" placeholder="Buscar por nombre o descripción..." />
   </mat-form-field>
-
-  <!-- Filtro por edades aplicables -->
   <mat-form-field>
     <mat-label>Edades Aplicables</mat-label>
     <mat-select #edadSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
@@ -74,8 +63,6 @@
       <mat-option value="13-15 años">13-15 años</mat-option>
     </mat-select>
   </mat-form-field>
-
-  <!-- Filtro por tipos de evento -->
   <mat-form-field>
     <mat-label>Tipos de Evento</mat-label>
     <mat-select #tipoSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
@@ -86,8 +73,6 @@
       <mat-option value="fiestas temáticas">Fiestas Temáticas</mat-option>
     </mat-select>
   </mat-form-field>
-
-  <!-- Filtro por estado -->
   <mat-form-field>
     <mat-label>Estado</mat-label>
     <mat-select #estadoSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
@@ -98,54 +83,11 @@
   </mat-form-field>
 </div>
 
-
-<!-- Tabla para listar categorías -->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <!-- Columna: Nombre -->
-  <ng-container matColumnDef="nombre">
-    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let categoria"> {{ categoria.nombre }} </td>
-  </ng-container>
-
-  <!-- Columna: Descripción -->
-  <ng-container matColumnDef="descripcion">
-    <th mat-header-cell *matHeaderCellDef> Descripción </th>
-    <td mat-cell *matCellDef="let categoria"> {{ categoria.descripcion }} </td>
-  </ng-container>
-
-  <!-- Columna: Tipos de Evento -->
-  <ng-container matColumnDef="tiposEvento">
-    <th mat-header-cell *matHeaderCellDef> Tipos de Evento </th>
-    <td mat-cell *matCellDef="let categoria"> {{ categoria.tiposEvento.join(', ') }} </td>
-  </ng-container>
-
-  <!-- Columna: Edades Aplicables -->
-  <ng-container matColumnDef="edadesAplicables">
-    <th mat-header-cell *matHeaderCellDef> Edades Aplicables </th>
-    <td mat-cell *matCellDef="let categoria"> {{ categoria.edadesAplicables.join(', ') }} </td>
-  </ng-container>
-
-  <!-- Columna: Estado -->
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef> Estado </th>
-    <td mat-cell *matCellDef="let categoria"> {{ categoria.estado }} </td>
-  </ng-container>
-
-  <!-- Columna: Acciones -->
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-    <td mat-cell *matCellDef="let categoria">
-      <button mat-button color="accent" (click)="editar(categoria)">Editar</button>
-      <button mat-button color="warn" (click)="eliminar(categoria)">Eliminar</button>
-    </td>
-  </ng-container>
-
-  <!-- Fila de Encabezados -->
-  <tr mat-header-row *matHeaderRowDef="['nombre', 'descripcion', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones']"></tr>
-  
-  <!-- Fila de Datos -->
-  <tr mat-row *matRowDef="let row; columns: ['nombre', 'descripcion', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones'];"></tr>
-</table>
-
-
-<mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+<!-- reutilizar Tabla  -->
+<app-table
+  [dataSource]="dataSource"
+  [displayedColumns]="displayedColumns"
+  [columnAliases]="columnAliases"
+  (onEdit)="editar($event)"
+  (onDelete)="eliminar($event)"
+></app-table>
