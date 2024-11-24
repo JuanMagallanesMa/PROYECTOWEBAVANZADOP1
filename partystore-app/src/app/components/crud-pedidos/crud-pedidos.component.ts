@@ -96,7 +96,14 @@ export class CrudPedidosComponent implements OnInit {
     this.getZip();
     this.getProductos();
     this.form = this.fb.group({
-
+      usuario: ["", Validators.required] ,
+      nombres: ["",[Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-z0-9]+$/)]],
+      cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      provincia: ["", Validators.required],
+      ciudad: ["",Validators.required],
+      postal: ["", [Validators.required,Validators.pattern(/^\d{6}$/)]],
+      direccion: ["", [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-z0-9]+$/)]],                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     });
   }
   onSubmit():void{
