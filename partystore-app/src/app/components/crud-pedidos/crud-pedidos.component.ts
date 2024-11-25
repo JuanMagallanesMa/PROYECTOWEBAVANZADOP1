@@ -59,7 +59,8 @@ export class CrudPedidosComponent implements OnInit {
   errorMessage = signal('');
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Opciones o llamado a otros modelo
-  validarProductoSelect : any;
+  cantidad:number=1;
+  total:number = 0;
   product: Producto[]=[];
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
@@ -95,7 +96,6 @@ export class CrudPedidosComponent implements OnInit {
   ngOnInit() {
     this.getUsuarios();
     this.getZip();
-    this.getProductos();
     this.form = this.fb.group({
       usuario: ["", Validators.required] ,
       nombres: ["",[Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-z0-9]+$/)]],
@@ -107,6 +107,8 @@ export class CrudPedidosComponent implements OnInit {
       postal: ["", [Validators.required,Validators.pattern(/^\d{6}$/)]],
       direccion: ["", [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-z0-9]+$/)]],                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     });
+    this.verCarrito();
+
   }
   onSubmit():void{
 
@@ -122,12 +124,7 @@ export class CrudPedidosComponent implements OnInit {
       this.errorMessage.set('');
     }
   }
-  //obtener productos
-  getProductos(): void {
-    this.servicioProducto.getProductos().subscribe((data: Producto[]) => {
-      this.product = data;
-    });
-  }
+  
   //obtener usuarios
   getUsuarios(): void {
     this.servicioUsuario.getUsuarios().subscribe((data: Usuario[]) => {
@@ -170,6 +167,21 @@ export class CrudPedidosComponent implements OnInit {
     console.log('Eliminar usuario:', usuario);
   }
   verCarrito():void{
-    this.servicioProducto.productoSeleccionado$.subscribe(producto => { this.validarProductoSelect = producto; });
+    this.product = this.servicioProducto.obtenerProductosCart();
+    this.calcularTotal();
+  }
+  calcularTotal():void { 
+    this.total = this.product.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
+  }
+  addArticulo():void{
+    this.cantidad++;
+    this.calcularTotal();
+  }
+  removeArticulo():void{
+    this.cantidad--;
+    this.calcularTotal();
+  }
+  trackByFn(index: number, item: Producto): number { 
+    return item.idProdcuto; 
   }
 }

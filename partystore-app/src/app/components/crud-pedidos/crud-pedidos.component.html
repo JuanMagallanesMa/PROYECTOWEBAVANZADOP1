@@ -80,35 +80,39 @@
     <div class="row" id="scroll">
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
-      @if (validarProductoSelect) {
+      @if (product.length>0) {
+        @for (prod of product; track $index) {
           <mat-card class="card-productos" appearance="outlined">
             <mat-card-header>
               <mat-card-title-group>
                 <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                <mat-card-title>{{validarProductoSelect.nombre}}</mat-card-title>
-                <mat-card-subtitle>{{validarProductoSelect.precio | currency: 'USD'}}</mat-card-subtitle>
+                <mat-card-title>{{prod.nombre}}</mat-card-title>
+                <mat-card-subtitle value=>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
               </mat-card-title-group>
             </mat-card-header>
             <mat-card-content>
-              {{validarProductoSelect.descripcion}}
+              {{prod.descripcion}}
             </mat-card-content>
             <mat-card-footer class="card-footer">
-              <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo()">
                 <mat-icon>add</mat-icon>
               </button>
               <mat-form-field class="Cantidad">
                 <mat-label>Cantidad</mat-label>
-                <input matInput value="0">
+                <input matInput [(ngModel)]="cantidad">
               </mat-form-field>
-              <button mat-mini-fab aria-label="Example icon button with a menu icon">
+              <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo()">
                 <mat-icon>remove</mat-icon>
               </button>
             </mat-card-footer>
           </mat-card>
+
         }
-       
+      }@else if (product.length===0) {
+        <p>No hay productos</p>
+      }
       </mat-list>
-    </div>
+      <div class="total"> <h3>Total: {{ total | currency: 'USD' }}</h3> </div>
   </div>
   
   

@@ -37,10 +37,14 @@ export class ListaProductoComponent implements OnInit {
       this.producto = data;
     });
   }
-  seleccionarProducto(producto: Producto) { 
-    this.productoService.seleccionarProducto(producto); 
-    this.router.navigate(['/pedidos']);
-  }
+  agregarAlCarrito(producto: Producto) { 
+    this.productoService.agregarProductoCart(producto); 
+    console.log(producto)
+  } 
+  irAlCarrito() { 
+    this.router.navigate(['/pedidos']); 
+
+  }// Navega a la ruta del componente Pedidos
   trackByFn(index: number, item: Producto): number { 
     return item.idProdcuto; // o cualquier propiedad única del producto
   }

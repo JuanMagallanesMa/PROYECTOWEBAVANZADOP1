@@ -13,4 +13,5 @@ export interface HeaderPedido{
     SubTotal: number;
     IVA: 0.15;
     totalDue: number;
+    cantidad: number;
 }

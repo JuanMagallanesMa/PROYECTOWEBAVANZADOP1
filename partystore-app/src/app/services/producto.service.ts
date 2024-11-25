@@ -74,4 +74,14 @@ export class ProductoService {
   seleccionarProducto(producto: Producto) { 
     this.productoSeleccionado.next(producto); 
   }
+  private productosEnCarrito = new BehaviorSubject<Producto[]>([]); 
+  productosEnCarrito$ = this.productosEnCarrito.asObservable(); 
+  agregarProductoCart(producto: Producto) { 
+    const productosActuales = this.productosEnCarrito.value; 
+    
+    this.productosEnCarrito.next([...productosActuales, producto]); 
+  } 
+  obtenerProductosCart(): Producto[] { 
+    return this.productosEnCarrito.value;
+  }
 }

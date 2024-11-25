@@ -2,7 +2,6 @@ export interface DetailPedido{
     idDetailPedido ?: number;
     idHeaderPedido: number;
     idProduct: number;
-    unitPrice: number;
-    idDiscount: number;
+    cantidad: number;
     lineTotal: number;
 }
