@@ -80,18 +80,17 @@
     <div class="row" id="scroll">
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
-       
-        @for (prod of product; track prod) {
+      @if (validarProductoSelect) {
           <mat-card class="card-productos" appearance="outlined">
             <mat-card-header>
               <mat-card-title-group>
                 <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                <mat-card-title>{{prod.nombre}}</mat-card-title>
-                <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
+                <mat-card-title>{{validarProductoSelect.nombre}}</mat-card-title>
+                <mat-card-subtitle>{{validarProductoSelect.precio | currency: 'USD'}}</mat-card-subtitle>
               </mat-card-title-group>
             </mat-card-header>
             <mat-card-content>
-              {{prod.descripcion}}
+              {{validarProductoSelect.descripcion}}
             </mat-card-content>
             <mat-card-footer class="card-footer">
               <button mat-mini-fab aria-label="Example icon button with a menu icon">
@@ -107,6 +106,7 @@
             </mat-card-footer>
           </mat-card>
         }
+       
       </mat-list>
     </div>
   </div>

@@ -1,0 +1,28 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  gap: 16px; /* Espacio entre las tarjetas */
+}
+
+.card-productos {
+  border: 1px solid black;
+  width: calc(25% - 32px); /* 4 columnas con espacio entre ellas */
+  margin: 8px;
+  box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+@media (max-width: 1000px) { 
+  .card-productos { 
+    width: calc(50% - 32px); /* 2 columnas con espacio entre ellas */ 
+  }
+}
+
+.card-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+
+  

@@ -58,7 +58,8 @@ export class CrudPedidosComponent implements OnInit {
   //error de mensaje
   errorMessage = signal('');
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
-  // Opciones o llamado a otros modelos
+  // Opciones o llamado a otros modelo
+  validarProductoSelect : any;
   product: Producto[]=[];
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
@@ -100,6 +101,7 @@ export class CrudPedidosComponent implements OnInit {
       nombres: ["",[Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-z0-9]+$/)]],
       cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]],
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      email: ["",[Validators.required, Validators.email]],
       provincia: ["", Validators.required],
       ciudad: ["",Validators.required],
       postal: ["", [Validators.required,Validators.pattern(/^\d{6}$/)]],
@@ -157,6 +159,7 @@ export class CrudPedidosComponent implements OnInit {
     const filterValuezip = value.toLowerCase();
     return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
   }
+  
   //funciones para editar y eliminar
   handleEdit(usuario: Usuario) { 
     // Lógica para editar el usuario 
@@ -166,5 +169,7 @@ export class CrudPedidosComponent implements OnInit {
     // Lógica para eliminar el usuario 
     console.log('Eliminar usuario:', usuario);
   }
-  
+  verCarrito():void{
+    this.servicioProducto.productoSeleccionado$.subscribe(producto => { this.validarProductoSelect = producto; });
+  }
 }

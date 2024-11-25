@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { Producto } from '../models/Producto';
 
 @Injectable({
@@ -67,5 +67,11 @@ export class ProductoService {
         return of(); 
       })
     );
+  }
+  //guardar producto seleccionado
+  private productoSeleccionado = new BehaviorSubject<any>(null); 
+  productoSeleccionado$ = this.productoSeleccionado.asObservable(); 
+  seleccionarProducto(producto: Producto) { 
+    this.productoSeleccionado.next(producto); 
   }
 }
