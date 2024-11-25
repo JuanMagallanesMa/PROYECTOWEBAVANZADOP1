@@ -244,6 +244,111 @@
       "categoria": "suministros para actividades",
       "precio": 10,
       "descripcion": "Paquete de 12 colores."
+    },
+    {
+      "id": "6",
+      "nombre": "Banderines temáticos",
+      "categoria": "decoraciones",
+      "precio": 7,
+      "descripcion": "Set de banderines para decorar fiestas."
+    },
+    {
+      "id": "7",
+      "nombre": "Velas aromáticas",
+      "categoria": "decoraciones",
+      "precio": 3,
+      "descripcion": "Pack de 4 velas con diferentes aromas."
+    },
+    {
+      "id": "8",
+      "nombre": "Confeti metálico",
+      "categoria": "decoraciones",
+      "precio": 4,
+      "descripcion": "Bolsa de confeti de colores brillantes."
+    },
+    {
+      "id": "9",
+      "nombre": "Sobres personalizados",
+      "categoria": "invitaciones",
+      "precio": 1.5,
+      "descripcion": "Pack de 10 sobres decorativos."
+    },
+    {
+      "id": "10",
+      "nombre": "Etiquetas para regalos",
+      "categoria": "invitaciones",
+      "precio": 2,
+      "descripcion": "Set de 20 etiquetas para personalizar."
+    },
+    {
+      "id": "11",
+      "nombre": "Sello de cera",
+      "categoria": "invitaciones",
+      "precio": 8,
+      "descripcion": "Incluye cera y sello con diseño único."
+    },
+    {
+      "id": "12",
+      "nombre": "Disfraz de superhéroe",
+      "categoria": "disfraces",
+      "precio": 18,
+      "descripcion": "Incluye capa y máscara."
+    },
+    {
+      "id": "13",
+      "nombre": "Disfraz de princesa",
+      "categoria": "disfraces",
+      "precio": 25,
+      "descripcion": "Vestido con accesorios incluidos."
+    },
+    {
+      "id": "14",
+      "nombre": "Sombrero de vaquero",
+      "categoria": "disfraces",
+      "precio": 12,
+      "descripcion": "Sombrero clásico de alta calidad."
+    },
+    {
+      "id": "15",
+      "nombre": "Puzzle de madera 3D",
+      "categoria": "juegos",
+      "precio": 30,
+      "descripcion": "Puzzle para armar figuras tridimensionales."
+    },
+    {
+      "id": "16",
+      "nombre": "Cartas UNO",
+      "categoria": "juegos",
+      "precio": 10,
+      "descripcion": "Juego de cartas clásico para toda la familia."
+    },
+    {
+      "id": "17",
+      "nombre": "Juego de mesa Ludo",
+      "categoria": "juegos",
+      "precio": 15,
+      "descripcion": "Incluye tablero, fichas y dados."
+    },
+    {
+      "id": "18",
+      "nombre": "Pegamento no tóxico",
+      "categoria": "suministros para actividades",
+      "precio": 3,
+      "descripcion": "Tubo de pegamento seguro para niños."
+    },
+    {
+      "id": "19",
+      "nombre": "Papel de colores",
+      "categoria": "suministros para actividades",
+      "precio": 6,
+      "descripcion": "Pack de 50 hojas de colores variados."
+    },
+    {
+      "id": "20",
+      "nombre": "Tijeras de seguridad",
+      "categoria": "suministros para actividades",
+      "precio": 4,
+      "descripcion": "Tijeras diseñadas para uso infantil."
     }
   ]
 }
