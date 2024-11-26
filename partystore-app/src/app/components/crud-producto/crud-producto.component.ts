@@ -89,10 +89,10 @@ export class CrudProductoComponent {
   }
 
   // Método para eliminar un producto
-  eliminarProducto(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe({
+  eliminarProducto(producto: number): void {
+    this.productoService.eliminarProducto(producto).subscribe({
       next: () => {
-        console.log(`Producto con ID ${id} eliminado correctamente.`);
+        console.log(`Producto con ID ${producto.toString()} eliminado correctamente.`);
         this.cargarProductos(); 
       },
       error: (err) => {
@@ -101,7 +101,7 @@ export class CrudProductoComponent {
     });
   }
   
-  handleDelete(id: number): void {
+  handleDelete(id:number): void {
     this.productoService.eliminarProducto(id).subscribe({
       next: () => console.log(`Producto con ID ${id} eliminado.`),
       error: (err) => console.error('Error al eliminar el producto:', err)

@@ -184,11 +184,11 @@ export class CrudPedidosComponent implements OnInit {
   calcularTotal():void { 
     this.total = this.product.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
   }
-  addArticulo():void{
+  addArticulo(prod: Producto):void{
     this.cantidad++;
     this.calcularTotal();
   }
-  removeArticulo():void{
+  removeArticulo(prod: Producto):void{
     this.cantidad--;
     this.calcularTotal();
   }

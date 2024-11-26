@@ -3,7 +3,7 @@
     <mat-card class="card-productos" appearance="outlined">
       <mat-card-header>
         <mat-card-title-group>
-          <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+          <img mat-card-sm-image [src]="prod.imagen">
           <mat-card-title>{{prod.nombre}}</mat-card-title>
           <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
         </mat-card-title-group>

@@ -56,7 +56,7 @@
               <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of product; trackBy: trackByFn">
                   <mat-card-header>
                       <mat-card-title-group>
-                          <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                          <img mat-card-sm-image [src]="prod.imagen">
                           <mat-card-title>{{prod.nombre}}</mat-card-title>
                           <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
                       </mat-card-title-group>
@@ -65,14 +65,14 @@
                       {{prod.descripcion}}
                   </mat-card-content>
                   <mat-card-footer class="card-footer">
-                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo()">
+                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo(prod)">
                           <mat-icon>add</mat-icon>
                       </button>
                       <mat-form-field class="Cantidad">
                           <mat-label>Cantidad</mat-label>
                           <input matInput [(ngModel)]="cantidad">
                       </mat-form-field>
-                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo()">
+                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo(prod)">
                           <mat-icon>remove</mat-icon>
                       </button>
                   </mat-card-footer>

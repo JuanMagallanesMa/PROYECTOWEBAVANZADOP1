@@ -56,12 +56,12 @@ export class ProductoService {
   }
 
   // Eliminar un producto
-  eliminarProducto(product: Producto): Observable<void> {
-    const url = `${this.apiUrl}/${product.idProducto}`;
-    console.log(`Producto con ID ${product.idProducto} eliminado correctamente.`);
+  eliminarProducto(product: number): Observable<void> {
+    const url = `${this.apiUrl}/${product}`;
+    console.log(`Producto con ID ${product} eliminado correctamente.`);
     return this.http.delete<void>(url);
-   
   }
+  
   //guardar producto seleccionado
   private productoSeleccionado = new BehaviorSubject<any>(null); 
   productoSeleccionado$ = this.productoSeleccionado.asObservable(); 
