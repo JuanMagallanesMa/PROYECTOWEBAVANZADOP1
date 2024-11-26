@@ -1,20 +1,27 @@
-
-<div>
+<div class="header">
   <h1>Tienda de Fiestas Infantiles</h1>
 </div>
-<div>
+
+<div class="navbar">
   <nav>
-    <div>
-      <a href="">Lista Productos</a>
-      <a routerLink="/producto" routerLinkActive="active">Productos</a>
-      <a href="">Categorias</a>
-      <a href="">Descuentos</a>
-      <a routerLink="/pedidos" routerLinkActive="active">Pedidos</a>
-      <a routerLink="/usuario" routerLinkActive="active">Usuarios</a>
-      <a routerLink="/categoria" routerLinkActive="active">Categorías</a>
+    <div class="nav-links">
+      <a routerLink="/marketplace" routerLinkActive="active">
+        <i class="material-icons">shopping_bag</i> Marketplace
+      </a>
+      <a routerLink="/producto" routerLinkActive="active">
+        <i class="material-icons">cake</i> Productos
+      </a>
+      <a routerLink="/pedidos" routerLinkActive="active">
+        <i class="material-icons">shopping_cart</i> Pedidos
+      </a>
+      <a routerLink="/usuario" routerLinkActive="active">
+        <i class="material-icons">child_care</i> Usuarios
+      </a>
+      <a routerLink="/categoria" routerLinkActive="active">
+        <i class="material-icons">star</i> Categorías
+      </a>
     </div>
-    
   </nav>
 </div>
 
-<router-outlet/>
+<router-outlet></router-outlet>

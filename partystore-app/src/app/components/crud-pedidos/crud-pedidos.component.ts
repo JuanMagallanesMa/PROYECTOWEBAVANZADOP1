@@ -24,6 +24,8 @@ import { ProductoService } from '../../services/producto.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { HeaderPedido } from '../../models/HeaderPedido';
+import { PedidosjsonService } from '../../services/pedidosjson.service';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -58,7 +60,10 @@ export class CrudPedidosComponent implements OnInit {
   //error de mensaje
   errorMessage = signal('');
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
-  // Opciones o llamado a otros modelos
+  // Opciones o llamado a otros modelo
+  header: HeaderPedido ;
+  cantidad:number=1;
+  total:number = 0;
   product: Producto[]=[];
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
@@ -85,40 +90,50 @@ export class CrudPedidosComponent implements OnInit {
   constructor(
     private servicioUsuario : UsuarioService, 
     private fb: FormBuilder,
-    private servicioProducto: ProductoService
+    private servicioProducto: ProductoService,
+    private servicioPedido: PedidosjsonService
   ) { 
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
+    this.header = { 
+      idHeaderPedido: 0, 
+      //idUsuario: 0, 
+      nombresCompletos: '', 
+      cedula: '', 
+      telefono: '', 
+      //email: '', 
+      provincia: '', 
+      //ciudad: '', 
+      //zip: '', 
+      direccion: '', 
+      //date: new Date(0), // Inicializa con la fecha mínima 
+      Total: 0 };
+    
   }
   ngOnInit() {
     this.getUsuarios();
     this.getZip();
-    this.getProductos();
     this.form = this.fb.group({
+      
+      pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
+      nombres: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
+      cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
+      telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
+      //email: ["", [Validators.required, Validators.email]],
+       provincia: ["", Validators.required], 
+       //ciudad: ["", Validators.required], postal: ["", Validators.required], 
+       direccion: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s,\.]+$/)]]
 
-    });
+
+  });
+  
+    
+    this.verCarrito();
+
   }
   onSubmit():void{
 
   }
 
-  //mensaje de error  
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
-    } else {
-      this.errorMessage.set('');
-    }
-  }
-  //obtener productos
-  getProductos(): void {
-    this.servicioProducto.getProductos().subscribe((data: Producto[]) => {
-      this.product = data;
-    });
-  }
+ 
   //obtener usuarios
   getUsuarios(): void {
     this.servicioUsuario.getUsuarios().subscribe((data: Usuario[]) => {
@@ -129,7 +144,9 @@ export class CrudPedidosComponent implements OnInit {
         map(value => this._filter(value || ''))  // Filtramos las opciones según el valor
       );
       console.log("Se muestra el autocomplete de usuarios");
+      
     });
+    
   }
   //obtener codigo postal
   getZip():void{
@@ -150,6 +167,7 @@ export class CrudPedidosComponent implements OnInit {
     const filterValuezip = value.toLowerCase();
     return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
   }
+  
   //funciones para editar y eliminar
   handleEdit(usuario: Usuario) { 
     // Lógica para editar el usuario 
@@ -159,5 +177,46 @@ export class CrudPedidosComponent implements OnInit {
     // Lógica para eliminar el usuario 
     console.log('Eliminar usuario:', usuario);
   }
-  
+  verCarrito():void{
+    this.product = this.servicioProducto.obtenerProductosCart();
+    this.calcularTotal();
+  }
+  calcularTotal():void { 
+    this.total = this.product.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
+  }
+  addArticulo(prod: Producto):void{
+    this.cantidad++;
+    this.calcularTotal();
+  }
+  removeArticulo(prod: Producto):void{
+    this.cantidad--;
+    this.calcularTotal();
+  }
+  trackByFn(index: number, item: Producto): number { 
+    return item.idProducto; 
+  }
+  agregarheader(): void { 
+    if (this.form.valid) { 
+      this.header = { 
+        ...this.header, 
+        idHeaderPedido: this.form.value.pedidoNumber, 
+        nombresCompletos: this.form.value.nombres, 
+        cedula: this.form.value.cedula, 
+        telefono: this.form.value.telefono,
+        //email: this.form.value.email, 
+        provincia: this.form.value.provincia, 
+        //ciudad: this.form.value.ciudad, 
+        //zip: this.form.value.postal, 
+        direccion: this.form.value.direccion, 
+        //date: new Date(), 
+        Total: this.total
+      }; 
+      this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
+        console.log('Header agregado:', this.header); 
+      }, (err) => { 
+        console.error('Error al agregar el header:', err); }); 
+      }else { console.error('Formulario inválido'); 
+
+      }
+  }
 }

@@ -1,56 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { Producto } from '../models/Producto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductoService {
-  [x: string]: any;
   private apiUrl = 'http://localhost:3000/productos';
 
   constructor(private http: HttpClient) {}
 
+
+
   // Obtener productos
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<{ productos: Producto[] }>(this.apiUrl).pipe(
-      map((response: { productos: any;}) => response.productos), 
-      catchError(err => {
+      map((response: { productos: Producto[] }) => response.productos),
+      catchError((err) => {
         console.error('Error al obtener productos:', err);
         return of([]);  
       })
     );
   }
 
-  getProductos(): Observable<Producto[]>{
+  getProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
-  } 
+  }
 
   // Agregar un producto
   agregarProducto(producto: Producto): Observable<Producto> {
-    return of(producto).pipe(
-      map(newProduct => {
+    return this.http.post<Producto>(this.apiUrl, producto).pipe(
+      map((newProduct) => {
         console.log('Producto agregado:', newProduct);
-        return newProduct; 
+        return newProduct;
       }),
-      catchError(err => {
+      catchError((err) => {
         console.error('Error al agregar producto:', err);
-        return of(producto); 
+        return of(producto);
       })
     );
   }
 
   // Actualizar un producto
   editarProducto(producto: Producto): Observable<Producto> {
-    return of(producto).pipe(
-      map(updatedProduct => {
+    const url = `${this.apiUrl}/${producto.idProducto}`;
+    return this.http.put<Producto>(url, producto).pipe(
+      map((updatedProduct) => {
         console.log('Producto actualizado:', updatedProduct);
-        return updatedProduct; 
+        return updatedProduct;
       }),
-      catchError(err => {
+      catchError((err) => {
         console.error('Error al editar producto:', err);
-        return of(producto); 
+        return of(producto);
       })
     );
   }
@@ -62,10 +64,31 @@ export class ProductoService {
       map(() => {
         console.log(`Producto con ID ${id} eliminado correctamente.`);
       }),
-      catchError(err => {
+      catchError((err) => {
         console.error('Error al eliminar producto:', err);
-        return of(); 
+        return of();
       })
     );
+  }
+
+  // Seleccionar producto
+  private productoSeleccionado = new BehaviorSubject<Producto | null>(null);
+  productoSeleccionado$ = this.productoSeleccionado.asObservable();
+
+  seleccionarProducto(producto: Producto) {
+    this.productoSeleccionado.next(producto);
+  }
+
+  // Manejo del carrito
+  private productosEnCarrito = new BehaviorSubject<Producto[]>([]);
+  productosEnCarrito$ = this.productosEnCarrito.asObservable();
+
+  agregarProductoCart(producto: Producto) {
+    const productosActuales = this.productosEnCarrito.value;
+    this.productosEnCarrito.next([...productosActuales, producto]);
+  }
+
+  obtenerProductosCart(): Producto[] {
+    return this.productosEnCarrito.value;
   }
 }

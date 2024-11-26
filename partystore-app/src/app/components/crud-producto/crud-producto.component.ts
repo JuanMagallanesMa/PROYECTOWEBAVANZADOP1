@@ -17,29 +17,29 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './crud-producto.component.html',
   styleUrls: ['./crud-producto.component.css']
 })
-
-export class CrudProductoComponent{
+export class CrudProductoComponent {
 
   productos: Producto[] = [];  
-  nuevoProducto: Producto = {
-    idProdcuto: 0,
-    nombre: '',
-    categoria: '',
-    precio: 0,
-    descripcion: ''
-  };
+ nuevoProducto: Producto = {
+   idProducto: 0,
+   nombre: '',
+   categoria: '',
+   precio: 0,
+   descripcion: '',
+   imagen: '',
+ };
   buscador: string = ''; 
   productoEnEdicion: Producto | null = null;  
 
   constructor(private productoService: ProductoService) {}
   dataSource = new MatTableDataSource<Producto>();
 
-  //definir las columnas
-  displayedColumns: string[]=['id','nombre','categoria','precio','descripcion','acciones'];
-  columnAliases={id: 'id', nombre: 'Nombre', categoria: 'Categoria', precio: 'Precio', descripcion: 'Descripcion',acciones: 'Acciones'};
+  // Definir las columnas
+  displayedColumns: string[] = ['id', 'nombre', 'categoria', 'precio', 'descripcion', 'acciones'];
+  columnAliases = { id: 'id', nombre: 'Nombre', categoria: 'Categoria', precio: 'Precio', descripcion: 'Descripcion', acciones: 'Acciones' };
 
   ngOnInit() {
-      this.cargarProductos();
+    this.cargarProductos();
   }
 
   // Método para cargar productos
@@ -54,7 +54,7 @@ export class CrudProductoComponent{
   guardarProducto(): void {
     if (this.productoEnEdicion) {
       this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
-        const index = this.productos.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
+        const index = this.productos.findIndex(p => p.idProducto === this.nuevoProducto.idProducto);
         if (index > -1) {
           this.productos[index] = { ...this.nuevoProducto };
         }
@@ -72,10 +72,10 @@ export class CrudProductoComponent{
   guardarProducto1(): void {
     if (this.productoEnEdicion) {
       this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
-        const index = this.dataSource.data.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
+        const index = this.dataSource.data.findIndex(p => p.idProducto === this.nuevoProducto.idProducto);
         if (index > -1) {
-          this.dataSource.data[index]={...this.nuevoProducto};
-          this.dataSource.data=[...this.dataSource.data];
+          this.dataSource.data[index] = { ...this.nuevoProducto };
+          this.dataSource.data = [...this.dataSource.data];
         }
         this.productoEnEdicion = null;
         this.resetProducto();
@@ -101,16 +101,22 @@ export class CrudProductoComponent{
     });
   }
   
-
+  handleDelete(id: number): void {
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => console.log(`Producto con ID ${id} eliminado.`),
+      error: (err) => console.error('Error al eliminar el producto:', err)
+    });
+  }
 
   // Método para reiniciar los campos del producto
-  resetProducto(): void {
-    this.nuevoProducto = {
-      idProdcuto: 0,
+  resetProducto():void{
+    this.nuevoProducto={
+      idProducto: 0,
       nombre: '',
       categoria: '',
       precio: 0,
-      descripcion: ''
+      descripcion: '',
+      imagen: ''
     };
   }
 
@@ -118,7 +124,7 @@ export class CrudProductoComponent{
   buscarProductos() {
     if (this.buscador.trim() !== '') {
       this.productos = this.productos.filter(producto =>
-        producto.nombre.toLowerCase().includes(this.buscador.toLowerCase())||
+        producto.nombre.toLowerCase().includes(this.buscador.toLowerCase()) ||
         producto.categoria.toLowerCase().includes(this.buscador.toLowerCase())
       );
     } else {
@@ -128,7 +134,7 @@ export class CrudProductoComponent{
 
   buscarProductos1() {
     if (this.buscador.trim() !== '') {
-      const productosFiltrados = this.productos.filter(producto=>
+      const productosFiltrados = this.productos.filter(producto =>
         producto.nombre.toLowerCase().includes(this.buscador.toLowerCase()) ||
         producto.categoria.toLowerCase().includes(this.buscador.toLowerCase())
       );
@@ -145,15 +151,8 @@ export class CrudProductoComponent{
     this.nuevoProducto = { ...producto };  
   }
 
-  handleEdit(producto: Producto){
+  handleEdit(producto: Producto) {
     this.editarProducto(producto);
     console.log('Editar producto:', producto);
-  }
-
-  handleDelete(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe({
-      next: () => console.log(`Producto con ID ${id} eliminado.`),
-      error: (err) => console.error('Error al eliminar el producto:', err)
-    });
   }
 }

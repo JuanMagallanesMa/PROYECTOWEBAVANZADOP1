@@ -65,5 +65,17 @@ export class UsuarioService {
       })
     );
   }
+  eliminarUsuario1(id: number): Observable<void> { 
+    const url = `${this.apiUrl}/${id}`; 
+    return this.http.delete<void>(url).pipe( map(() => { 
+      console.log('Usuario eliminado con ID:', id); 
+    }), 
+    catchError(err => { 
+      console.error('Error al eliminar usuario:', err); 
+      throw err; // Propaga el error para que pueda ser manejado en el componente 
+      }) 
+    ); 
+    
+  }
 }
 

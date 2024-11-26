@@ -2,7 +2,7 @@
   "categoria": [
     {
       "nombre": "Fiestas de Superhéroes",
-      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
+      "descripcion": "Accesorios y decoración tematica de superhéroes como capas, máscaras, y globos personalizados.",
       "estado": "inactivo",
       "edadesAplicables": [
         "3-5 años",
@@ -209,41 +209,167 @@
       "id": "eb74"
     }
   ],
+  
   "productos": [
     {
       "id": "1",
       "nombre": "Globo de cumpleaños",
       "categoria": "decoraciones",
       "precio": 5,
-      "descripcion": "Globo de helio para fiestas."
+      "descripcion": "Globo de helio para fiestas.",
+      "imagen": "https://globosyuli.com/9157-large_default/bouquet-feliz-cumple.jpg"
     },
     {
       "id": "2",
       "nombre": "Tarjetas de invitación",
       "categoria": "invitaciones",
       "precio": 2.5,
-      "descripcion": "Paquete de 10 tarjetas."
+      "descripcion": "Paquete de 10 tarjetas.",
+      "imagen": "https://m.media-amazon.com/images/I/71PZaFl6pmL._AC_UF894,1000_QL80_.jpg"
     },
     {
       "id": "3",
       "nombre": "Disfraz de pirata",
       "categoria": "disfraces",
       "precio": 15,
-      "descripcion": "Incluye sombrero y parche."
+      "descripcion": "Incluye sombrero y parche.",
+      "imagen": "https://www.ubuy.ec/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFjNjk5M3prOUwuX0FDX1NMMTUwMF8uanBn.jpg"
     },
     {
       "id": "4",
       "nombre": "Jenga clásico",
       "categoria": "juegos",
       "precio": 20,
-      "descripcion": "Juego de bloques de madera."
+      "descripcion": "Juego de bloques de madera.",
+      "imagen": "https://m.media-amazon.com/images/I/61J6ULPr4tL._AC_SL1000_.jpg"
     },
     {
       "id": "5",
       "nombre": "Marcadores no tóxicos",
       "categoria": "suministros para actividades",
       "precio": 10,
-      "descripcion": "Paquete de 12 colores."
+      "descripcion": "Paquete de 12 colores.",
+      "imagen": "https://m.media-amazon.com/images/I/81hYeePKTRL._AC_UF894,1000_QL80_.jpg"
+    },
+    {
+      "id": "6",
+      "nombre": "Banderines temáticos",
+      "categoria": "decoraciones",
+      "precio": 7,
+      "descripcion": "Set de banderines para decorar fiestas.",
+      "imagen": "https://fantasyregalos.com/wp-content/uploads/2023/10/Foto-global-banderines-600x600.jpg"
+    },
+    {
+      "id": "7",
+      "nombre": "Velas aromáticas",
+      "categoria": "decoraciones",
+      "precio": 3,
+      "descripcion": "Pack de 4 velas con diferentes aromas.",
+      "imagen": "https://m.media-amazon.com/images/I/61FjdZHXHuL._AC_UF894,1000_QL80_.jpg"
+    },
+    {
+      "id": "8",
+      "nombre": "Confeti metálico",
+      "categoria": "decoraciones",
+      "precio": 4,
+      "descripcion": "Bolsa de confeti de colores brillantes.",
+      "imagen": "https://fiestaytoys.com/2591-large_default/3550-confetti-metalico-party-sparkle-foil-283gr-uni-am.jpg"
+    },
+    {
+      "id": "9",
+      "nombre": "Sobres personalizados",
+      "categoria": "invitaciones",
+      "precio": 1.5,
+      "descripcion": "Pack de 10 sobres decorativos.",
+      "imagen": "https://m.media-amazon.com/images/I/71fz36ODGQL.jpg"
+    },
+    {
+      "id": "10",
+      "nombre": "Etiquetas para regalos",
+      "categoria": "invitaciones",
+      "precio": 2,
+      "descripcion": "Set de 20 etiquetas para personalizar.",
+      "imagen": "https://felizia.es/24841-home_default/etiquetas-flores.jpg"
+    },
+    {
+      "id": "11",
+      "nombre": "Sello de cera",
+      "categoria": "invitaciones",
+      "precio": 8,
+      "descripcion": "Incluye cera y sello con diseño único.",
+      "imagen": "https://i.pinimg.com/736x/7a/09/af/7a09afb5e8338780d6f8498f15279200.jpg"
+    },
+    {
+      "id": "12",
+      "nombre": "Disfraz de superhéroe",
+      "categoria": "disfraces",
+      "precio": 18,
+      "descripcion": "Incluye capa y máscara.",
+      "imagen": "https://m.media-amazon.com/images/I/51X0hU8EiKL._AC_.jpg"
+    },
+    {
+      "id": "13",
+      "nombre": "Disfraz de princesa",
+      "categoria": "disfraces",
+      "precio": 25,
+      "descripcion": "Vestido con accesorios incluidos.",
+      "imagen": "https://m.media-amazon.com/images/I/71m54FAyt+L._AC_SL1500_.jpg"
+    },
+    {
+      "id": "14",
+      "nombre": "Sombrero de vaquero",
+      "categoria": "disfraces",
+      "precio": 12,
+      "descripcion": "Sombrero clásico de alta calidad.",
+      "imagen": "https://m.media-amazon.com/images/I/61mf8LyYZYL._AC_SL1500_.jpg"
+    },
+    {
+      "id": "15",
+      "nombre": "Puzzle de madera 3D",
+      "categoria": "juegos",
+      "precio": 30,
+      "descripcion": "Puzzle para armar figuras tridimensionales.",
+      "imagen": "https://m.media-amazon.com/images/I/61AZBtv6zLL.jpg"
+    },
+    {
+      "id": "16",
+      "nombre": "Cartas UNO",
+      "categoria": "juegos",
+      "precio": 10,
+      "descripcion": "Juego de cartas clásico para toda la familia.",
+      "imagen": "https://www.megamaxi.com/wp-content/uploads/2024/06/items2Figm2F1500x15002F444369-2-6.jpg"
+    },
+    {
+      "id": "17",
+      "nombre": "Juego de mesa Ludo",
+      "categoria": "juegos",
+      "precio": 15,
+      "descripcion": "Incluye tablero, fichas y dados.",
+      "imagen": "https://www.librerianova.com.py/storage/sku/coluna-juegos-de-mesa-juego-ludo-en-caja-coluna-2201-1-1-1701342010.jpg"
+    },
+    {
+      "id": "18",
+      "nombre": "Pegamento no tóxico",
+      "categoria": "suministros para actividades",
+      "precio": 3,
+      "descripcion": "Tubo de pegamento seguro para niños.",
+      "imagen": "https://s.alicdn.com/@sc04/kf/H38bb814a8fe84f64b2ca18dcb4a75208Q.jpg_720x720q50.jpg"
+    },
+    {
+      "id": "19",
+      "nombre": "Papel de colores",
+      "categoria": "suministros para actividades",
+      "precio": 6,
+      "descripcion": "Pack de 50 hojas de colores variados.",
+      "imagen": "https://m.media-amazon.com/images/I/61UKJ61rC7L.jpg"
+    },
+    {
+      "id": "20",
+      "nombre": "Tijeras de seguridad",
+      "categoria": "suministros para actividades",
+      "precio": 4,
+      "descripcion": "Tijeras diseñadas para uso infantil.",
+      "imagen": "https://m.media-amazon.com/images/I/51sTE59t65L._AC_SL1000_.jpg"
     }
-  ]
+]
 }
