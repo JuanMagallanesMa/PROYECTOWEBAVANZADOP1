@@ -65,10 +65,10 @@ export class UsuarioService {
       })
     );
   }
-  eliminarUsuario1(id: number): Observable<void> { 
-    const url = `${this.apiUrl}/${id}`; 
+  eliminarUsuario1(id: Usuario): Observable<void> { 
+    const url = `${this.apiUrl}/${id.id}`; 
     return this.http.delete<void>(url).pipe( map(() => { 
-      console.log('Usuario eliminado con ID:', id); 
+      console.log('Usuario eliminado con ID:', id.id); 
     }), 
     catchError(err => { 
       console.error('Error al eliminar usuario:', err); 

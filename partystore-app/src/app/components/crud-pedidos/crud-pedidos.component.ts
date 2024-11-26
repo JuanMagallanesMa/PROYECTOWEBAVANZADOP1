@@ -207,17 +207,17 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     }
     this.cargarHeader();
   }
-  handleEdit(usuario: HeaderPedido) { 
-    this.servicioPedido.eliminarPedido(usuario.id).subscribe(() => {
+  handleEdit(pedido: HeaderPedido) { 
+    this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
       
     });
-    console.log('Eliminar usuario:', usuario.id);
+    console.log('Eliminar usuario:', pedido);
   } 
   
-  handleDelete(usuario: HeaderPedido) { 
-    this.servicioPedido.eliminarPedido(usuario.id).subscribe(() => {
+  handleDelete(pedido: HeaderPedido) { 
+    this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
       
     });
-    console.log('Eliminar usuario:', usuario.id);
+    console.log('Eliminar usuario:', pedido);
   }
 }

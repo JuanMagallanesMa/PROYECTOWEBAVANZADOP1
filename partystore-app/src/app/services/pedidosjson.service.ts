@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HeaderPedido } from '../models/HeaderPedido';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Producto } from '../models/Producto';
-import { ProductoService } from './producto.service';
-import { DetailPedido } from '../models/DetailPedido';
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +32,8 @@ export class PedidosjsonService {
   obtenerProductosCart() {
       return this.productosSeleccionados$;
   }
-  eliminarPedido(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.jsonUrlHeader}/${id}`);
+  eliminarPedido(id: HeaderPedido): Observable<void> {
+    return this.http.delete<void>(`${this.jsonUrlHeader}/${id.id}`);
   }
 
 
