@@ -1,60 +1,72 @@
-<div class="crud-container">
-  <h2>{{ isEditMode ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
+<h3>Agregar Producto</h3>
+<div class="container-productos">
+  
 
+  <!-- Formulario para agregar/editar productos -->
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="nombre">Nombre</label>
-      <input id="nombre" formControlName="nombre" type="text" matInput placeholder="Nombre del producto" />
-      <div *ngIf="form.controls['nombre'].invalid && form.controls['nombre'].touched">
-        <small class="error-message">El nombre es obligatorio y debe tener al menos 8 caracteres.</small>
-      </div>
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingrese el nombre del producto" />
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <input id="descripcion" formControlName="descripcion" type="text" matInput placeholder="Descripción" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Ingrese la descripción"></textarea>
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="precio">Precio</label>
-      <input id="precio" formControlName="precio" type="number" matInput placeholder="Precio" />
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="precio" placeholder="Ingrese el precio" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>URL de la Imagen</mat-label>
+      <input matInput formControlName="imagen" placeholder="Ingrese la URL de la imagen" />
+    </mat-form-field>
 
     <div class="form-group">
       <label for="categoria">Categoría</label>
-      <mat-select formControlName="categoria" id="categoria">  
-        <mat-option value="activo">Decoraciones</mat-option>
-        <mat-option value="inactivo">Invitaciones</mat-option>
-        <mat-option value="activo">Disfraces</mat-option>
-        <mat-option value="activo">Suministro para actividades</mat-option>
-        <mat-option value="activo">Juegos</mat-option>
-      </mat-select>
-    </div>
-
-    <div class="form-group">
-      <label for="estado">Estado</label>
-      <mat-select formControlName="estado" id="estado" multiple (selectionChange)="onEstadoChange($event)">
-        <mat-option value="activo">
-          <mat-checkbox [(ngModel)]="activoSeleccionado">Activo</mat-checkbox>
-        </mat-option>
-        <mat-option value="inactivo">
-          <mat-checkbox [(ngModel)]="inactivoSeleccionado">Inactivo</mat-checkbox>
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="fill">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoria" id="categoria">
+          <mat-option value="Decoraciones">Decoraciones</mat-option>
+          <mat-option value="Invitaciones">Invitaciones</mat-option>
+          <mat-option value="Disfraces">Disfraces</mat-option>
+          <mat-option value="Suministro para actividades">Suministro para actividades</mat-option>
+          <mat-option value="Juegos">Juegos</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     
-    <button mat-raised-button color="primary" type="submit">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
-    <button mat-raised-button type="button" color="warn" (click)="clearForm()">Limpiar</button>
-  </form>
+    <div class="estado-container">
+      <mat-radio-group formControlName="estado">
+        <mat-radio-button value="activo">Activo</mat-radio-button>
+        <mat-radio-button value="inactivo">Inactivo</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-  <div class="crud-table">
-    <h3>Lista de Productos</h3>
-    <app-table
-      [dataSource]="dataSource"
-      [displayedColumns]="displayedColumns"
-      [columnAliases]="columnAliases"
-      (onEdit)="editar($event)"
-      (onDelete)="eliminar($event)"
-    ></app-table>
-  </div>
+    <button mat-raised-button color="primary" type="submit">
+      {{ isEditMode ? 'Actualizar' : 'Crear' }}
+    </button>
+    <button mat-raised-button color="warn" type="button" (click)="clearForm()">Limpiar</button>
+  </form>
+  
+<!-- Barra de búsqueda -->
+<div class="search-container">
+  <mat-form-field appearance="fill" class="search-bar">
+    <mat-label>Buscar Producto</mat-label>
+    <input 
+      matInput 
+      placeholder="Buscar por nombre, descripción o categoría"
+      (input)="applyFilter($event)" />
+  </mat-form-field>
+</div>
+  <!-- Tabla de productos -->
+  <app-table
+    [dataSource]="dataSource"
+    [displayedColumns]="displayedColumns"
+    [columnAliases]="columnAliases"
+    (onEdit)="editar($event)"
+    (onDelete)="eliminar($event)">
+  </app-table>
 </div>
