@@ -54,12 +54,6 @@ export class CrudUsuarioComponent {
   }
 
 
-  agregarUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.usuarioService.agregarUsuario(usuario);
-  }
-
-  
-
   /*guardarUsuario(): void {
     if (this.usuarioEnEdicion) {
       this.usuarioService.editarUsuario(this.nuevoUsuario).subscribe(() => {
@@ -145,7 +139,6 @@ buscarUsuarios1(): void {
 editarUsuario(usuario: Usuario) {
   this.usuarioEnEdicion = { ...usuario }; 
   this.nuevoUsuario = { ...usuario };
-  this.nuevoId = usuario.id;
 }
 
 handleEdit(usuario: Usuario) { 
