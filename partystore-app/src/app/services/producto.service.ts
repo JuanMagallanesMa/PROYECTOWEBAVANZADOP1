@@ -11,6 +11,8 @@ export class ProductoService {
 
   constructor(private http: HttpClient) {}
 
+
+
   // Obtener productos
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<{ productos: Producto[] }>(this.apiUrl).pipe(
@@ -23,12 +25,7 @@ export class ProductoService {
   }
 
   getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiUrl).pipe(
-      catchError((err) => {
-        console.error('Error al obtener productos:', err);
-        return of([]);
-      })
-    );
+    return this.http.get<Producto[]>(this.apiUrl);
   }
 
   // Agregar un producto
@@ -61,17 +58,25 @@ export class ProductoService {
   }
 
   // Eliminar un producto
-  eliminarProducto(product: number): Observable<void> {
-    const url = `${this.apiUrl}/${product}`;
-    console.log(`Producto con ID ${product} eliminado correctamente.`);
-    return this.http.delete<void>(url);
+  eliminarProducto(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url).pipe(
+      map(() => {
+        console.log(`Producto con ID ${id} eliminado correctamente.`);
+      }),
+      catchError((err) => {
+        console.error('Error al eliminar producto:', err);
+        return of();
+      })
+    );
   }
-  
-  //guardar producto seleccionado
-  private productoSeleccionado = new BehaviorSubject<any>(null); 
-  productoSeleccionado$ = this.productoSeleccionado.asObservable(); 
-  seleccionarProducto(producto: Producto) { 
-    this.productoSeleccionado.next(producto); 
+
+  // Seleccionar producto
+  private productoSeleccionado = new BehaviorSubject<Producto | null>(null);
+  productoSeleccionado$ = this.productoSeleccionado.asObservable();
+
+  seleccionarProducto(producto: Producto) {
+    this.productoSeleccionado.next(producto);
   }
 
   // Manejo del carrito

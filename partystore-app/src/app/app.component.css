@@ -1,0 +1,111 @@
+/* Reseteo global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff; /* Azul claro para un ambiente suave */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+  }
+  
+  /* Encabezado */
+  .header {
+    background-color: #fdb813; /* Amarillo cálido */
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+    width: 100%;
+    border-bottom: 5px solid #ff9f00; /* Detalle de borde */
+  }
+  
+  .header h1 {
+    font-size: 2.8rem;
+    letter-spacing: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Comic Sans MS', cursive; /* Fuente juguetona */
+  }
+  
+  /* Barra de navegación */
+  .navbar {
+    background-color: #ff7f50; /* Naranja coral, cálido y amigable */
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px; /* Limita el ancho para no expandirse demasiado */
+    width: 100%;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 12px 18px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+  }
+  
+  /* Efecto hover y foco */
+  .nav-links a:hover {
+    background-color: #ff6347; /* Rojo coral para hover */
+    transform: scale(1.05);
+  }
+  
+  .nav-links a.active {
+    background-color: #32cd32; /* Verde brillante para la página activa */
+    font-weight: bold;
+  }
+  
+  .nav-links a:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px rgba(0, 128, 255, 0.8); /* Resalta cuando se hace foco */
+  }
+  
+  /* Estilo de iconos */
+  .material-icons {
+    font-size: 1.6rem;
+    vertical-align: middle;
+    color: white;
+  }
+  
+  /* Animación de iconos */
+  .nav-links a:hover .material-icons {
+    transform: rotate(20deg); /* Rotación suave del icono */
+    transition: transform 0.3s ease;
+  }
+  
+  /* Router outlet */
+  router-outlet {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
