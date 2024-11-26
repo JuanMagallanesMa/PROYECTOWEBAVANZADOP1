@@ -40,17 +40,19 @@ export class UsuarioService {
   }
 
   editarUsuario(usuario: Usuario): Observable<Usuario> {
-    return of(usuario).pipe(
-      map(updatedUser => {
-        console.log('Usuario actualizado:', updatedUser);
+    const url = `${this.apiUrl}/${usuario.id}`;
+    return this.http.put<Usuario>(url, usuario).pipe(
+      map((updatedUser) => {
+        console.log('Usuario actualizado exitosamente:', updatedUser);
         return updatedUser;
       }),
-      catchError(err => {
-        console.error('Error al editar usuario:', err);
-        return of(usuario);
+      catchError((err) => {
+        console.error('Error al actualizar el usuario:', err);
+        throw err;
       })
     );
   }
+  
 
  
   eliminarUsuario(id: number): Observable<number> {
