@@ -27,12 +27,12 @@ export class UsuarioService {
   }
 
   agregarUsuario(usuario: Usuario): Observable<Usuario> {
-    return of(usuario).pipe(
-      map(newUser => {
-        console.log('Usuario agregado:', newUser);
+    return this.http.post<Usuario>(this.apiUrl, usuario).pipe(
+      map((newUser) => {
+        console.log('Usuario agregado exitosamente:', newUser);
         return newUser;
       }),
-      catchError(err => {
+      catchError((err) => {
         console.error('Error al agregar usuario:', err);
         return of(usuario);
       })
@@ -40,17 +40,19 @@ export class UsuarioService {
   }
 
   editarUsuario(usuario: Usuario): Observable<Usuario> {
-    return of(usuario).pipe(
-      map(updatedUser => {
-        console.log('Usuario actualizado:', updatedUser);
+    const url = `${this.apiUrl}/${usuario.id}`;
+    return this.http.put<Usuario>(url, usuario).pipe(
+      map((updatedUser) => {
+        console.log('Usuario actualizado exitosamente:', updatedUser);
         return updatedUser;
       }),
-      catchError(err => {
-        console.error('Error al editar usuario:', err);
-        return of(usuario);
+      catchError((err) => {
+        console.error('Error al actualizar el usuario:', err);
+        throw err;
       })
     );
   }
+  
 
  
   eliminarUsuario(id: number): Observable<number> {
@@ -65,6 +67,7 @@ export class UsuarioService {
       })
     );
   }
+  
   eliminarUsuario1(id: Usuario): Observable<void> { 
     const url = `${this.apiUrl}/${id.id}`; 
     return this.http.delete<void>(url).pipe( map(() => { 
@@ -72,7 +75,7 @@ export class UsuarioService {
     }), 
     catchError(err => { 
       console.error('Error al eliminar usuario:', err); 
-      throw err; // Propaga el error para que pueda ser manejado en el componente 
+      throw err;
       }) 
     ); 
     
