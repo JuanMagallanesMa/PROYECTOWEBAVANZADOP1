@@ -1,124 +1,60 @@
-<div class="container mt-4">
-  <div class="row">
-    <!-- Formulario -->
-    <div class="col-md-5">
-      <h4>{{ productoEnEdicion ? 'Editar Producto' : 'Registrar Producto' }}</h4>
-      <form (ngSubmit)="guardarProducto()" #productoForm="ngForm" class="form-container">
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>ID</mat-label>
-          <input
-            matInput
-            type="text"
-            id="id"
-            [(ngModel)]="nuevoProducto.idProducto"
-            name="id"
-            placeholder="ID del producto"
-            required
-          />
-        </mat-form-field>
+<div class="crud-container">
+  <h2>{{ isEditMode ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
 
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            type="text"
-            id="nombre"
-            [(ngModel)]="nuevoProducto.nombre"
-            name="nombre"
-            placeholder="Ingresa el nombre del producto"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Descripción</mat-label>
-          <input
-            matInput
-            type="text"
-            id="descripcion"
-            [(ngModel)]="nuevoProducto.descripcion"
-            name="descripcion"
-            placeholder="Ingresa la descripción del producto"
-            required
-          />
-        </mat-form-field> 
-
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Categoría</mat-label>
-          <mat-select
-            id="categoria"
-            [(ngModel)]="nuevoProducto.categoria"
-            name="categoria"
-            required
-          >
-            <mat-option value="" disabled>Selecciona una categoría</mat-option>
-            <mat-option value="decoracion">Decoraciones</mat-option>
-            <mat-option value="invitacion">Invitaciones</mat-option>
-            <mat-option value="disfraces">Disfraces</mat-option>
-            <mat-option value="juegos">Juegos</mat-option>
-            <mat-option value="suministro">Suministros</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Precio</mat-label>
-          <input
-            matInput
-            type="number"
-            id="precio"
-            [(ngModel)]="nuevoProducto.precio"
-            name="precio"
-            placeholder="Ingresa el precio del producto"
-            required
-            min="0"
-            step="0.01"
-          />
-        </mat-form-field>
-
-        <button 
-          mat-raised-button
-          color="primary"
-          class="submit-button"
-          type="button"
-          (click)="guardarProducto1()"
-        >
-          {{ productoEnEdicion ? 'Guardar cambios' : 'Registrar Producto' }}
-        </button>
-      </form>
-    </div>
-
-    <!-- Tabla -->
-    <div class="col-md-7">
-      <h4>Lista de Productos</h4>
-
-      <!-- Buscador -->
-      <div class="search-container">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Buscar Producto</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="buscador"
-            placeholder="Buscar producto"
-          />
-        </mat-form-field>
-        <button
-          mat-raised-button
-          color="primary"
-          class="search-button"
-          (click)="buscarProductos1()"
-        >
-          Buscar
-        </button>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" formControlName="nombre" type="text" matInput placeholder="Nombre del producto" />
+      <div *ngIf="form.controls['nombre'].invalid && form.controls['nombre'].touched">
+        <small class="error-message">El nombre es obligatorio y debe tener al menos 8 caracteres.</small>
       </div>
-
-      <app-table
-        [dataSource]="dataSource"
-        [displayedColumns]="displayedColumns"
-        [columnAliases]="columnAliases"
-        (onEdit)="handleEdit($event)"
-        (onDelete)="handleDelete($event)"
-      ></app-table>
     </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" formControlName="descripcion" type="text" matInput placeholder="Descripción" />
+    </div>
+
+    <div class="form-group">
+      <label for="precio">Precio</label>
+      <input id="precio" formControlName="precio" type="number" matInput placeholder="Precio" />
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoría</label>
+      <mat-select formControlName="categoria" id="categoria">  
+        <mat-option value="activo">Decoraciones</mat-option>
+        <mat-option value="inactivo">Invitaciones</mat-option>
+        <mat-option value="activo">Disfraces</mat-option>
+        <mat-option value="activo">Suministro para actividades</mat-option>
+        <mat-option value="activo">Juegos</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <mat-select formControlName="estado" id="estado" multiple (selectionChange)="onEstadoChange($event)">
+        <mat-option value="activo">
+          <mat-checkbox [(ngModel)]="activoSeleccionado">Activo</mat-checkbox>
+        </mat-option>
+        <mat-option value="inactivo">
+          <mat-checkbox [(ngModel)]="inactivoSeleccionado">Inactivo</mat-checkbox>
+        </mat-option>
+      </mat-select>
+    </div>
+    
+    <button mat-raised-button color="primary" type="submit">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+    <button mat-raised-button type="button" color="warn" (click)="clearForm()">Limpiar</button>
+  </form>
+
+  <div class="crud-table">
+    <h3>Lista de Productos</h3>
+    <app-table
+      [dataSource]="dataSource"
+      [displayedColumns]="displayedColumns"
+      [columnAliases]="columnAliases"
+      (onEdit)="editar($event)"
+      (onDelete)="eliminar($event)"
+    ></app-table>
   </div>
 </div>
