@@ -91,8 +91,8 @@ export class CrudUsuarioComponent {
   }
   
 
-  eliminarUsuario(id: Usuario): void {
-    this.usuarioService.eliminarUsuario1(id).subscribe(() => {
+  eliminarUsuario(id: number): void {
+    this.usuarioService.eliminarUsuario(id).subscribe(() => {
       this.cargarUsuarios();
     });
   }
@@ -143,7 +143,7 @@ handleEdit(usuario: Usuario) {
 } 
 
 handleDelete(usuario: Usuario) { 
-  this.eliminarUsuario(usuario);
+  this.eliminarUsuario(usuario.id);
   console.log('Eliminar usuario:', usuario.id);
 }
 }
