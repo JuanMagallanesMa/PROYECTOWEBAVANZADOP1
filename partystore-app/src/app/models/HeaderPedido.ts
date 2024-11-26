@@ -1,3 +1,5 @@
+import { Producto } from "./Producto";
+
 export interface HeaderPedido{
     idHeaderPedido ?: number;
     //idUsuario: number;
@@ -6,5 +8,6 @@ export interface HeaderPedido{
     telefono: string;
     provincia: string;
     direccion:string;
+    productos: Producto[];
     Total: number; 
 }

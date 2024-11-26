@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HeaderPedido } from '../models/HeaderPedido';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Producto } from '../models/Producto';
 import { ProductoService } from './producto.service';
+import { DetailPedido } from '../models/DetailPedido';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,16 @@ export class PedidosjsonService {
   //  const idObtenido= 
  //   return 0;
  // }
+ 
+  private productosSeleccionados = new BehaviorSubject<any[]>([]); 
+  productosSeleccionados$ = this.productosSeleccionados.asObservable(); 
+  agregarProductoCart(producto: any) {
+      const productosActuales = this.productosSeleccionados.value; 
+      this.productosSeleccionados.next([...productosActuales, producto]); 
+    } 
+    obtenerProductosCart() {
+      return this.productosSeleccionados$;
+    }
+
 
 }

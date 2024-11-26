@@ -52,8 +52,8 @@
   <div class="row" id="scroll">
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
-          <ng-container *ngIf="product.length > 0; else noProducts">
-              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of product; trackBy: trackByFn">
+          <ng-container *ngIf="header.productos.length; else noProducts">
+              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of header.productos; trackBy: trackByFn">
                   <mat-card-header>
                       <mat-card-title-group>
                           <img mat-card-sm-image [src]="prod.imagen">
@@ -64,18 +64,7 @@
                   <mat-card-content>
                       {{prod.descripcion}}
                   </mat-card-content>
-                  <mat-card-footer class="card-footer">
-                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo(prod)">
-                          <mat-icon>add</mat-icon>
-                      </button>
-                      <mat-form-field class="Cantidad">
-                          <mat-label>Cantidad</mat-label>
-                          <input matInput [(ngModel)]="cantidad">
-                      </mat-form-field>
-                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo(prod)">
-                          <mat-icon>remove</mat-icon>
-                      </button>
-                  </mat-card-footer>
+                 
               </mat-card>
           </ng-container>
           <ng-template #noProducts>

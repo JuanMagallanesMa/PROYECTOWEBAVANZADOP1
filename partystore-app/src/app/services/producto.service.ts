@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
 import { Producto } from '../models/Producto';
 
 @Injectable({
@@ -56,13 +56,23 @@ export class ProductoService {
       })
     );
   }
+  deleteProducto(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url)
+      .pipe(
+        catchError(error => {
+          console.error('Error al eliminar el producto', error);
+          return throwError(error);
+        })
+      );
+  }
 
   // Eliminar un producto
-  eliminarProducto(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
+  eliminarProducto(id: Producto): Observable<void> {
+    const url = `${this.apiUrl}/${id.idProducto}`;
     return this.http.delete<void>(url).pipe(
       map(() => {
-        console.log(`Producto con ID ${id} eliminado correctamente.`);
+        console.log(`Producto con ID ${id.idProducto} eliminado correctamente.`);
       }),
       catchError((err) => {
         console.error('Error al eliminar producto:', err);
@@ -80,15 +90,7 @@ export class ProductoService {
   }
 
   // Manejo del carrito
-  private productosEnCarrito = new BehaviorSubject<Producto[]>([]);
-  productosEnCarrito$ = this.productosEnCarrito.asObservable();
+  
 
-  agregarProductoCart(producto: Producto) {
-    const productosActuales = this.productosEnCarrito.value;
-    this.productosEnCarrito.next([...productosActuales, producto]);
-  }
-
-  obtenerProductosCart(): Producto[] {
-    return this.productosEnCarrito.value;
-  }
+ 
 }

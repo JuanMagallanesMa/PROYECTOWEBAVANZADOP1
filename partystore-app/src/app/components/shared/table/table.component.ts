@@ -16,7 +16,7 @@ export class TableComponent<T> implements AfterViewInit {
   @Input() displayedColumns!: string[]; 
   @Input() columnAliases: { [key: string]: string } = {}; 
   @Output() onEdit = new EventEmitter<T>(); 
-  @Output() onDelete = new EventEmitter<number>(); 
+  @Output() onDelete = new EventEmitter<T>(); 
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
   @ViewChild(MatSort) sort!: MatSort; // Añadí el ViewChild para MatSort 
   ngAfterViewInit(): void { 
@@ -28,7 +28,7 @@ export class TableComponent<T> implements AfterViewInit {
   edit(item: T): void { 
     this.onEdit.emit(item); 
   } 
-  delete(id: number): void { 
-    this.onDelete.emit(id); 
+  delete(item: T ): void { 
+    this.onDelete.emit(item); 
   }
 }

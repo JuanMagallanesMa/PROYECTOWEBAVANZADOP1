@@ -27,6 +27,7 @@ export class CrudProductoComponent {
    precio: 0,
    descripcion: '',
    imagen: '',
+   cantidadVenta: 0,
  };
   buscador: string = ''; 
   productoEnEdicion: Producto | null = null;  
@@ -89,7 +90,7 @@ export class CrudProductoComponent {
   }
 
   // Método para eliminar un producto
-  eliminarProducto(id: number): void {
+  eliminarProducto(id: Producto): void {
     this.productoService.eliminarProducto(id).subscribe({
       next: () => {
         console.log(`Producto con ID ${id} eliminado correctamente.`);
@@ -101,11 +102,22 @@ export class CrudProductoComponent {
     });
   }
   
-  handleDelete(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe({
-      next: () => console.log(`Producto con ID ${id} eliminado.`),
-      error: (err) => console.error('Error al eliminar el producto:', err)
-    });
+  handleDelete(id: Producto): void {
+    //this.productoService.eliminarProducto(id).subscribe({
+    //  next: () => console.log(`Producto con ID ${id} eliminado.`),
+    //  error: (err) => console.error('Error al eliminar el producto:', err)
+   // });
+   this.productoService.deleteProducto(id.idProducto)
+      .subscribe(
+        () => {
+          // Handle successful deletion, e.g., update the table data source
+          console.log('Producto eliminado correctamente');
+        },
+        error => {
+          console.error('Error al eliminar el producto', error);
+          // Handle error, e.g., show an error message to the user
+        }
+      );
   }
 
   // Método para reiniciar los campos del producto
@@ -116,7 +128,8 @@ export class CrudProductoComponent {
       categoria: '',
       precio: 0,
       descripcion: '',
-      imagen: ''
+      imagen: '',
+      cantidadVenta: 0,
     };
   }
 

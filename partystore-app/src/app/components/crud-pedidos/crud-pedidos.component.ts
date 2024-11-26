@@ -62,9 +62,10 @@ export class CrudPedidosComponent implements OnInit {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Opciones o llamado a otros modelo
   header: HeaderPedido ;
+  carrito: any[]=[];
   cantidad:number=1;
   total:number = 0;
-  product: Producto[]=[];
+  //product: Producto[]=[];
   options: Usuario[] = [];
   optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
   // Propiedad para las opciones filtradas
@@ -104,8 +105,11 @@ export class CrudPedidosComponent implements OnInit {
       //ciudad: '', 
       //zip: '', 
       direccion: '', 
+      productos: [] ,
       //date: new Date(0), // Inicializa con la fecha mínima 
-      Total: 0 };
+      Total: 0,
+
+     };
     
   }
   ngOnInit() {
@@ -178,20 +182,18 @@ export class CrudPedidosComponent implements OnInit {
     console.log('Eliminar usuario:', usuario);
   }
   verCarrito():void{
-    this.product = this.servicioProducto.obtenerProductosCart();
-    this.calcularTotal();
+    this.servicioPedido.obtenerProductosCart().subscribe(header => { 
+      
+      this.header.productos = header; // Guarda los productos en el atributo productos de headerPedido 
+      this.header.Total = this.calcularTotal(); // Calcula el total del pedido 
+      console.log('Productos en el carrito:', this.header.productos); // Muestra el listado de productos en la consola
+      console.log(this.header.Total)
+    });
   }
-  calcularTotal():void { 
-    this.total = this.product.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
+  calcularTotal():number { 
+    return this.total = this.header.productos.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
   }
-  addArticulo(prod: Producto):void{
-    this.cantidad++;
-    this.calcularTotal();
-  }
-  removeArticulo(prod: Producto):void{
-    this.cantidad--;
-    this.calcularTotal();
-  }
+  
   trackByFn(index: number, item: Producto): number { 
     return item.idProducto; 
   }
@@ -209,7 +211,6 @@ export class CrudPedidosComponent implements OnInit {
         //zip: this.form.value.postal, 
         direccion: this.form.value.direccion, 
         //date: new Date(), 
-        Total: this.total
       }; 
       this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
         console.log('Header agregado:', this.header); 

@@ -27,7 +27,7 @@ export class CrudUsuarioComponent {
     telefono: '',
     rol: 'cliente',
     estado: true,
-    contrasena: undefined
+    contrasena: undefined,
   };
   buscador: string = '';
   usuarioEnEdicion: Usuario | null = null;

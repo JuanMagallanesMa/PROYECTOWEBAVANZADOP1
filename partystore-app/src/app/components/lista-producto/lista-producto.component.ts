@@ -9,6 +9,8 @@ import { Producto } from '../../models/Producto';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PedidosjsonService } from '../../services/pedidosjson.service';
+import { HeaderPedido } from '../../models/HeaderPedido';
 
 @Component({
   selector: 'app-lista-producto',
@@ -28,8 +30,15 @@ import { Router } from '@angular/router';
 })
 export class ListaProductoComponent implements OnInit {
   producto: Producto[] = [];
-
-  constructor(private productoService: ProductoService, private router: Router) {}
+  headerPedido: HeaderPedido = { 
+    nombresCompletos: '', 
+    cedula: '', 
+    telefono: '', 
+    provincia: '', 
+    direccion: '', 
+    productos: [], 
+    Total: 0 };
+  constructor(private productoService: ProductoService, private servicePedidos: PedidosjsonService,private router: Router) {}
 
   ngOnInit() {
     this.mostrarProductos();
@@ -42,7 +51,7 @@ export class ListaProductoComponent implements OnInit {
   }
 
   agregarAlCarrito(producto: Producto) {
-    this.productoService.agregarProductoCart(producto);
+    this.servicePedidos.agregarProductoCart(producto);
     console.log(producto);
   }
 
