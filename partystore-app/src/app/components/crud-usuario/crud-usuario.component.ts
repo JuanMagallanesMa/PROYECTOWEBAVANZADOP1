@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-crud-usuario',
@@ -18,7 +20,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './crud-usuario.component.css'
 })
 export class CrudUsuarioComponent {
-
   usuarios: Usuario[] = [];
   nuevoUsuario: Usuario = {
     id: 0,
@@ -31,21 +32,20 @@ export class CrudUsuarioComponent {
   };
   buscador: string = '';
   usuarioEnEdicion: Usuario | null = null;
+  nuevoId: number | undefined;
+  http: any;
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(private usuarioService: UsuarioService, http:HttpClient) {}
   dataSource = new MatTableDataSource<Usuario>();
   
   //definir las columnas
   displayedColumns: string[] = ['nombreCompleto', 'correo', 'telefono', 'acciones'];  
   columnAliases = { nombreCompleto: 'Nombre Completo', correo: 'Correo Electrónico', telefono: 'Teléfono', acciones:'Acciones' }; 
 
-
   ngOnInit() {
     this.cargarUsuarios();
   }
   
-  
-
   cargarUsuarios(): void {
     this.usuarioService.getUsuarios().subscribe(usuarios => {
       this.usuarios = usuarios;
@@ -53,7 +53,14 @@ export class CrudUsuarioComponent {
     });
   }
 
-  guardarUsuario(): void {
+
+  agregarUsuario(usuario: Usuario): Observable<Usuario> {
+    return this.usuarioService.agregarUsuario(usuario);
+  }
+
+  
+
+  /*guardarUsuario(): void {
     if (this.usuarioEnEdicion) {
       this.usuarioService.editarUsuario(this.nuevoUsuario).subscribe(() => {
         const index = this.usuarios.findIndex(u => u.id === this.nuevoUsuario.id);
@@ -66,10 +73,11 @@ export class CrudUsuarioComponent {
     } else {
       this.usuarioService.agregarUsuario(this.nuevoUsuario).subscribe(nuevoUsuario => {
         this.usuarios.push(nuevoUsuario);
+        this.dataSource.data = [...this.usuarios];
         this.resetUsuario();
       });
     }
-  }
+  }*/
   
   guardarUsuario1(): void {
     if (this.usuarioEnEdicion) {
@@ -89,7 +97,6 @@ export class CrudUsuarioComponent {
       });
     }
   }
-  
 
   eliminarUsuario(id: number): void {
     this.usuarioService.eliminarUsuario(id).subscribe(() => {
@@ -108,8 +115,9 @@ export class CrudUsuarioComponent {
       estado: true,
     };
   }
+
    // Buscar usuarios
-buscarUsuarios() {
+/*buscarUsuarios() {
   if (this.buscador.trim() !== '') {
     this.usuarios = this.usuarios.filter(usuario =>
       usuario.nombreCompleto.toLowerCase().includes(this.buscador.toLowerCase()) ||
@@ -118,7 +126,8 @@ buscarUsuarios() {
   } else{
     this.resetUsuario();
   }
-}
+}*/
+
 buscarUsuarios1(): void {
   if (this.buscador.trim() !== '') {
     const usuariosFiltrados = this.usuarios.filter(usuario =>
@@ -135,8 +144,10 @@ buscarUsuarios1(): void {
 
 editarUsuario(usuario: Usuario) {
   this.usuarioEnEdicion = { ...usuario }; 
-  this.nuevoUsuario = { ...usuario }; 
+  this.nuevoUsuario = { ...usuario };
+  this.nuevoId = usuario.id;
 }
+
 handleEdit(usuario: Usuario) { 
   this.editarUsuario(usuario);
   console.log('Editar usuario:', usuario); 

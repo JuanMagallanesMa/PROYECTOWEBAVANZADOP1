@@ -3,7 +3,20 @@
       <!-- Formulario -->
       <div class="col-md-5">
         <h4>{{ usuarioEnEdicion ? 'Editar Usuario' : 'Registrar Usuario' }}</h4>
-        <form (ngSubmit)="guardarUsuario()" #usuarioForm="ngForm" class="form-container">
+        <form (ngSubmit)="guardarUsuario1()" #usuarioForm="ngForm" class="form-container">
+          
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Id</mat-label>
+            <input
+              matInput
+              type="text"
+              name="id"
+              [(ngModel)]="nuevoUsuario.id"
+              placeholder=""
+              required
+            />
+          </mat-form-field>
+
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>Nombre</mat-label>
             <input
