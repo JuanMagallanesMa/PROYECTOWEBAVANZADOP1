@@ -22,7 +22,7 @@ export class CrudProductoComponent{
 
   productos: Producto[] = [];  
   nuevoProducto: Producto = {
-    idProdcuto: 0,
+    idProducto: 0,
     nombre: '',
     categoria: '',
     precio: 0,
@@ -54,7 +54,7 @@ export class CrudProductoComponent{
   guardarProducto(): void {
     if (this.productoEnEdicion) {
       this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
-        const index = this.productos.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
+        const index = this.productos.findIndex(p => p.idProducto === this.nuevoProducto.idProducto);
         if (index > -1) {
           this.productos[index] = { ...this.nuevoProducto };
         }
@@ -72,7 +72,7 @@ export class CrudProductoComponent{
   guardarProducto1(): void {
     if (this.productoEnEdicion) {
       this.productoService.editarProducto(this.nuevoProducto).subscribe(() => {
-        const index = this.dataSource.data.findIndex(p => p.idProdcuto === this.nuevoProducto.idProdcuto);
+        const index = this.dataSource.data.findIndex(p => p.idProducto === this.nuevoProducto.idProducto);
         if (index > -1) {
           this.dataSource.data[index]={...this.nuevoProducto};
           this.dataSource.data=[...this.dataSource.data];
@@ -89,10 +89,10 @@ export class CrudProductoComponent{
   }
 
   // Método para eliminar un producto
-  eliminarProducto(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe({
+  eliminarProducto(product: Producto): void {
+    this.productoService.eliminarProducto(product).subscribe({
       next: () => {
-        console.log(`Producto con ID ${id} eliminado correctamente.`);
+        console.log(`Producto con ID ${product.idProducto} eliminado correctamente.`);
         this.cargarProductos(); 
       },
       error: (err) => {
@@ -106,7 +106,7 @@ export class CrudProductoComponent{
   // Método para reiniciar los campos del producto
   resetProducto(): void {
     this.nuevoProducto = {
-      idProdcuto: 0,
+      idProducto: 0,
       nombre: '',
       categoria: '',
       precio: 0,
@@ -150,10 +150,7 @@ export class CrudProductoComponent{
     console.log('Editar producto:', producto);
   }
 
-  handleDelete(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe({
-      next: () => console.log(`Producto con ID ${id} eliminado.`),
-      error: (err) => console.error('Error al eliminar el producto:', err)
-    });
-  }
+  handleDelete(product: Producto): void {
+    this.eliminarProducto(product);
+}
 }

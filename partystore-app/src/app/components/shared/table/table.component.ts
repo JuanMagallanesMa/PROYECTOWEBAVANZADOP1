@@ -11,15 +11,21 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent<T> implements AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
-  @Input() dataSource!: MatTableDataSource<any>; 
+  @Input() dataSource!: MatTableDataSource<T>; 
   @Input() displayedColumns!: string[];
   @Input() columnAliases: { [key: string]: string } = {}; 
   
-  @Output() onEdit = new EventEmitter<any>(); 
-  @Output() onDelete = new EventEmitter<any>();
+  @Output() onEdit = new EventEmitter<T>(); 
+  @Output() onDelete = new EventEmitter<T>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  edit(item: T): void { 
+    this.onEdit.emit(item); 
+  } 
+  delete(item: T): void { 
+    this.onDelete.emit(item); 
+  }
 }

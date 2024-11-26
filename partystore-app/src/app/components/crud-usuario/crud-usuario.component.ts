@@ -142,9 +142,9 @@ handleEdit(usuario: Usuario) {
   console.log('Editar usuario:', usuario); 
 } 
 
-handleDelete(id:number) { 
-  this.eliminarUsuario(id);
-  console.log('Eliminar usuario:', id);
+handleDelete(usuario: Usuario) { 
+  this.eliminarUsuario(usuario.idUsuario);
+  console.log('Eliminar usuario:', usuario.idUsuario);
 }
 }
 

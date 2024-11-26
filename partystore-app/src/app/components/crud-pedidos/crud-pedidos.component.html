@@ -1,136 +1,89 @@
-<!--  <form [formGroup]="form" class="ocultar" (submit)="onSubmit()"> -->
-  <div class="container-pedido">
-    <div class="row">
-      <form [formGroup]="form" class="ocultar" (submit)="onSubmit()">
-        <div mat-subheader>Datos Personales</div>
-        <div class="oneInputs">
-          <mat-form-field appearance="fill" class="usuario">
-            <mat-label>Usuario</mat-label>
-            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" formControlName="usuario">
-            <mat-autocomplete #auto="matAutocomplete">
-              @for (option of filteredOptions | async; track $index) {
-                <mat-option [value]="option.nombreCompleto">
-                  {{ option.nombreCompleto }} -- {{option.correo}}
-                </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <div class="twoInputs">
-          <mat-form-field>
-            <mat-label>Nombres Completos</mat-label>
-            <input matInput required type="text" formControlName="nombres">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Cédula</mat-label>
-            <input matInput required type="text" formControlName="cedula">
-          </mat-form-field>
-        </div>
-        <div class="twoInputs">
-          <mat-form-field>
-            <mat-label>Teléfono</mat-label>
-            <input matInput required type="tel" formControlName="telefono">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Ingresa tu email</mat-label>
-            <input matInput placeholder="pat@example.com" [formControl]="email" (blur)="updateErrorMessage()" formControlName="email" required type="email">
-            @if (email.invalid) {
-              <mat-error>{{errorMessage()}}</mat-error>
-            }
-          </mat-form-field>
-        </div>
-        <div class="twoInputs">
-          <mat-form-field>
-            <mat-label>Provincia</mat-label>
-            <mat-select [(value)]="provinciaSeleccionada" formControlName="provincia">
-              <mat-option value="Guayas">Guayas</mat-option>
-              <mat-option value="Pichincha">Pichincha</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Ciudad</mat-label>
-            <mat-select formControlName="ciudad">
-              <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Guayaquil">Guayaquil</mat-option>
-              <mat-option *ngIf="provinciaSeleccionada === 'Guayas'" value="Nobol">Nobol</mat-option>
-              <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Cayambe">Cayambe</mat-option>
-              <mat-option *ngIf="provinciaSeleccionada === 'Pichincha'" value="Quito">Quito</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="oneInputs">
-          <mat-form-field class="example-full-width">
-            <mat-label>Código Postal</mat-label>
-            <input #input type="text" placeholder="Escoge un código postal" matInput [formControl]="myControlzip" [matAutocomplete]="auto2" formControlName="postal">
-            <mat-autocomplete requireSelection #auto2="matAutocomplete">
-              @for (optionZIP of filteredOptionsZIP | async; track optionZIP) {
-                <mat-option [value]="optionZIP">{{optionZIP}}</mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <div class="oneInputs">
-          <mat-form-field class="example-full-width">
-            <mat-label>Dirección</mat-label>
-            <textarea matInput placeholder="Ej... Mapasingue Este" formControlName="direccion"></textarea>
-          </mat-form-field>
-        </div>
+<div class="container-pedido">
+  <div class="row">
+      <form [formGroup]="form" class="ocultar" (ngSubmit)="agregarheader()">
+          <!-- Campos del formulario -->
+          <div mat-subheader>Datos Personales</div>
+          
+          <div class="oneInputs">
+              <mat-form-field appearance="fill" class="idpedido">
+                  <mat-label>Pedido</mat-label>
+                  <input type="text" matInput  formControlName="pedidoNumber">
+              </mat-form-field>
+          </div>
+          
+          <div class="twoInputs">
+              <mat-form-field>
+                  <mat-label>Nombres Completos</mat-label>
+                  <input matInput required type="text" formControlName="nombres">
+              </mat-form-field>
+              <mat-form-field>
+                  <mat-label>Cédula</mat-label>
+                  <input matInput required type="text" formControlName="cedula">
+              </mat-form-field>
+          </div>
+          <div class="oneInputs">
+              <mat-form-field>
+                  <mat-label>Teléfono</mat-label>
+                  <input matInput required type="tel" formControlName="telefono">
+              </mat-form-field>
+              
+          </div>
+          <div class="oneInputs">
+              <mat-form-field>
+                  <mat-label>Provincia</mat-label>
+                  <mat-select [(value)]="provinciaSeleccionada" formControlName="provincia">
+                      <mat-option value="Guayas">Guayas</mat-option>
+                      <mat-option value="Pichincha">Pichincha</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              
+          </div>
+          
+          <div class="oneInputs">
+              <mat-form-field class="example-full-width">
+                  <mat-label>Dirección</mat-label>
+                  <textarea matInput placeholder="Ej... Mapasingue Este" formControlName="direccion"></textarea>
+              </mat-form-field>
+          </div>
+          <button mat-button type="submit">Agregar</button>
       </form>
-    </div>
-    <mat-divider [vertical]="true"></mat-divider>
-    <div class="row" id="scroll">
+  </div>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div class="row" id="scroll">
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
-      @if (product.length>0) {
-        @for (prod of product; track $index) {
-          <mat-card class="card-productos" appearance="outlined">
-            <mat-card-header>
-              <mat-card-title-group>
-                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                <mat-card-title>{{prod.nombre}}</mat-card-title>
-                <mat-card-subtitle value=>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
-              </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-              {{prod.descripcion}}
-            </mat-card-content>
-            <mat-card-footer class="card-footer">
-              <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo()">
-                <mat-icon>add</mat-icon>
-              </button>
-              <mat-form-field class="Cantidad">
-                <mat-label>Cantidad</mat-label>
-                <input matInput [(ngModel)]="cantidad">
-              </mat-form-field>
-              <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo()">
-                <mat-icon>remove</mat-icon>
-              </button>
-            </mat-card-footer>
-          </mat-card>
-
-        }
-      }@else if (product.length===0) {
-        <p>No hay productos</p>
-      }
+          <ng-container *ngIf="product.length > 0; else noProducts">
+              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of product; trackBy: trackByFn">
+                  <mat-card-header>
+                      <mat-card-title-group>
+                          <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                          <mat-card-title>{{prod.nombre}}</mat-card-title>
+                          <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
+                      </mat-card-title-group>
+                  </mat-card-header>
+                  <mat-card-content>
+                      {{prod.descripcion}}
+                  </mat-card-content>
+                  <mat-card-footer class="card-footer">
+                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="addArticulo()">
+                          <mat-icon>add</mat-icon>
+                      </button>
+                      <mat-form-field class="Cantidad">
+                          <mat-label>Cantidad</mat-label>
+                          <input matInput [(ngModel)]="cantidad">
+                      </mat-form-field>
+                      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="removeArticulo()">
+                          <mat-icon>remove</mat-icon>
+                      </button>
+                  </mat-card-footer>
+              </mat-card>
+          </ng-container>
+          <ng-template #noProducts>
+              <p>No hay productos</p>
+          </ng-template>
       </mat-list>
-      <div class="total"> <h3>Total: {{ total | currency: 'USD' }}</h3> </div>
+      <div class="total">
+          <h3>Total: {{ total | currency: 'USD' }}</h3>
+      </div>
   </div>
-  
-  
-    
-  <!--
-  
-  
-
-  <app-table 
-    [dataSource]="dataSource" 
-    [displayedColumns]="displayedColumns" 
-    [columnAliases]="columnAliases" 
-    (onEdit)="handleEdit($event)" 
-    (onDelete)="handleDelete($event)"
-    >
-  </app-table>
-   -->
-  
-  
-  
-  
+</div>

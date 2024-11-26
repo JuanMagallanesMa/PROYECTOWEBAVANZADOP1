@@ -46,6 +46,6 @@ export class ListaProductoComponent implements OnInit {
 
   }// Navega a la ruta del componente Pedidos
   trackByFn(index: number, item: Producto): number { 
-    return item.idProdcuto; // o cualquier propiedad única del producto
+    return item.idProducto; // o cualquier propiedad única del producto
   }
 }
