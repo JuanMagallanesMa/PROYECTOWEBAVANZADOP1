@@ -41,7 +41,7 @@ export class ProductoService {
 
   // Actualizar un producto existente
   actualizarProducto(producto: Producto): Observable<Producto> {
-    return this.http.put<Producto>(`${this.apiUrl}/${producto.idProducto}`, producto);
+    return this.http.put<Producto>(`${this.apiUrl}/${producto.id}`, producto);
   }
 
   // Eliminar un producto

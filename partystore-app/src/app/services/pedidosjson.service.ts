@@ -31,9 +31,12 @@ export class PedidosjsonService {
       const productosActuales = this.productosSeleccionados.value; 
       this.productosSeleccionados.next([...productosActuales, producto]); 
     } 
-    obtenerProductosCart() {
+  obtenerProductosCart() {
       return this.productosSeleccionados$;
-    }
+  }
+  eliminarPedido(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.jsonUrlHeader}/${id}`);
+  }
 
 
 }

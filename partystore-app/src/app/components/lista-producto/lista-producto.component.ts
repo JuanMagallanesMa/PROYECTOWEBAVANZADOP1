@@ -9,6 +9,7 @@ import { Producto } from '../../models/Producto';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PedidosjsonService } from '../../services/pedidosjson.service';
 
 @Component({
   selector: 'app-lista-producto',
@@ -29,7 +30,7 @@ import { Router } from '@angular/router';
 export class ListaProductoComponent implements OnInit {
   productos: Producto[] = []; // Cambié el nombre de la propiedad a plural
 
-  constructor(private productoService: ProductoService, private router: Router) {}
+  constructor(private productoService: ProductoService, private pedidoService:PedidosjsonService, private router: Router) {}
 
   ngOnInit(): void {
     this.mostrarProductos(); // Llamada a la función para cargar productos
@@ -41,8 +42,8 @@ export class ListaProductoComponent implements OnInit {
     });
   }
 
-  agregarAlCarrito(producto: Producto): void {
-    this.productoService.agregarProductoCart(producto);
+  agregarAlCarrito(producto: Producto) {
+    this.pedidoService.agregarProductoCart(producto);
     console.log('Producto agregado al carrito:', producto); // Consola para depuración
   }
 
@@ -50,8 +51,6 @@ export class ListaProductoComponent implements OnInit {
     this.router.navigate(['/pedidos']); // Navega a la ruta del componente Pedidos
   }
 
-  trackByFn(index: number, item: Producto): number {
-    return item.idProducto; // Usa la propiedad idProducto como clave única
-  }
+  
 }
 

@@ -9,6 +9,11 @@
             <button mat-raised-button color="accent" (click)="edit(element)">Editar</button> 
             <button mat-raised-button color="warn" (click)="delete(element)">Eliminar</button>
           </ng-container>
+          <ng-container *ngSwitchCase="'productos'"> 
+            <ul> 
+              <li *ngFor="let producto of element[column]"> {{ producto.nombre }} </li> 
+            </ul> 
+          </ng-container>
           <ng-container *ngSwitchDefault>
             {{ element[column] }}
           </ng-container>

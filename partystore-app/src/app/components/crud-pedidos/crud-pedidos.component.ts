@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {ChangeDetectionStrategy,  signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -49,7 +49,7 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
     TableComponent
   ]
 })
-export class CrudPedidosComponent implements OnInit {
+export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
   // Control para el input del autocompletado
@@ -76,9 +76,9 @@ export class CrudPedidosComponent implements OnInit {
   //datasources para la tabla
   dataSource = new MatTableDataSource<HeaderPedido>(); 
   //definir las columnas a mostrar en la tabla
-  displayedColumns: string[] = ['idHeaderPedido', 'nombresCompletos', 'cedula', 'provincia', 'productos','total', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombresCompletos', 'cedula', 'provincia', 'productos','Total', 'acciones'];
   columnAliases = {
-    idHeaderPedido: 'id', 
+    id: 'id', 
     nombresCompletos: 'Nombres', 
     cedula:'Cedula', 
     provincia:'Provincia', 
@@ -91,8 +91,9 @@ export class CrudPedidosComponent implements OnInit {
     private servicioPedido: PedidosjsonService
   ) { 
     this.header = { 
-      idHeaderPedido: 0, 
-      //idUsuario: 0, 
+     
+      id: '', 
+      //id: 0, 
       nombresCompletos: '', 
       cedula: '', 
       telefono: '', 
@@ -108,9 +109,13 @@ export class CrudPedidosComponent implements OnInit {
      };
     
   }
+  ngAfterViewInit(): void {
+    this.ngOnInit();
+  }
   ngOnInit() {
     //this.getUsuarios();
     this.getZip();
+    this.cargarHeader();
     this.form = this.fb.group({
       
       pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
@@ -165,7 +170,7 @@ export class CrudPedidosComponent implements OnInit {
    
   }
   cargarHeader():void{
-    this.servicioPedido.getHeaderPedido().subscribe(headerPedido=>{
+    this.servicioPedido.getHeaderPedido().subscribe((headerPedido=this.headerPedido)=>{
       this.headerPedido= headerPedido;
       this.dataSource.data = headerPedido;
     });
@@ -175,13 +180,13 @@ export class CrudPedidosComponent implements OnInit {
   }
   
   trackByFn(index: number, item: Producto): number { 
-    return item.idProducto; 
+    return item.id; 
   }
   agregarheader(): void { 
     if (this.form.valid) { 
       this.header = { 
         ...this.header, 
-        idHeaderPedido: this.form.value.pedidoNumber, 
+        id: this.form.value.pedidoNumber, 
         nombresCompletos: this.form.value.nombres, 
         cedula: this.form.value.cedula, 
         telefono: this.form.value.telefono,
@@ -200,13 +205,19 @@ export class CrudPedidosComponent implements OnInit {
     }else { console.error('Formulario inválido'); 
 
     }
+    this.cargarHeader();
   }
   handleEdit(usuario: HeaderPedido) { 
-    console.log('Eliminar usuario:', usuario.idHeaderPedido);
+    this.servicioPedido.eliminarPedido(usuario.id).subscribe(() => {
+      
+    });
+    console.log('Eliminar usuario:', usuario.id);
   } 
   
   handleDelete(usuario: HeaderPedido) { 
-    
-    console.log('Eliminar usuario:', usuario.idHeaderPedido);
+    this.servicioPedido.eliminarPedido(usuario.id).subscribe(() => {
+      
+    });
+    console.log('Eliminar usuario:', usuario.id);
   }
 }

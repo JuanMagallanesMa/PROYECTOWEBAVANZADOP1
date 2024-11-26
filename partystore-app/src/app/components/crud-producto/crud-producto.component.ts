@@ -101,7 +101,7 @@ submit(){
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'aceptar') {
-        this.productoServie.eliminarProducto(producto.idProducto).subscribe(() => {
+        this.productoServie.eliminarProducto(producto.id).subscribe(() => {
           alert('Producto eliminado exitosamente');
           this.getProductos();
         });
@@ -111,7 +111,7 @@ submit(){
 
   editar(producto: Producto): void {
     this.isEditMode = true;
-    this.currentID = producto.idProducto;
+    this.currentID = producto.id;
 
     this.form.setValue({
       nombre: producto.nombre,
@@ -130,7 +130,7 @@ submit(){
 
     const nuevoProducto: Producto = this.form.value;
     if (this.isEditMode) {
-      nuevoProducto.idProducto = this.currentID;
+      nuevoProducto.id = this.currentID;
       this.productoServie.actualizarProducto(nuevoProducto).subscribe(() => {
         alert('Producto actualizado');
         this.getProductos();

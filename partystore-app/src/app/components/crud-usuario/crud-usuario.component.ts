@@ -21,7 +21,7 @@ export class CrudUsuarioComponent {
 
   usuarios: Usuario[] = [];
   nuevoUsuario: Usuario = {
-    idUsuario: 0,
+    id: 0,
     nombreCompleto: '',
     correo: '',
     telefono: '',
@@ -56,7 +56,7 @@ export class CrudUsuarioComponent {
   guardarUsuario(): void {
     if (this.usuarioEnEdicion) {
       this.usuarioService.editarUsuario(this.nuevoUsuario).subscribe(() => {
-        const index = this.usuarios.findIndex(u => u.idUsuario === this.nuevoUsuario.idUsuario);
+        const index = this.usuarios.findIndex(u => u.id === this.nuevoUsuario.id);
         if (index > -1) {
           this.usuarios[index] = { ...this.nuevoUsuario };
         }
@@ -74,7 +74,7 @@ export class CrudUsuarioComponent {
   guardarUsuario1(): void {
     if (this.usuarioEnEdicion) {
       this.usuarioService.editarUsuario(this.nuevoUsuario).subscribe(() => {
-        const index = this.dataSource.data.findIndex(u => u.idUsuario === this.nuevoUsuario.idUsuario);
+        const index = this.dataSource.data.findIndex(u => u.id === this.nuevoUsuario.id);
         if (index > -1) {
           this.dataSource.data[index] = { ...this.nuevoUsuario };
           this.dataSource.data = [...this.dataSource.data]; // Actualizar el dataSource
@@ -99,7 +99,7 @@ export class CrudUsuarioComponent {
 
   resetUsuario(): void {
     this.nuevoUsuario = {
-      idUsuario: 0,
+      id: 0,
       nombreCompleto: '',
       correo: '',
       contrasena: '',
@@ -143,8 +143,8 @@ handleEdit(usuario: Usuario) {
 } 
 
 handleDelete(usuario: Usuario) { 
-  this.eliminarUsuario(usuario.idUsuario);
-  console.log('Eliminar usuario:', usuario.idUsuario);
+  this.eliminarUsuario(usuario.id);
+  console.log('Eliminar usuario:', usuario.id);
 }
 }
 

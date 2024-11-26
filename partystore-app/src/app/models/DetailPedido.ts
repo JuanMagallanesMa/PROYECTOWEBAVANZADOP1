@@ -3,7 +3,7 @@ import { Producto } from "./Producto";
 
 export interface DetailPedido{
     idDetailPedido ?: number;
-    idHeaderPedido: HeaderPedido;
+    id: HeaderPedido;
     idProduct: Producto;
     cantidad: number;
     lineTotal: number;
