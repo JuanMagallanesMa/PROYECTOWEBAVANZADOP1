@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HeaderPedido } from '../models/HeaderPedido';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -35,6 +35,16 @@ export class PedidosjsonService {
   eliminarPedido(id: HeaderPedido): Observable<void> {
     return this.http.delete<void>(`${this.jsonUrlHeader}/${id.id}`);
   }
+  getHeaderPedidoSearch(id?: string, cedula?: string): Observable<HeaderPedido[]> {
+    return this.http.get<HeaderPedido[]>(this.jsonUrlHeader).pipe(
+      map((pedidos) =>
+        pedidos.filter((pedido) =>
+          (id ? pedido.id.toLowerCase().includes(id.toLowerCase()) : true)
+        )
+      )
+    );
+  }
+  
 
 
 }

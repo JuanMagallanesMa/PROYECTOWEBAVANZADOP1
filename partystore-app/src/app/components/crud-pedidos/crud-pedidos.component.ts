@@ -52,10 +52,8 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
 export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
-  // Control para el input del autocompletado
-  myControl = new FormControl('');
-  myControlzip = new FormControl('');
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
+  
+  
   //inicializacion del formgroup
   form!: FormGroup;
   //error de mensaje
@@ -64,15 +62,10 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   // Opciones o llamado a otros modelo
   header: HeaderPedido ;
   headerPedido: HeaderPedido[]=[];
-  carrito: any[]=[];
+  
   cantidad:number=1;
   total:number = 0;
-  //product: Producto[]=[];
-  options: Usuario[] = [];
-  optionsZIP: string[] = ['090101', '090102', '091906', '170102', '170121', '171002'];
-  // Propiedad para las opciones filtradas
-  filteredOptionsZIP!: Observable<string[]>;
-  filteredOptions!: Observable<Usuario[]>;
+ 
   //datasources para la tabla
   dataSource = new MatTableDataSource<HeaderPedido>(); 
   //definir las columnas a mostrar en la tabla
@@ -113,8 +106,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     this.ngOnInit();
   }
   ngOnInit() {
-    //this.getUsuarios();
-    this.getZip();
+   
     this.cargarHeader();
     this.form = this.fb.group({
       
@@ -138,26 +130,6 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
 
   }
 
-   //obtener codigo postal
-  getZip():void{
-    this.filteredOptionsZIP = this.myControlzip.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterZip(value || ''))
-    );
-  }
-  // Función de filtro para las opciones
-  private _filter(value: string): Usuario[] {
-    const filterValue = value.toLowerCase();  // Comparamos sin importar mayúsculas/minúsculas
-    return this.options.filter(option => 
-      option.nombreCompleto.toLowerCase().includes(filterValue) ||
-      option.correo.toLowerCase().includes(filterValue)
-    );
-  }
-  private _filterZip(value: string): string[] {
-    const filterValuezip = value.toLowerCase();
-    return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
-  }
-  
  
   verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
@@ -219,5 +191,14 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       
     });
     console.log('Eliminar usuario:', pedido);
+  }
+  search(searchInput:HTMLInputElement){
+    if(searchInput.value){
+      this.servicioPedido.getHeaderPedidoSearch(searchInput.value).subscribe((datos:HeaderPedido[])=>{
+        this.dataSource.data = datos;
+      });
+    }else{
+      this.cargarHeader();
+    }
   }
 }

@@ -130,8 +130,7 @@
   ],
   "headerPedido": [
     {
-      "id": "72c7",
-      "idHeaderPedido": "111",
+      "id": "111",
       "nombresCompletos": "juan ",
       "cedula": "0999123456",
       "telefono": "1234567890",
@@ -180,6 +179,16 @@
         }
       ],
       "Total": 37
+    },
+    {
+      "id": "225",
+      "nombresCompletos": "Juan luis",
+      "cedula": "2333333333",
+      "telefono": "2222222233",
+      "provincia": "Pichincha",
+      "direccion": "ssssss",
+      "productos": [],
+      "Total": 0
     }
   ],
   "usuarios": [
@@ -274,7 +283,6 @@
       "id": "eb74"
     }
   ],
- 
   "productos": [
     {
       "id": "1",
@@ -438,5 +446,5 @@
       "imagen": "https://m.media-amazon.com/images/I/51sTE59t65L._AC_SL1000_.jpg",
       "estado": "activo"
     }
-    ]
+  ]
 }
