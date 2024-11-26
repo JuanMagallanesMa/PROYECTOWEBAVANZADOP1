@@ -1,6 +1,6 @@
 <!-- Sección de productos -->
 <div class="cards">
-  <mat-card *ngFor="let prod of producto" class="card-productos" appearance="outlined">
+  <mat-card *ngFor="let prod of productos" class="card-productos" appearance="outlined">
     <mat-card-header>
       <img mat-card-sm-image class="product-image" [src]="prod.imagen" alt="{{ prod.nombre }}">
     </mat-card-header>
@@ -16,4 +16,3 @@
     </mat-card-actions>
   </mat-card>
 </div>
- 
