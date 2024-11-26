@@ -1,69 +1,57 @@
-/* Contenedor del formulario */
-.crud-container {
+/* Contenedor de la página de productos */
+.container-productos {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Títulos */
-h2, h3 {
+h3 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #000000; 
+  color: #000000;
   margin-bottom: 1rem;
   text-align: center;
 }
 
+/* Barra de búsqueda */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Estilo del campo de búsqueda */
+.search-bar {
+  flex: 1;
+}
+
 /* Campos del formulario */
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  font-weight: 500; 
-  margin-bottom: 8px;
-  display: block;
-  color: #333; 
-}
-
-.form-group input,
-.form-group mat-select {
+mat-form-field {
   width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: 'Roboto', sans-serif;
+  margin-bottom: 16px;
 }
 
-.form-group input:focus,
-.form-group mat-select:focus {
-  border-color: #6200ea; 
-  outline: none;
+mat-form-field mat-label {
+  font-weight: 500;
 }
 
-/* Mensaje de error */
-.error-message {
-  color: #b00020; 
-  font-size: 0.875rem;
-  margin-top: 5px;
-}
-
-/* Botón de envío */
+/* Estilo de los botones */
 button.mat-raised-button {
   width: 100%;
   padding: 12px;
   font-size: 1.1rem;
   margin-top: 16px;
-  background-color: #6200ea; 
+  background-color: #6200ea;
   color: white;
   border-radius: 4px;
   font-family: 'Roboto', sans-serif;
 }
 
 button.mat-raised-button:hover {
-  background-color: #3700b3; 
+  background-color: #3700b3;
 }
 
 /* Contenedor de la tabla de productos */
@@ -90,52 +78,42 @@ button.mat-raised-button:hover {
 }
 
 .crud-table app-table tr:nth-child(even) {
-  background-color: #fafafa; 
+  background-color: #fafafa;
 }
 
 /* Estilo para botones dentro de la tabla */
 button.mat-icon-button {
   padding: 5px;
-  color: #6200ea; 
+  color: #6200ea;
 }
 
-/* Contenedor del buscador */
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* Estilo del radio group */
+.estado-container {
+  margin-bottom: 20px;
+}
+
+/* Mat-select y mat-radio-button */
+.mat-select,
+.mat-radio-button {
+  width: 100%;
+}
+
+/* Campo de entrada de texto */
+textarea.mat-input-element {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  padding: 12px;
+}
+
+/* Estilo para el campo de URL de la imagen */
+.mat-form-field.mat-url-input {
+  width: 100%;
   margin-bottom: 16px;
 }
 
-/* Campo de búsqueda */
-.search-field {
-  flex: 1;
-}
-
-/* Botón de búsqueda */
-.search-button {
-  padding: 8px 16px;
-  height: 56px;
-  background-color: #6200ea;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-family: 'Roboto', sans-serif;
-}
-
-.search-button:hover {
-  background-color: #3700b3; 
-}
-
-.mat-select {
-  width: 100%;
-}
-
-.mat-checkbox {
-  margin-left: 10px; 
-}
-
-button {
-  margin-top: 20px;
-  width: 100%;
+/* Mensajes de error (si fuera necesario) */
+.error-message {
+  color: #b00020;
+  font-size: 0.875rem;
+  margin-top: 5px;
 }
