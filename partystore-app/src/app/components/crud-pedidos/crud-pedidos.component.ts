@@ -52,8 +52,8 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
 export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
-  
-  
+  isEditMode:boolean=false;
+  currentId!:string;
   //inicializacion del formgroup
   form!: FormGroup;
   //error de mensaje
@@ -127,9 +127,34 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
 
   }
   onSubmit():void{
-
+    if(this.form.invalid){
+      console.log("invalid")
+      return;
+    }
+    const newHeaderPedido : HeaderPedido = this.form.value;
+    if(this.isEditMode){
+      newHeaderPedido.id = this.currentId;
+      this.servicioPedido.editarPedido(newHeaderPedido).subscribe((updatepedido)=>{
+        alert("Pedido editado");
+        this.cargarHeader();
+      });
+    }else{
+      this.agregarheader();
+    }
+    this.clearForm();
   }
-
+  clearForm():void{
+    this.form.reset({
+      pedidoNumber: '', 
+      nombres: '', 
+      cedula: '', 
+      telefono: '', 
+       provincia:'', 
+       direccion:'',
+    });
+    this.currentId = '';
+    this.isEditMode = false;
+  }
  
   verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
@@ -154,41 +179,54 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   trackByFn(index: number, item: Producto): number { 
     return item.id; 
   }
-  agregarheader(): void { 
-    if (this.form.valid) { 
-      this.header = { 
-        ...this.header, 
-        id: this.form.value.pedidoNumber, 
-        nombresCompletos: this.form.value.nombres, 
-        cedula: this.form.value.cedula, 
-        telefono: this.form.value.telefono,
-        //email: this.form.value.email, 
-        provincia: this.form.value.provincia, 
-        //ciudad: this.form.value.ciudad, 
-        //zip: this.form.value.postal, 
-        direccion: this.form.value.direccion, 
-        //date: new Date(), 
-      }; 
-      this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
-        console.log('Header agregado:', this.header); 
-      }, (err) => { 
-        console.error('Error al agregar el header:', err); 
-      }); 
-    }else { console.error('Formulario inválido'); 
+  
 
-    }
-    this.cargarHeader();
+
+  agregarheader(): void { 
+    
+      if (this.form.valid) { 
+        this.header = { 
+          ...this.header, 
+          id: this.form.value.pedidoNumber, 
+          nombresCompletos: this.form.value.nombres, 
+          cedula: this.form.value.cedula, 
+          telefono: this.form.value.telefono,
+          provincia: this.form.value.provincia, 
+          direccion: this.form.value.direccion, 
+        }; 
+        this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
+          console.log('Header agregado:', this.header); 
+          this.cargarHeader();
+        }, (err) => { 
+          console.error('Error al agregar el header:', err); 
+        }); 
+      }else { console.error('Formulario inválido'); 
+        
+      }
+    
+    
+    
   }
+    
   handleEdit(pedido: HeaderPedido) { 
-    this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
-      
+    this.isEditMode = true;
+    if(pedido && pedido.id){
+      this.currentId= pedido.id;
+    }
+    this.form.setValue({
+      pedidoNumber: pedido.id, 
+      nombres: pedido.nombresCompletos, 
+      cedula: pedido.cedula, 
+      telefono: pedido.telefono, 
+       provincia:pedido.provincia, 
+       direccion:pedido.direccion
     });
-    console.log('Eliminar usuario:', pedido);
+    console.log('Editar usuario:', pedido);
   } 
   
   handleDelete(pedido: HeaderPedido) { 
     this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
-      
+      this.cargarHeader();
     });
     console.log('Eliminar usuario:', pedido);
   }

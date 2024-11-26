@@ -29,7 +29,7 @@ export class PedidosjsonService {
       const productosActuales = this.productosSeleccionados.value; 
       this.productosSeleccionados.next([...productosActuales, producto]); 
     } 
-  obtenerProductosCart() {
+  obtenerProductosCart():Observable<any> {
       return this.productosSeleccionados$;
   }
   eliminarPedido(id: HeaderPedido): Observable<void> {
@@ -43,6 +43,9 @@ export class PedidosjsonService {
         )
       )
     );
+  }
+  editarPedido(pedido: HeaderPedido): Observable<HeaderPedido>{
+    return this.http.put<HeaderPedido>(`${this.jsonUrlHeader}/${pedido.id}`, pedido)
   }
   
 

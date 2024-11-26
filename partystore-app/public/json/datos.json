@@ -181,12 +181,12 @@
       "Total": 37
     },
     {
-      "id": "225",
-      "nombresCompletos": "Juan luis",
-      "cedula": "2333333333",
-      "telefono": "2222222233",
+      "id": "226",
+      "nombresCompletos": "juan ",
+      "cedula": "0999123454",
+      "telefono": "1234567890",
       "provincia": "Pichincha",
-      "direccion": "ssssss",
+      "direccion": "Mapasingue Este, Coop. Jaime Polit, Mz. J, Villa 5",
       "productos": [],
       "Total": 0
     }
@@ -219,7 +219,7 @@
     {
       "nombreCompleto": "Andrea López",
       "correo": "andrea.lopez@yahoo.com",
-      "telefono": "0998765432",
+      "telefono": "0998765431",
       "rol": "cliente",
       "estado": false,
       "id": "4"
@@ -249,7 +249,6 @@
       "id": "7"
     },
     {
-     
       "nombreCompleto": "Sofía Castillo",
       "correo": "sofia.castillo@yahoo.com",
       "telefono": "0994321098",
@@ -258,7 +257,6 @@
       "id": "8"
     },
     {
-      
       "nombreCompleto": "Ricardo Vázquez",
       "correo": "ricardovazquez@gmail.com",
       "telefono": "0993210987",
@@ -267,7 +265,6 @@
       "id": "9"
     },
     {
-      
       "nombreCompleto": "Paola Mendoza",
       "correo": "paolamendoza_2024@hotmail.com",
       "telefono": "0992109876",
