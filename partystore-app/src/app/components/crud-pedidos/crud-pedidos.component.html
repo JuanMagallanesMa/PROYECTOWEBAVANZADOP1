@@ -76,3 +76,13 @@
       </div>
   </div>
 </div>
+<mat-divider></mat-divider>
+<div>
+ <app-table
+    [dataSource]="dataSource" 
+    [displayedColumns]="displayedColumns" 
+    [columnAliases]="columnAliases" 
+    (onEdit)="handleEdit($event)" 
+    (onDelete)="handleDelete($event)"
+></app-table>
+</div>

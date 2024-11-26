@@ -45,7 +45,8 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
     MatListModule, MatDividerModule, DatePipe,
     MatCardModule,
     MatIconModule,
-    MatButtonModule  
+    MatButtonModule  ,
+    TableComponent
   ]
 })
 export class CrudPedidosComponent implements OnInit {
@@ -62,6 +63,7 @@ export class CrudPedidosComponent implements OnInit {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   // Opciones o llamado a otros modelo
   header: HeaderPedido ;
+  headerPedido: HeaderPedido[]=[];
   carrito: any[]=[];
   cantidad:number=1;
   total:number = 0;
@@ -72,26 +74,20 @@ export class CrudPedidosComponent implements OnInit {
   filteredOptionsZIP!: Observable<string[]>;
   filteredOptions!: Observable<Usuario[]>;
   //datasources para la tabla
-  dataSource = new MatTableDataSource<Usuario>(); 
+  dataSource = new MatTableDataSource<HeaderPedido>(); 
   //definir las columnas a mostrar en la tabla
-  displayedColumns: string[] = [
-    'nombreCompleto', 
-    'correo', 
-    'telefono', 
-    'acciones'
-  ];
-  //darle un nombre visual a cada columna definida
-  columnAliases = { 
-    nombreCompleto: 'Nombre Completo', 
-    correo: 'Correo Electrónico', 
-    telefono: 'Teléfono', 
-    acciones:'Acciones' 
-  }; 
+  displayedColumns: string[] = ['idHeaderPedido', 'nombresCompletos', 'cedula', 'provincia', 'productos','total', 'acciones'];
+  columnAliases = {
+    idHeaderPedido: 'id', 
+    nombresCompletos: 'Nombres', 
+    cedula:'Cedula', 
+    provincia:'Provincia', 
+    productos: 'Productos',
+    total:'Total', 
+    acciones: 'Acciones' };
   //constructor con los servicios
   constructor(
-    private servicioUsuario : UsuarioService, 
     private fb: FormBuilder,
-    private servicioProducto: ProductoService,
     private servicioPedido: PedidosjsonService
   ) { 
     this.header = { 
@@ -113,7 +109,7 @@ export class CrudPedidosComponent implements OnInit {
     
   }
   ngOnInit() {
-    this.getUsuarios();
+    //this.getUsuarios();
     this.getZip();
     this.form = this.fb.group({
       
@@ -137,22 +133,7 @@ export class CrudPedidosComponent implements OnInit {
 
   }
 
- 
-  //obtener usuarios
-  getUsuarios(): void {
-    this.servicioUsuario.getUsuarios().subscribe((data: Usuario[]) => {
-      this.options = data;
-      this.dataSource.data = data; 
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),  // Cuando el input está vacío, se muestran todas las opciones
-        map(value => this._filter(value || ''))  // Filtramos las opciones según el valor
-      );
-      console.log("Se muestra el autocomplete de usuarios");
-      
-    });
-    
-  }
-  //obtener codigo postal
+   //obtener codigo postal
   getZip():void{
     this.filteredOptionsZIP = this.myControlzip.valueChanges.pipe(
       startWith(''),
@@ -172,15 +153,7 @@ export class CrudPedidosComponent implements OnInit {
     return this.optionsZIP.filter(optionzip => optionzip.toLowerCase().includes(filterValuezip));
   }
   
-  //funciones para editar y eliminar
-  handleEdit(usuario: Usuario) { 
-    // Lógica para editar el usuario 
-    console.log('Editar usuario:', usuario); 
-  } 
-  handleDelete(usuario: Usuario) { 
-    // Lógica para eliminar el usuario 
-    console.log('Eliminar usuario:', usuario);
-  }
+ 
   verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
       
@@ -189,9 +162,16 @@ export class CrudPedidosComponent implements OnInit {
       console.log('Productos en el carrito:', this.header.productos); // Muestra el listado de productos en la consola
       console.log(this.header.Total)
     });
+   
+  }
+  cargarHeader():void{
+    this.servicioPedido.getHeaderPedido().subscribe(headerPedido=>{
+      this.headerPedido= headerPedido;
+      this.dataSource.data = headerPedido;
+    });
   }
   calcularTotal():number { 
-    return this.total = this.header.productos.reduce((acc, prod) => acc + (prod.precio * this.cantidad), 0); 
+    return this.total = this.header.productos.reduce((acc, prod) => acc + prod.precio, 0); 
   }
   
   trackByFn(index: number, item: Producto): number { 
@@ -215,9 +195,18 @@ export class CrudPedidosComponent implements OnInit {
       this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
         console.log('Header agregado:', this.header); 
       }, (err) => { 
-        console.error('Error al agregar el header:', err); }); 
-      }else { console.error('Formulario inválido'); 
+        console.error('Error al agregar el header:', err); 
+      }); 
+    }else { console.error('Formulario inválido'); 
 
-      }
+    }
+  }
+  handleEdit(usuario: HeaderPedido) { 
+    console.log('Eliminar usuario:', usuario.idHeaderPedido);
+  } 
+  
+  handleDelete(usuario: HeaderPedido) { 
+    
+    console.log('Eliminar usuario:', usuario.idHeaderPedido);
   }
 }

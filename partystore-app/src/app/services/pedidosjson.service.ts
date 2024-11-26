@@ -10,10 +10,10 @@ import { DetailPedido } from '../models/DetailPedido';
   providedIn: 'root'
 })
 export class PedidosjsonService {
-  product: Producto[] = []
+  
   private jsonUrlHeader = 'http://localhost:3000/headerPedido';
 
-  constructor(private http: HttpClient, private productoService: ProductoService) {}
+  constructor(private http: HttpClient) {}
   getHeaderPedido(): Observable<HeaderPedido[]> {
     return this.http.get<HeaderPedido[]>(this.jsonUrlHeader);
   }
