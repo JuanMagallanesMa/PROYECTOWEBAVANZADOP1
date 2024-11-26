@@ -98,7 +98,7 @@ h3 {
   }
   
   app-table th {
-    color: #673ab7; 
+    color: #6015e2; 
     font-weight: bold;
     font-size: 14px;
   }
@@ -106,6 +106,7 @@ h3 {
   app-table td {
     color: #000000; 
     font-size: 14px;
+    
   }
   
   

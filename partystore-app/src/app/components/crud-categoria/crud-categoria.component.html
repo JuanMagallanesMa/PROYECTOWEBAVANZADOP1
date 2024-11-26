@@ -67,6 +67,44 @@
   </div>
 </form>
 
+<div class="search-container">
+  <!-- Filtros -->
+  <mat-form-field>
+    <mat-label>Buscar Categorías</mat-label>
+    <input matInput #searchInput type="search" (keyup)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)" placeholder="Buscar por nombre o descripción..." />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Edades Aplicables</mat-label>
+    <mat-select #edadSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
+      <mat-option value="">Todas</mat-option>
+      <mat-option value="Meses">Meses</mat-option>
+      <mat-option value="1-2 años">1-2 años</mat-option>
+      <mat-option value="3-5 años">3-5 años</mat-option>
+      <mat-option value="6-8 años">6-8 años</mat-option>
+      <mat-option value="9-12 años">9-12 años</mat-option>
+      <mat-option value="13-15 años">13-15 años</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tipos de Evento</mat-label>
+    <mat-select #tipoSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="cumpleaños">Cumpleaños</mat-option>
+      <mat-option value="bautizos">Bautizos</mat-option>
+      <mat-option value="baby showers">Baby Showers</mat-option>
+      <mat-option value="fiestas temáticas">Fiestas Temáticas</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Estado</mat-label>
+    <mat-select #estadoSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="activo">Activo</mat-option>
+      <mat-option value="inactivo">Inactivo</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <!-- reutilizar Tabla  -->
 <app-table
   [dataSource]="dataSource"
