@@ -14,7 +14,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
-import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-crud-producto', 
@@ -30,8 +29,7 @@ import { AppComponent } from '../../app.component';
     MatButtonModule,
     MatRadioModule,
     TableComponent,
-   FormsModule,
-
+    FormsModule,
   ],
 })
 export class CrudProductoComponent implements OnInit { 
@@ -39,6 +37,7 @@ export class CrudProductoComponent implements OnInit {
   isEditMode = false;
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
+  searchValue: string = ''; 
 
   displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'estado', 'acciones']; 
   columnAliases = {
@@ -49,20 +48,18 @@ export class CrudProductoComponent implements OnInit {
     estado: 'Estado',
     acciones: 'Acciones',
   };
-categoriasDisponibles: any;
-
-activoSeleccionado:boolean=false;
-inactivoSeleccionado:boolean=false;
+  categoriasDisponibles: any;
+  activoSeleccionado: boolean = false;
+  inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoServie : ProductoService,
+    private productoService: ProductoService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-  
   ) {
     this.form = this.fb.group({
       estado: [[]],
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -75,33 +72,41 @@ inactivoSeleccionado:boolean=false;
       estado: ['activo', Validators.required],
       categoria: ['', Validators.required], 
     });
+
+    // Configuración del filtro de MatTableDataSource
+    this.dataSource.filterPredicate = (data: Producto, filter: string) => {
+      const searchTerm = filter.trim().toLowerCase();
+      return (
+        data.nombre.toLowerCase().includes(searchTerm) ||
+        data.descripcion.toLowerCase().includes(searchTerm) ||
+        (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
+      );
+    };
   }
 
-onEstadoChange(event: any):void{
-  console.log(event);
-}
-
-submit(){
-  console.log(this.form.value);
-}
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.searchValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = this.searchValue; 
+  }
 
   getProductos(): void {
-    this.productoServie.obtenerProductos().subscribe((datos: Producto[]) => {
+    this.productoService.obtenerProductos().subscribe((datos: Producto[]) => {
       this.dataSource.data = datos;
     });
   }
 
   eliminar(producto: Producto): void {
-    const dialogRef = this.dialog.open(MyDialogComponent, {
-      data: {
-        titulo: 'Eliminación de Producto',
+    const dialogRef = this.dialog.open(MyDialogComponent,{
+      data:{
+        titulo: 'Eliminación del Producto',
         contenido: `¿Estás seguro de eliminar el producto ${producto.nombre}?`,
       },
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'aceptar') {
-        this.productoServie.eliminarProducto(producto.id).subscribe(() => {
+    
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === 'aceptar'){
+        this.productoService.eliminarProducto(producto.id).subscribe(()=>{
           alert('Producto eliminado exitosamente');
           this.getProductos();
         });
@@ -111,7 +116,7 @@ submit(){
 
   editar(producto: Producto): void {
     this.isEditMode = true;
-    this.currentID = producto.id;
+    this.currentID = producto.id; // Cambié idProducto por id
 
     this.form.setValue({
       nombre: producto.nombre,
@@ -130,14 +135,14 @@ submit(){
 
     const nuevoProducto: Producto = this.form.value;
     if (this.isEditMode) {
-      nuevoProducto.id = this.currentID;
-      this.productoServie.actualizarProducto(nuevoProducto).subscribe(() => {
+      nuevoProducto.id = this.currentID; // Cambié idProducto por id
+      this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
         alert('Producto actualizado');
         this.getProductos();
         this.clearForm();
       });
     } else {
-      this.productoServie.crearProducto(nuevoProducto).subscribe(() => {
+      this.productoService.crearProducto(nuevoProducto).subscribe(() => {
         alert('Producto creado');
         this.getProductos();
         this.clearForm();
@@ -155,19 +160,5 @@ submit(){
     });
     this.currentID = 0;
     this.isEditMode = false;
-  }
-
-  search(
-    searchInput: HTMLInputElement,
-    categoria?: string,
-    estado?: string
-  ): void {
-    const searchTerm = searchInput.value.trim();
-
-    this.productoServie
-      .buscarProductos(searchTerm, categoria, estado)
-      .subscribe((productos: Producto[]) => {
-        this.dataSource.data = productos;
-      });
   }
 }
