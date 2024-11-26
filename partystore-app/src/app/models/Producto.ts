@@ -8,4 +8,3 @@ export interface Producto {
   cantidadVenta:number;
   estado: string;
 }
-
