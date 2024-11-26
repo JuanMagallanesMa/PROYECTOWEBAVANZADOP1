@@ -9,14 +9,12 @@ import { Producto } from '../../models/Producto';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PedidosjsonService } from '../../services/pedidosjson.service';
-import { HeaderPedido } from '../../models/HeaderPedido';
 
 @Component({
   selector: 'app-lista-producto',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
     MatCardModule,
     CurrencyPipe,
@@ -29,37 +27,31 @@ import { HeaderPedido } from '../../models/HeaderPedido';
   styleUrls: ['./lista-producto.component.css'],
 })
 export class ListaProductoComponent implements OnInit {
-  producto: Producto[] = [];
-  headerPedido: HeaderPedido = { 
-    nombresCompletos: '', 
-    cedula: '', 
-    telefono: '', 
-    provincia: '', 
-    direccion: '', 
-    productos: [], 
-    Total: 0 };
-  constructor(private productoService: ProductoService, private servicePedidos: PedidosjsonService,private router: Router) {}
+  productos: Producto[] = []; // Cambié el nombre de la propiedad a plural
 
-  ngOnInit() {
-    this.mostrarProductos();
+  constructor(private productoService: ProductoService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.mostrarProductos(); // Llamada a la función para cargar productos
   }
 
   mostrarProductos(): void {
-    this.productoService.getProductos().subscribe((data: Producto[]) => {
-      this.producto = data;
+    this.productoService.obtenerProductos().subscribe((data: Producto[]) => {
+      this.productos = data; // Asignación de los productos al arreglo
     });
   }
 
-  agregarAlCarrito(producto: Producto) {
-    this.servicePedidos.agregarProductoCart(producto);
-    console.log(producto);
+  agregarAlCarrito(producto: Producto): void {
+    this.productoService.agregarProductoCart(producto);
+    console.log('Producto agregado al carrito:', producto); // Consola para depuración
   }
 
-  irAlCarrito() {
+  irAlCarrito(): void {
     this.router.navigate(['/pedidos']); // Navega a la ruta del componente Pedidos
   }
 
   trackByFn(index: number, item: Producto): number {
-    return item.idProducto; // o cualquier propiedad única del producto
+    return item.idProducto; // Usa la propiedad idProducto como clave única
   }
 }
+
