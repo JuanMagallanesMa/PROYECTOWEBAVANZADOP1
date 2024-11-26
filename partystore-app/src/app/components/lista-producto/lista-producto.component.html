@@ -1,23 +1,19 @@
+<!-- Sección de productos -->
 <div class="cards">
-  @for (prod of producto; track prod) {
-    <mat-card class="card-productos" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title-group>
-          <img mat-card-sm-image [src]="prod.imagen">
-          <mat-card-title>{{prod.nombre}}</mat-card-title>
-          <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        {{prod.descripcion}}
-      </mat-card-content>
-      <mat-card-actions class="card-footer">
-        <button mat-mini-fab aria-label="add" (click)="agregarAlCarrito(prod)">
-          <mat-icon>shopping_cart</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  }
+  <mat-card *ngFor="let prod of producto" class="card-productos" appearance="outlined">
+    <mat-card-header>
+      <img mat-card-sm-image class="product-image" [src]="prod.imagen" alt="{{ prod.nombre }}">
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-title>{{ prod.nombre }}</mat-card-title>
+      <mat-card-subtitle>{{ prod.precio | currency: 'USD' }}</mat-card-subtitle>
+      <p>{{ prod.descripcion }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="agregarAlCarrito(prod)">
+        Agregar al carrito
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-
-  
+ 
