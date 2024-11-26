@@ -109,6 +109,18 @@
         "cumpleaños",
         "fiestas temáticas"
       ]
+    },
+    {
+      "id": "f5fa",
+      "nombre": "adfsdfsd",
+      "descripcion": "acvdvsd",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "1-2 años"
+      ],
+      "tiposEvento": [
+        "bautizos"
+      ]
     }
   ],
   "detailPedido": [

@@ -1,0 +1,135 @@
+/* Estilo general */
+h3 {
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #673ab7; 
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px #000000;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid #ff9800; 
+    border-radius: 12px;
+    background: linear-gradient(145deg, #fff3e0, #ffe0b2); /* Fondo degradado */
+    box-shadow: 0px 8px 15px rgba(255, 87, 34, 0.3); /* Sombra con un toque naranja */
+    margin-bottom: 30px;
+  }
+  
+  .form-element {
+    flex: 1 1 300px;
+    max-width: 400px;
+  }
+  
+  mat-form-field {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  mat-label {
+    color: #3f51b5; 
+    font-weight: bold;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+  }
+  
+  button[color="primary"] {
+    background-color: #4caf50; 
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  button[color="primary"]:hover {
+    background-color: #388e3c; 
+  }
+  
+  button[color="warn"] {
+    background-color: #f44336; 
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  button[color="warn"]:hover {
+    background-color: #d32f2f; 
+  }
+  
+  .search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid #2196f3; 
+    border-radius: 12px;
+    background: linear-gradient(145deg, #e3f2fd, #bbdefb); /* Fondo degradado azul claro */
+    box-shadow: 0px 8px 15px rgba(33, 150, 243, 0.3); /* Sombra azul */
+    margin-bottom: 30px;
+  }
+  
+  .search-container mat-form-field {
+    flex: 1 1 200px;
+    max-width: 300px;
+  }
+  
+  app-table {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #8bc34a; 
+    border-radius: 12px;
+    background: linear-gradient(145deg, #f1f8e9, #dcedc8); /* Fondo degradado verde claro */
+    box-shadow: 0px 8px 15px rgba(139, 195, 74, 0.3); /* Sombra verde */
+  }
+  
+  app-table th {
+    color: #673ab7; 
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  app-table td {
+    color: #000000; 
+    font-size: 14px;
+  }
+  
+  
+  app-table button {
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+  }
+  
+  app-table button[color="accent"] {
+    background-color: #ff9800; 
+  }
+  
+  app-table button[color="accent"]:hover {
+    background-color: #fb8c00; 
+  }
+  
+  app-table button[color="warn"] {
+    background-color: #e91e63; 
+  }
+  
+  app-table button[color="warn"]:hover {
+    background-color: #d81b60;
+  }
+  
