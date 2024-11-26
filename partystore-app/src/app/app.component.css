@@ -7,7 +7,7 @@
   
   body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f8ff; /* Azul claro para un ambiente suave */
+    background-color: #f0f8ff;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -18,12 +18,12 @@
   
   /* Encabezado */
   .header {
-    background-color: #fdb813; /* Amarillo cálido */
+    background-color: #fdb813; 
     color: white;
     text-align: center;
     padding: 40px 0;
     width: 100%;
-    border-bottom: 5px solid #ff9f00; /* Detalle de borde */
+    border-bottom: 5px solid #ff9f00; 
   }
   
   .header h1 {
@@ -31,12 +31,12 @@
     letter-spacing: 4px;
     font-weight: bold;
     text-transform: uppercase;
-    font-family: 'Comic Sans MS', cursive; /* Fuente juguetona */
+    font-family: 'Comic Sans MS', cursive;
   }
   
   /* Barra de navegación */
   .navbar {
-    background-color: #ff7f50; /* Naranja coral, cálido y amigable */
+    background-color: #ff7f50; 
     width: 100%;
     padding: 15px 0;
     display: flex;
@@ -54,7 +54,7 @@
     gap: 25px;
     justify-content: center;
     align-items: center;
-    max-width: 1200px; /* Limita el ancho para no expandirse demasiado */
+    max-width: 1200px; 
     width: 100%;
   }
   
@@ -73,18 +73,18 @@
   
   /* Efecto hover y foco */
   .nav-links a:hover {
-    background-color: #ff6347; /* Rojo coral para hover */
+    background-color: #ff6347; 
     transform: scale(1.05);
   }
   
   .nav-links a.active {
-    background-color: #32cd32; /* Verde brillante para la página activa */
+    background-color: #32cd32; 
     font-weight: bold;
   }
   
   .nav-links a:focus {
     outline: none;
-    box-shadow: 0 0 5px 2px rgba(0, 128, 255, 0.8); /* Resalta cuando se hace foco */
+    box-shadow: 0 0 5px 2px rgba(0, 128, 255, 0.8); 
   }
   
   /* Estilo de iconos */
@@ -96,7 +96,7 @@
   
   /* Animación de iconos */
   .nav-links a:hover .material-icons {
-    transform: rotate(20deg); /* Rotación suave del icono */
+    transform: rotate(20deg); 
     transition: transform 0.3s ease;
   }
   

@@ -46,7 +46,7 @@
       "descripcion": "Detalles y decoraciones elegantes para celebraciones de bautizos.",
       "estado": "activo",
       "edadesAplicables": [
-        ""
+        "3-5 años"
       ],
       "tiposEvento": [
         "bautizos",
@@ -108,6 +108,18 @@
       "tiposEvento": [
         "cumpleaños",
         "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "f5fa",
+      "nombre": "adfsdfsd",
+      "descripcion": "acvdvsd",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "1-2 años"
+      ],
+      "tiposEvento": [
+        "bautizos"
       ]
     }
   ],
@@ -262,6 +274,7 @@
       "id": "eb74"
     }
   ],
+ 
   "productos": [
     {
       "id": "1",
@@ -269,7 +282,8 @@
       "categoria": "decoraciones",
       "precio": 5,
       "descripcion": "Globo de helio para fiestas.",
-      "imagen": "https://globosyuli.com/9157-large_default/bouquet-feliz-cumple.jpg"
+      "imagen": "https://globosyuli.com/9157-large_default/bouquet-feliz-cumple.jpg",
+      "estado": "activo"
     },
     {
       "id": "2",
@@ -277,7 +291,8 @@
       "categoria": "invitaciones",
       "precio": 2.5,
       "descripcion": "Paquete de 10 tarjetas.",
-      "imagen": "https://m.media-amazon.com/images/I/71PZaFl6pmL._AC_UF894,1000_QL80_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/71PZaFl6pmL._AC_UF894,1000_QL80_.jpg",
+      "estado": "activo"
     },
     {
       "id": "3",
@@ -285,23 +300,8 @@
       "categoria": "disfraces",
       "precio": 15,
       "descripcion": "Incluye sombrero y parche.",
-      "imagen": "https://www.ubuy.ec/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFjNjk5M3prOUwuX0FDX1NMMTUwMF8uanBn.jpg"
-    },
-    {
-      "id": "4",
-      "nombre": "Jenga clásico",
-      "categoria": "juegos",
-      "precio": 20,
-      "descripcion": "Juego de bloques de madera.",
-      "imagen": "https://m.media-amazon.com/images/I/61J6ULPr4tL._AC_SL1000_.jpg"
-    },
-    {
-      "id": "5",
-      "nombre": "Marcadores no tóxicos",
-      "categoria": "suministros para actividades",
-      "precio": 10,
-      "descripcion": "Paquete de 12 colores.",
-      "imagen": "https://m.media-amazon.com/images/I/81hYeePKTRL._AC_UF894,1000_QL80_.jpg"
+      "imagen": "https://www.ubuy.ec/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFjNjk5M3prOUwuX0FDX1NMMTUwMF8uanBn.jpg",
+      "estado": "activo"
     },
     {
       "id": "6",
@@ -309,7 +309,8 @@
       "categoria": "decoraciones",
       "precio": 7,
       "descripcion": "Set de banderines para decorar fiestas.",
-      "imagen": "https://fantasyregalos.com/wp-content/uploads/2023/10/Foto-global-banderines-600x600.jpg"
+      "imagen": "https://fantasyregalos.com/wp-content/uploads/2023/10/Foto-global-banderines-600x600.jpg",
+      "estado": "activo"
     },
     {
       "id": "7",
@@ -317,7 +318,8 @@
       "categoria": "decoraciones",
       "precio": 3,
       "descripcion": "Pack de 4 velas con diferentes aromas.",
-      "imagen": "https://m.media-amazon.com/images/I/61FjdZHXHuL._AC_UF894,1000_QL80_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/61FjdZHXHuL._AC_UF894,1000_QL80_.jpg",
+      "estado": "activo"
     },
     {
       "id": "8",
@@ -325,7 +327,8 @@
       "categoria": "decoraciones",
       "precio": 4,
       "descripcion": "Bolsa de confeti de colores brillantes.",
-      "imagen": "https://fiestaytoys.com/2591-large_default/3550-confetti-metalico-party-sparkle-foil-283gr-uni-am.jpg"
+      "imagen": "https://fiestaytoys.com/2591-large_default/3550-confetti-metalico-party-sparkle-foil-283gr-uni-am.jpg",
+      "estado": "activo"
     },
     {
       "id": "9",
@@ -333,7 +336,8 @@
       "categoria": "invitaciones",
       "precio": 1.5,
       "descripcion": "Pack de 10 sobres decorativos.",
-      "imagen": "https://m.media-amazon.com/images/I/71fz36ODGQL.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/71fz36ODGQL.jpg",
+      "estado": "activo"
     },
     {
       "id": "10",
@@ -341,7 +345,8 @@
       "categoria": "invitaciones",
       "precio": 2,
       "descripcion": "Set de 20 etiquetas para personalizar.",
-      "imagen": "https://felizia.es/24841-home_default/etiquetas-flores.jpg"
+      "imagen": "https://felizia.es/24841-home_default/etiquetas-flores.jpg",
+      "estado": "activo"
     },
     {
       "id": "11",
@@ -349,7 +354,8 @@
       "categoria": "invitaciones",
       "precio": 8,
       "descripcion": "Incluye cera y sello con diseño único.",
-      "imagen": "https://i.pinimg.com/736x/7a/09/af/7a09afb5e8338780d6f8498f15279200.jpg"
+      "imagen": "https://i.pinimg.com/736x/7a/09/af/7a09afb5e8338780d6f8498f15279200.jpg",
+      "estado": "activo"
     },
     {
       "id": "12",
@@ -357,7 +363,8 @@
       "categoria": "disfraces",
       "precio": 18,
       "descripcion": "Incluye capa y máscara.",
-      "imagen": "https://m.media-amazon.com/images/I/51X0hU8EiKL._AC_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/51X0hU8EiKL._AC_.jpg",
+      "estado": "activo"
     },
     {
       "id": "13",
@@ -365,7 +372,8 @@
       "categoria": "disfraces",
       "precio": 25,
       "descripcion": "Vestido con accesorios incluidos.",
-      "imagen": "https://m.media-amazon.com/images/I/71m54FAyt+L._AC_SL1500_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/71m54FAyt+L._AC_SL1500_.jpg",
+      "estado": "activo"
     },
     {
       "id": "14",
@@ -373,7 +381,8 @@
       "categoria": "disfraces",
       "precio": 12,
       "descripcion": "Sombrero clásico de alta calidad.",
-      "imagen": "https://m.media-amazon.com/images/I/61mf8LyYZYL._AC_SL1500_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/61mf8LyYZYL._AC_SL1500_.jpg",
+      "estado": "activo"
     },
     {
       "id": "15",
@@ -381,7 +390,8 @@
       "categoria": "juegos",
       "precio": 30,
       "descripcion": "Puzzle para armar figuras tridimensionales.",
-      "imagen": "https://m.media-amazon.com/images/I/61AZBtv6zLL.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/61AZBtv6zLL.jpg",
+      "estado": "activo"
     },
     {
       "id": "16",
@@ -389,7 +399,8 @@
       "categoria": "juegos",
       "precio": 10,
       "descripcion": "Juego de cartas clásico para toda la familia.",
-      "imagen": "https://www.megamaxi.com/wp-content/uploads/2024/06/items2Figm2F1500x15002F444369-2-6.jpg"
+      "imagen": "https://www.megamaxi.com/wp-content/uploads/2024/06/items2Figm2F1500x15002F444369-2-6.jpg",
+      "estado": "activo"
     },
     {
       "id": "17",
@@ -397,7 +408,8 @@
       "categoria": "juegos",
       "precio": 15,
       "descripcion": "Incluye tablero, fichas y dados.",
-      "imagen": "https://www.librerianova.com.py/storage/sku/coluna-juegos-de-mesa-juego-ludo-en-caja-coluna-2201-1-1-1701342010.jpg"
+      "imagen": "https://www.librerianova.com.py/storage/sku/coluna-juegos-de-mesa-juego-ludo-en-caja-coluna-2201-1-1-1701342010.jpg",
+      "estado": "activo"
     },
     {
       "id": "18",
@@ -405,7 +417,8 @@
       "categoria": "suministros para actividades",
       "precio": 3,
       "descripcion": "Tubo de pegamento seguro para niños.",
-      "imagen": "https://s.alicdn.com/@sc04/kf/H38bb814a8fe84f64b2ca18dcb4a75208Q.jpg_720x720q50.jpg"
+      "imagen": "https://s.alicdn.com/@sc04/kf/H38bb814a8fe84f64b2ca18dcb4a75208Q.jpg_720x720q50.jpg",
+      "estado": "activo"
     },
     {
       "id": "19",
@@ -413,7 +426,8 @@
       "categoria": "suministros para actividades",
       "precio": 6,
       "descripcion": "Pack de 50 hojas de colores variados.",
-      "imagen": "https://m.media-amazon.com/images/I/61UKJ61rC7L.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/61UKJ61rC7L.jpg",
+      "estado": "activo"
     },
     {
       "id": "20",
@@ -421,7 +435,8 @@
       "categoria": "suministros para actividades",
       "precio": 4,
       "descripcion": "Tijeras diseñadas para uso infantil.",
-      "imagen": "https://m.media-amazon.com/images/I/51sTE59t65L._AC_SL1000_.jpg"
+      "imagen": "https://m.media-amazon.com/images/I/51sTE59t65L._AC_SL1000_.jpg",
+      "estado": "activo"
     }
-  ]
+    ]
 }

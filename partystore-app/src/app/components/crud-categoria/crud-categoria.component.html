@@ -2,21 +2,36 @@
 
 <!-- Formulario para crear/editar categorías -->
 <form [formGroup]="form" (submit)="onSubmit()" class="form-container">
+  <!-- Campo: Nombre de la Categoría -->
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Nombre de la Categoría</mat-label>
     <input matInput type="text" placeholder="Nombre" formControlName="nombre" />
+    <mat-error *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid">
+      <span *ngIf="form.get('nombre')?.errors?.['required']">El nombre es obligatorio.</span>
+      <span *ngIf="form.get('nombre')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</span>
+    </mat-error>
   </mat-form-field>
 
+  <!-- Campo: Descripción -->
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Descripción</mat-label>
     <textarea matInput placeholder="Descripción" formControlName="descripcion"></textarea>
+    <mat-error *ngIf="form.get('descripcion')?.touched && form.get('descripcion')?.invalid">
+      <span *ngIf="form.get('descripcion')?.errors?.['required']">La descripción es obligatoria.</span>
+      <span *ngIf="form.get('descripcion')?.errors?.['minlength']">Debe tener al menos 5 caracteres.</span>
+    </mat-error>
   </mat-form-field>
 
+  <!-- Campo: Estado -->
   <mat-radio-group formControlName="estado" class="form-element">
     <mat-radio-button value="activo">Activo</mat-radio-button>
     <mat-radio-button value="inactivo">Inactivo</mat-radio-button>
   </mat-radio-group>
+  <mat-error *ngIf="form.get('estado')?.touched && form.get('estado')?.invalid">
+    Selecciona un estado.
+  </mat-error>
 
+  <!-- Campo: Edades Aplicables -->
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Edades Aplicables</mat-label>
     <mat-select formControlName="edadesAplicables" multiple>
@@ -27,8 +42,12 @@
       <mat-option value="9-12 años">9-12 años</mat-option>
       <mat-option value="13-15 años">13-15 años</mat-option>
     </mat-select>
+    <mat-error *ngIf="form.get('edadesAplicables')?.touched && form.get('edadesAplicables')?.invalid">
+      Selecciona al menos una opción.
+    </mat-error>
   </mat-form-field>
 
+  <!-- Campo: Tipos de Evento -->
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Tipos de Evento</mat-label>
     <mat-select formControlName="tiposEvento" multiple>
@@ -37,6 +56,9 @@
       <mat-option value="baby showers">Baby Showers</mat-option>
       <mat-option value="fiestas temáticas">Fiestas Temáticas</mat-option>
     </mat-select>
+    <mat-error *ngIf="form.get('tiposEvento')?.touched && form.get('tiposEvento')?.invalid">
+      Selecciona al menos una opción.
+    </mat-error>
   </mat-form-field>
 
   <div class="form-actions">
