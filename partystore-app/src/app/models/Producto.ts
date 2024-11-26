@@ -6,5 +6,6 @@ export interface Producto {
   descripcion: string;
   imagen: string;
   cantidadVenta:number;
+  estado: string;
 }
 
