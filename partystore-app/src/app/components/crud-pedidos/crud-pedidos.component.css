@@ -52,3 +52,6 @@ mat-form-field{
   overflow-y: auto;
   max-height: 490px;
 }
+.acciones-form button{
+  margin: 8px;
+}

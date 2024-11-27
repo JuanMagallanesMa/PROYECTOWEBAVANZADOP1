@@ -42,7 +42,7 @@ mat-label {
   justify-content: center;
   margin-top: 20px;
 }
-
+/**
 button {
   font-weight: bold;
   text-transform: uppercase;
@@ -68,7 +68,7 @@ button[color="warn"] {
 button[color="warn"]:hover {
   background-color: #bcb9f8; 
 }
-
+**/
 .search-container {
   display: flex;
   flex-wrap: wrap;

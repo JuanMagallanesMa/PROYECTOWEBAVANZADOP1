@@ -108,4 +108,15 @@
     justify-content: center;
     align-items: center;
   }
-  
+  /* Animación responsiva */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column; /* Los enlaces se apilan verticalmente */
+    gap: 15px;
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+}

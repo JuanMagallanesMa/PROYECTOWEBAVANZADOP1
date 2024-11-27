@@ -7,9 +7,9 @@
   <div class="row">
 
       <form [formGroup]="form" class="ocultar" (ngSubmit)="onSubmit()">
-          <!-- Campos del formulario -->
+         
           <div mat-subheader>Datos Personales</div>
-          
+           <!-- Campos del formulario -->
           <div class="oneInputs">
               <mat-form-field appearance="fill" class="idpedido">
                   <mat-label>Pedido</mat-label>
@@ -87,6 +87,7 @@
               
           </div>
           
+          
           <div class="oneInputs">
               <mat-form-field class="example-full-width">
                   <mat-label>Dirección</mat-label>
@@ -103,6 +104,7 @@
                     </mat-error>
               </mat-form-field>
           </div>
+
           <div class="acciones-form">
             <button mat-flat-button type="submit">Agregar</button>
             <button mat-stroked-button type="reset" (click)="clearForm()">Cancelar</button>

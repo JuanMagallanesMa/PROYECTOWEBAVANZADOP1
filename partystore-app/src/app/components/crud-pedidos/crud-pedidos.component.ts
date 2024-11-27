@@ -28,6 +28,7 @@ import { HeaderPedido } from '../../models/HeaderPedido';
 import { PedidosjsonService } from '../../services/pedidosjson.service';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatRadioButton } from '@angular/material/radio';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -48,7 +49,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatCardModule,
     MatIconModule,
     MatButtonModule  ,
-    TableComponent
+    TableComponent,
+    MatRadioButton
   ]
 })
 export class CrudPedidosComponent implements OnInit , AfterViewInit{
@@ -87,7 +89,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     private dialog: MatDialog
   ) { 
     this.header = { 
-     
+      estado: 'activo',
       id: '0', 
       //id: 0, 
       nombresCompletos: '', 
@@ -113,7 +115,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     this.cargarHeader();
     this.form = this.fb.group({
       
-      //pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
+      pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
       nombres: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
       cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
@@ -161,7 +163,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
  
   verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
-      this.header.id = this.header.id+1;
+      
       this.header.productos = header; // Guarda los productos en el atributo productos de headerPedido 
       this.header.Total = this.calcularTotal(); // Calcula el total del pedido 
       console.log('Productos en el carrito:', this.header.productos); // Muestra el listado de productos en la consola
@@ -189,12 +191,13 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       if (this.form.valid) { 
         this.header = { 
           ...this.header, 
-          id: this.form.value.id,
+          id: this.form.value.pedidoNumber,
           nombresCompletos: this.form.value.nombres, 
           cedula: this.form.value.cedula, 
           telefono: this.form.value.telefono,
           provincia: this.form.value.provincia, 
           direccion: this.form.value.direccion, 
+          
         }; 
         this.servicioPedido.addHeaderPedido(this.header).subscribe(() => { 
           console.log('Header agregado:', this.header); 
@@ -219,6 +222,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       pedidoNumber: pedido.id, 
       nombres: pedido.nombresCompletos, 
       cedula: pedido.cedula, 
+      estado: pedido.estado,
       telefono: pedido.telefono, 
        provincia:pedido.provincia, 
        direccion:pedido.direccion

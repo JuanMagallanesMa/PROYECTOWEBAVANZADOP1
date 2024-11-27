@@ -136,7 +136,7 @@
       "id": "62"
     },
     {
-      "id": 9111,
+      "id": "9111",
       "nombre": "dfgdfgdfg",
       "descripcion": "dfgdfgdf",
       "estado": "activo",
@@ -148,7 +148,7 @@
       ]
     },
     {
-      "id": 9112,
+      "id": "9112",
       "nombre": "hjfhgjfhgj",
       "descripcion": "ghjfghjfh",
       "estado": "activo",
@@ -163,57 +163,16 @@
   ],
   "headerPedido": [
     {
-      "id": "111",
-      "nombresCompletos": "juan ",
-      "cedula": "0999123456",
+      "id": "1",
+      "estado": "activo",
+      "nombresCompletos": "Juan Luis",
+      "cedula": "1234567890",
       "telefono": "1234567890",
-      "provincia": "Guayas",
-      "direccion": "mapasingue este coop jaime poli",
-      "productos": [
-        {
-          "id": "2",
-          "nombre": "Tarjetas de invitación",
-          "categoria": "invitaciones",
-          "precio": 2.5,
-          "descripcion": "Paquete de 10 tarjetas.",
-          "imagen": "https://m.media-amazon.com/images/I/71PZaFl6pmL._AC_UF894,1000_QL80_.jpg"
-        },
-        {
-          "id": "2",
-          "nombre": "Tarjetas de invitación",
-          "categoria": "invitaciones",
-          "precio": 2.5,
-          "descripcion": "Paquete de 10 tarjetas.",
-          "imagen": "https://m.media-amazon.com/images/I/71PZaFl6pmL._AC_UF894,1000_QL80_.jpg"
-        },
-        {
-          "id": "3",
-          "nombre": "Disfraz de pirata",
-          "categoria": "disfraces",
-          "precio": 15,
-          "descripcion": "Incluye sombrero y parche.",
-          "imagen": "https://www.ubuy.ec/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODFjNjk5M3prOUwuX0FDX1NMMTUwMF8uanBn.jpg"
-        },
-        {
-          "id": "5",
-          "nombre": "Marcadores no tóxicos",
-          "categoria": "suministros para actividades",
-          "precio": 10,
-          "descripcion": "Paquete de 12 colores.",
-          "imagen": "https://m.media-amazon.com/images/I/81hYeePKTRL._AC_UF894,1000_QL80_.jpg"
-        },
-        {
-          "id": "6",
-          "nombre": "Banderines temáticos",
-          "categoria": "decoraciones",
-          "precio": 7,
-          "descripcion": "Set de banderines para decorar fiestas.",
-          "imagen": "https://fantasyregalos.com/wp-content/uploads/2023/10/Foto-global-banderines-600x600.jpg"
-        }
-      ],
-      "Total": 37
+      "provincia": "Pichincha",
+      "direccion": "Mapasingue Este, Coop. Jaime Polit, Mz. J, Villa 5",
+      "productos": [],
+      "Total": 0
     }
-    
   ],
   "usuarios": [
     {
