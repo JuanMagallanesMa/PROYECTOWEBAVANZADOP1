@@ -2,8 +2,9 @@ mat-form-field{
     padding: 4px;
     margin: 4px;
 }
-div{
-  /*border: 1px solid black;*/
+
+.tituloss{
+  text-align: center;
 }
 .container-pedido {
   display: flex;
