@@ -55,7 +55,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
   isEditMode:boolean=false;
-  currentId!:string;
+  currentId!:number;
   //inicializacion del formgroup
   form!: FormGroup;
   //error de mensaje
@@ -88,7 +88,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   ) { 
     this.header = { 
      
-      id: '', 
+      id: 0, 
       //id: 0, 
       nombresCompletos: '', 
       cedula: '', 
@@ -113,7 +113,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     this.cargarHeader();
     this.form = this.fb.group({
       
-      pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
+      //pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
       nombres: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
       cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
@@ -137,7 +137,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     const newHeaderPedido : HeaderPedido = this.form.value;
     if(this.isEditMode){
       newHeaderPedido.id = this.currentId;
-      this.servicioPedido.editarPedido(newHeaderPedido).subscribe((updatepedido)=>{
+      this.servicioPedido.editarPedido(newHeaderPedido).subscribe(()=>{
         alert("Pedido editado");
         this.cargarHeader();
       });
@@ -155,7 +155,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
        provincia:'', 
        direccion:'',
     });
-    this.currentId = '';
+    this.currentId = 0;
     this.isEditMode = false;
   }
  
@@ -182,6 +182,10 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   trackByFn(index: number, item: Producto): number { 
     return item.id; 
   }
+  generateId(): number {
+    const maxId = this.dataSource.data.reduce((max, item) => (item.id > max ? item.id : max), 0);
+    return maxId + 1;
+  }
   
 
 
@@ -190,7 +194,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       if (this.form.valid) { 
         this.header = { 
           ...this.header, 
-          id: this.form.value.pedidoNumber, 
+          id: this.generateId(), 
           nombresCompletos: this.form.value.nombres, 
           cedula: this.form.value.cedula, 
           telefono: this.form.value.telefono,

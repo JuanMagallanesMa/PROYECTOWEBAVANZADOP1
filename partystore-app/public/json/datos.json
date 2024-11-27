@@ -83,7 +83,7 @@
       ]
     },
     {
-      "id": "14",
+      "id": "50",
       "nombre": "Fiestas de Superhéroes",
       "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
       "estado": "inactivo",
@@ -96,37 +96,56 @@
       ]
     },
     {
-      "id": 7300000001,
-      "nombre": "wewr",
-      "descripcion": "erwer",
+      "id": "32",
+      "nombre": "Fiestas de Superhéroes",
+      "descripcion": "Accesorios y decoración temática de superhéroes como capas, máscaras, y globos personalizados.",
       "estado": "activo",
       "edadesAplicables": [
-        "Meses",
-        "1-2 años"
+        "3-5 años",
+        "6-8 años",
+        "9-12 años"
       ],
       "tiposEvento": [
         "cumpleaños",
+        "fiestas temáticas"
+      ]
+    },
+    {
+      "id": "51",
+      "nombre": "adfsdfsd",
+      "descripcion": "acvdvsd",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "1-2 años"
+      ],
+      "tiposEvento": [
         "bautizos"
       ]
     },
     {
-      "id": 7300000002,
-      "nombre": "fgdfgd",
-      "descripcion": "gdfgdfgd",
-      "estado": "inactivo",
+      "id": "62",
+      "nombre": "partys",
+      "descripcion": "para fiestas",
+      "estado": "activo",
       "edadesAplicables": [
-        "Meses",
-        "1-2 años"
+        "9-12 años"
       ],
       "tiposEvento": [
         "cumpleaños",
-        "bautizos"
+        "fiestas temáticas"
       ]
-    }
-  ],
-  "detailPedido": [
+    },
     {
-      "id": "5d54"
+      "id": "63",
+      "nombre": "partys2",
+      "descripcion": "fiestitas",
+      "estado": "inactivo",
+      "edadesAplicables": [
+        "3-5 años"
+      ],
+      "tiposEvento": [
+        "fiestas temáticas"
+      ]
     }
   ],
   "headerPedido": [
@@ -180,16 +199,6 @@
         }
       ],
       "Total": 37
-    },
-    {
-      "id": "226",
-      "nombresCompletos": "juan ",
-      "cedula": "0999123454",
-      "telefono": "1234567890",
-      "provincia": "Pichincha",
-      "direccion": "Mapasingue Este, Coop. Jaime Polit, Mz. J, Villa 5",
-      "productos": [],
-      "Total": 0
     }
   ],
   "usuarios": [

@@ -39,7 +39,7 @@ export class PedidosjsonService {
     return this.http.get<HeaderPedido[]>(this.jsonUrlHeader).pipe(
       map((pedidos) =>
         pedidos.filter((pedido) =>
-          (id ? pedido.id.toLowerCase().includes(id.toLowerCase()) : true)
+          (id ? pedido.id: true)
         )
       )
     );
