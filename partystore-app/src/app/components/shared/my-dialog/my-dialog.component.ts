@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {MatDialogRef} from '@angular/material/dialog';
 export interface DialogData{
@@ -9,7 +10,7 @@ export interface DialogData{
 @Component({
   selector: 'app-my-dialog',
   standalone: true,
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, MatButton],
   templateUrl: './my-dialog.component.html',
   styleUrl: './my-dialog.component.css'
 })

@@ -26,6 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderPedido } from '../../models/HeaderPedido';
 import { PedidosjsonService } from '../../services/pedidosjson.service';
+import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -81,7 +83,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //constructor con los servicios
   constructor(
     private fb: FormBuilder,
-    private servicioPedido: PedidosjsonService
+    private servicioPedido: PedidosjsonService,
+    private dialog: MatDialog
   ) { 
     this.header = { 
      
@@ -225,9 +228,21 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   } 
   
   handleDelete(pedido: HeaderPedido) { 
-    this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
-      this.cargarHeader();
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      data: {
+        titulo: 'Eliminación de Categoría',
+        contenido: `¿Estás seguro de eliminar el pedido ${pedido.id} de ${pedido.nombresCompletos}?`,
+      },
     });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'aceptar') {
+        this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
+          this.cargarHeader();
+        });
+      }
+    });
+
+    
     console.log('Eliminar usuario:', pedido);
   }
   search(searchInput:HTMLInputElement){

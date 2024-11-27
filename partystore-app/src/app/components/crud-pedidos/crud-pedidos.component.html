@@ -97,9 +97,9 @@
                     </mat-error>
               </mat-form-field>
           </div>
-          <div>
-            <button mat-button type="submit">Agregar</button>
-            <button mat-button type="reset" (click)="clearForm()">Cancelar</button>
+          <div class="acciones-form">
+            <button mat-flat-button type="submit">Agregar</button>
+            <button mat-stroked-button type="reset" (click)="clearForm()">Cancelar</button>
           </div>
           
       </form>
@@ -141,7 +141,7 @@
             <input matInput type="search" placeholder="Numero de pedido" #searchInput 
             (keyup)="search(searchInput)"/>
         </mat-form-field>
-        <button mat-button (click)="search(searchInput)">Buscar</button>
+        <button mat-flat-button (click)="search(searchInput)">Buscar</button>
       </div>
     <app-table
         [dataSource]="dataSource" 
