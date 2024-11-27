@@ -3,13 +3,13 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Arial', sans-serif;
+  
 }
 
 /* Títulos */
 h3 {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 34px;
   color: #000000;
   margin-bottom: 1rem;
   text-align: center;
