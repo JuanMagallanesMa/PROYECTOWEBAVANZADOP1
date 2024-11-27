@@ -3,7 +3,7 @@
       <form [formGroup]="form" class="ocultar" (ngSubmit)="onSubmit()">
           <!-- Campos del formulario -->
           <div mat-subheader>Datos Personales</div>
-          <!--
+          
           <div class="oneInputs">
               <mat-form-field appearance="fill" class="idpedido">
                   <mat-label>Pedido</mat-label>
@@ -22,7 +22,7 @@
                         
               </mat-form-field>
           </div>
-          -->
+          
           <div class="twoInputs">
               <mat-form-field>
                   <mat-label>Nombres Completos</mat-label>
@@ -109,7 +109,7 @@
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
           <ng-container *ngIf="header.productos.length; else noProducts">
-              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of header.productos; trackBy: trackByFn">
+              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of header.productos; track: $prod">
                   <mat-card-header>
                       <mat-card-title-group>
                           <img mat-card-sm-image [src]="prod.imagen">

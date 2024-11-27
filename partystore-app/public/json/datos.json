@@ -123,9 +123,8 @@
       ]
     },
     {
-      "id": "62",
       "nombre": "partys",
-      "descripcion": "para fiestas",
+      "descripcion": "para fiestas dsasd",
       "estado": "activo",
       "edadesAplicables": [
         "9-12 años"
@@ -133,18 +132,32 @@
       "tiposEvento": [
         "cumpleaños",
         "fiestas temáticas"
-      ]
+      ],
+      "id": "62"
     },
     {
-      "id": "63",
-      "nombre": "partys2",
-      "descripcion": "fiestitas",
-      "estado": "inactivo",
+      "id": 9111,
+      "nombre": "dfgdfgdfg",
+      "descripcion": "dfgdfgdf",
+      "estado": "activo",
       "edadesAplicables": [
         "3-5 años"
       ],
       "tiposEvento": [
-        "fiestas temáticas"
+        "bautizos"
+      ]
+    },
+    {
+      "id": 9112,
+      "nombre": "hjfhgjfhgj",
+      "descripcion": "ghjfghjfh",
+      "estado": "activo",
+      "edadesAplicables": [
+        "3-5 años",
+        "6-8 años"
+      ],
+      "tiposEvento": [
+        "bautizos"
       ]
     }
   ],
@@ -200,6 +213,7 @@
       ],
       "Total": 37
     }
+    
   ],
   "usuarios": [
     {

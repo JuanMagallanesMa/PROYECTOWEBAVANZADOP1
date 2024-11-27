@@ -55,7 +55,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
   provinciaSeleccionada: string = '';
   isEditMode:boolean=false;
-  currentId!:number;
+  currentId!:string;
   //inicializacion del formgroup
   form!: FormGroup;
   //error de mensaje
@@ -88,7 +88,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   ) { 
     this.header = { 
      
-      id: 0, 
+      id: '0', 
       //id: 0, 
       nombresCompletos: '', 
       cedula: '', 
@@ -137,7 +137,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     const newHeaderPedido : HeaderPedido = this.form.value;
     if(this.isEditMode){
       newHeaderPedido.id = this.currentId;
-      this.servicioPedido.editarPedido(newHeaderPedido).subscribe(()=>{
+      this.servicioPedido.editarPedido(newHeaderPedido).subscribe((updatepedido)=>{
         alert("Pedido editado");
         this.cargarHeader();
       });
@@ -155,13 +155,13 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
        provincia:'', 
        direccion:'',
     });
-    this.currentId = 0;
+    this.currentId = '';
     this.isEditMode = false;
   }
  
   verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
-      
+      this.header.id = this.header.id+1;
       this.header.productos = header; // Guarda los productos en el atributo productos de headerPedido 
       this.header.Total = this.calcularTotal(); // Calcula el total del pedido 
       console.log('Productos en el carrito:', this.header.productos); // Muestra el listado de productos en la consola
@@ -169,6 +169,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     });
    
   }
+  
   cargarHeader():void{
     this.servicioPedido.getHeaderPedido().subscribe((headerPedido=this.headerPedido)=>{
       this.headerPedido= headerPedido;
@@ -179,13 +180,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     return this.total = this.header.productos.reduce((acc, prod) => acc + prod.precio, 0); 
   }
   
-  trackByFn(index: number, item: Producto): number { 
-    return item.id; 
-  }
-  generateId(): number {
-    const maxId = this.dataSource.data.reduce((max, item) => (item.id > max ? item.id : max), 0);
-    return maxId + 1;
-  }
+  
   
 
 
@@ -194,7 +189,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       if (this.form.valid) { 
         this.header = { 
           ...this.header, 
-          id: this.generateId(), 
+          id: this.form.value.id,
           nombresCompletos: this.form.value.nombres, 
           cedula: this.form.value.cedula, 
           telefono: this.form.value.telefono,

@@ -1,7 +1,7 @@
 import { Producto } from "./Producto";
 
 export interface HeaderPedido{
-    id:number;
+    id:string;
     //id: number;
     nombresCompletos:string;
     cedula: string;
