@@ -107,10 +107,14 @@ export class CrudCategoriaComponent implements OnInit {
       alert('Formulario inválido');
       return;
     }
-
-    const nuevaCategoria: Categoria = this.form.value;
+  
+    // Construye la categoría y asegura que el ID sea un número
+    const nuevaCategoria: Categoria = {
+      ...this.form.value,
+      id: this.isEditMode ? this.currentID : this.generateId(), // Genera un ID entero
+    };
+  
     if (this.isEditMode) {
-      nuevaCategoria.id = this.currentID;
       this.categoriaService.actualizarCategoria(nuevaCategoria).subscribe(() => {
         alert('Categoría actualizada');
         this.getCategorias();
@@ -124,6 +128,13 @@ export class CrudCategoriaComponent implements OnInit {
       });
     }
   }
+  
+  // Genera un ID único como número entero
+  generateId(): number {
+    const maxId = this.dataSource.data.reduce((max, item) => (item.id > max ? item.id : max), 0);
+    return maxId + 1;
+  }
+  
 
   clearForm(): void {
     this.form.reset({

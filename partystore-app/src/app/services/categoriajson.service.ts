@@ -15,9 +15,16 @@ export class CategoriajsonService {
 
   // Obtener todas las categorías
   obtenerCategorias(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(this.jsonURL);
+    return this.http.get<Categoria[]>(this.jsonURL).pipe(
+      map((categorias) =>
+        categorias.map((categoria) => ({
+          ...categoria,
+          id: Number(categoria.id), // Asegura que el ID sea un número
+        }))
+      )
+    );
   }
-
+  
   // Buscar categorías por nombre o descripción
   buscarCategorias(
     termino: string = '',
@@ -52,8 +59,13 @@ export class CategoriajsonService {
 
   // Crear una nueva categoría
   crearCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.jsonURL, categoria);
+    const nuevaCategoria = {
+      ...categoria,
+      id: parseInt(categoria.id as unknown as string, 10), // Convierte el ID a entero si es necesario
+    };
+    return this.http.post<Categoria>(this.jsonURL, nuevaCategoria);
   }
+  
 
   // Actualizar una categoría existente
   actualizarCategoria(categoria: Categoria): Observable<Categoria> {
