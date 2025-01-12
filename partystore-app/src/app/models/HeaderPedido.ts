@@ -12,5 +12,5 @@ export interface HeaderPedido{
     provincia: string;
     
     total: number; 
-    estado: true;
+    isActive: true;
 }

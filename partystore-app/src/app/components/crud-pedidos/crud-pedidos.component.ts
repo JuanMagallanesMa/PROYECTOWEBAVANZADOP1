@@ -72,7 +72,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //datasources para la tabla
   dataSourceHeader = new MatTableDataSource<HeaderPedido>(); 
   //definir las columnas a mostrar en la tabla
-  displayedColumns: string[] = ['id', 'name', 'cedula','telefono', 'provincia', 'address','total', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'cedula','telefono', 'provincia', 'address','total','isActive', 'acciones'];
   columnAliases = {
     id: 'id', 
     name: 'Nombres', 
@@ -81,6 +81,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     provincia:'Provincia', 
     address:'Direccion',
     total:'Total', 
+    isActive: 'Estado',
     acciones: 'Acciones' };
   //constructor con los servicios
   constructor(
@@ -103,8 +104,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       //email: ["", [Validators.required, Validators.email]],
        provincia: ["", Validators.required], 
-       //ciudad: ["", Validators.required], postal: ["", Validators.required], 
-       address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s,\.]+$/)]]
+       isActive: [true],
+       address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]]
   });
   
     
@@ -209,10 +210,12 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       
       name: pedido.name, 
       cedula: pedido.cedula, 
-      telephone: pedido.telefono, 
-       provincia:pedido.provincia, 
+      telefono: pedido.telefono, 
+       
        address:pedido.address,
-       Total:pedido.total
+       provincia:pedido.provincia, 
+       isActive:pedido.isActive,
+       total:pedido.total
     });
     console.log('Editar header:', pedido);
   } 
