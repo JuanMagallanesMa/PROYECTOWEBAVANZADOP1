@@ -1,13 +1,16 @@
 import { Producto } from "./Producto";
+import { Usuario } from "./Usuario";
 
 export interface HeaderPedido{
-    id:string;
-    estado: string;
-    nombresCompletos:string;
+    id:number;
+    //idUser: number;
+    //user: Usuario;
+    name:string;
     cedula: string;
     telefono: string;
+    address:string;
     provincia: string;
-    direccion:string;
-    productos: Producto[];
-    Total: number; 
+    
+    total: number; 
+    estado: true;
 }

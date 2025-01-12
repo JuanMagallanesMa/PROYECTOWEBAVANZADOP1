@@ -29,6 +29,8 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatRadioButton } from '@angular/material/radio';
+import { HeaderpedidoApiService } from '../../services/headerpedido-api.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -50,88 +52,67 @@ import { MatRadioButton } from '@angular/material/radio';
     MatIconModule,
     MatButtonModule  ,
     TableComponent,
-    MatRadioButton
+    MatRadioButton,
+    MatCheckboxModule,
   ]
 })
 export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //obtener datos del formulario y guardarlo
-  provinciaSeleccionada: string = '';
+  provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas"]
   isEditMode:boolean=false;
-  currentId!:string;
+  currentId!:number;
   //inicializacion del formgroup
   form!: FormGroup;
-  //error de mensaje
-  errorMessage = signal('');
+  estate:boolean=true;
+  total:number=10;
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
-  // Opciones o llamado a otros modelo
-  header: HeaderPedido ;
+  
   headerPedido: HeaderPedido[]=[];
   
-  cantidad:number=1;
-  total:number = 0;
- 
   //datasources para la tabla
-  dataSource = new MatTableDataSource<HeaderPedido>(); 
+  dataSourceHeader = new MatTableDataSource<HeaderPedido>(); 
   //definir las columnas a mostrar en la tabla
-  displayedColumns: string[] = ['id', 'nombresCompletos', 'cedula', 'provincia', 'productos','Total', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'cedula','telefono', 'provincia', 'address','total', 'acciones'];
   columnAliases = {
     id: 'id', 
-    nombresCompletos: 'Nombres', 
+    name: 'Nombres', 
     cedula:'Cedula', 
+    telefono: 'Telefono',
     provincia:'Provincia', 
-    productos: 'Productos',
+    address:'Direccion',
     total:'Total', 
     acciones: 'Acciones' };
   //constructor con los servicios
   constructor(
     private fb: FormBuilder,
-    private servicioPedido: PedidosjsonService,
+    private servicioHeaderPedido: HeaderpedidoApiService,
     private dialog: MatDialog
   ) { 
-    this.header = { 
-      estado: 'activo',
-      id: '0', 
-      //id: 0, 
-      nombresCompletos: '', 
-      cedula: '', 
-      telefono: '', 
-      //email: '', 
-      provincia: '', 
-      //ciudad: '', 
-      //zip: '', 
-      direccion: '', 
-      productos: [] ,
-      //date: new Date(0), // Inicializa con la fecha mínima 
-      Total: 0,
-
-     };
+    
     
   }
   ngAfterViewInit(): void {
-    this.ngOnInit();
+    
   }
   ngOnInit() {
    
     this.cargarHeader();
     this.form = this.fb.group({
-      
-      pedidoNumber: ["", [Validators.required, Validators.pattern(/^(?:[1-9][0-9]{0,2}|1000)$/)]], 
-      nombres: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
+      name: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
       cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       //email: ["", [Validators.required, Validators.email]],
        provincia: ["", Validators.required], 
        //ciudad: ["", Validators.required], postal: ["", Validators.required], 
-       direccion: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s,\.]+$/)]]
-
-
+       address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s,\.]+$/)]]
   });
   
     
-    this.verCarrito();
+   // this.verCarrito();
 
   }
   onSubmit():void{
+    
     if(this.form.invalid){
       console.log("invalid")
       return;
@@ -139,29 +120,32 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     const newHeaderPedido : HeaderPedido = this.form.value;
     if(this.isEditMode){
       newHeaderPedido.id = this.currentId;
-      this.servicioPedido.editarPedido(newHeaderPedido).subscribe((updatepedido)=>{
+      this.servicioHeaderPedido.updateHeaderPedido(newHeaderPedido).subscribe((updatepedido)=>{
         alert("Pedido editado");
         this.cargarHeader();
       });
     }else{
-      this.agregarheader();
+      this.servicioHeaderPedido.addHeaderPedido(newHeaderPedido).subscribe((updatepedido)=>{
+        alert("Pedido agregado");
+        this.cargarHeader();
+      });
     }
     this.clearForm();
+    
   }
   clearForm():void{
     this.form.reset({
-      pedidoNumber: '', 
-      nombres: '', 
+      name: '', 
       cedula: '', 
-      telefono: '', 
+      telephone: '', 
        provincia:'', 
-       direccion:'',
+       address:'',
     });
-    this.currentId = '';
+    this.currentId = 0;
     this.isEditMode = false;
   }
  
-  verCarrito():void{
+  /*verCarrito():void{
     this.servicioPedido.obtenerProductosCart().subscribe(header => { 
       
       this.header.productos = header; // Guarda los productos en el atributo productos de headerPedido 
@@ -170,22 +154,21 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       console.log(this.header.Total)
     });
    
-  }
+  }*/
   
   cargarHeader():void{
-    this.servicioPedido.getHeaderPedido().subscribe((headerPedido=this.headerPedido)=>{
-      this.headerPedido= headerPedido;
-      this.dataSource.data = headerPedido;
+    this.servicioHeaderPedido.getHeaderPedido().subscribe((datos:HeaderPedido[])=>{
+      this.dataSourceHeader.data = datos;
     });
   }
-  calcularTotal():number { 
+ /* calcularTotal():number { 
     return this.total = this.header.productos.reduce((acc, prod) => acc + prod.precio, 0); 
-  }
+  }*/
   
   
   
 
-
+/*
   agregarheader(): void { 
     
       if (this.form.valid) { 
@@ -194,7 +177,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
           id: this.form.value.pedidoNumber,
           nombresCompletos: this.form.value.nombres, 
           cedula: this.form.value.cedula, 
-          telefono: this.form.value.telefono,
+          telephone: this.form.value.telephone,
           provincia: this.form.value.provincia, 
           direccion: this.form.value.direccion, 
           
@@ -212,36 +195,42 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     
     
   }
-    
+    */
+
+
   handleEdit(pedido: HeaderPedido) { 
     this.isEditMode = true;
     if(pedido && pedido.id){
       this.currentId= pedido.id;
-    }
+    }else{
+    console.log("Header o el id del header estan undefined");
+   }
     this.form.setValue({
-      pedidoNumber: pedido.id, 
-      nombres: pedido.nombresCompletos, 
+      
+      name: pedido.name, 
       cedula: pedido.cedula, 
-      estado: pedido.estado,
-      telefono: pedido.telefono, 
+      telephone: pedido.telefono, 
        provincia:pedido.provincia, 
-       direccion:pedido.direccion
+       address:pedido.address,
+       Total:pedido.total
     });
-    console.log('Editar usuario:', pedido);
+    console.log('Editar header:', pedido);
   } 
   
   handleDelete(pedido: HeaderPedido) { 
     const dialogRef = this.dialog.open(MyDialogComponent, {
       data: {
-        titulo: 'Eliminación de Categoría',
-        contenido: `¿Estás seguro de eliminar el pedido ${pedido.id} de ${pedido.nombresCompletos}?`,
+        titulo: 'Eliminación de Pedido',
+        contenido: `¿Estás seguro de eliminar el pedido ${pedido.id} de ${pedido.name}?`,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 'aceptar') {
-        this.servicioPedido.eliminarPedido(pedido).subscribe(() => {
+        this.servicioHeaderPedido.desactiveHeaderPedido(pedido).subscribe(() => {
           this.cargarHeader();
         });
+      }else if(result ==="cancelar"){
+        
       }
     });
 
@@ -250,8 +239,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   }
   search(searchInput:HTMLInputElement){
     if(searchInput.value){
-      this.servicioPedido.getHeaderPedidoSearch(searchInput.value).subscribe((datos:HeaderPedido[])=>{
-        this.dataSource.data = datos;
+      this.servicioHeaderPedido.getHeaderPedidoSearch(searchInput.value).subscribe((datos:HeaderPedido[])=>{
+        this.dataSourceHeader.data = datos;
       });
     }else{
       this.cargarHeader();

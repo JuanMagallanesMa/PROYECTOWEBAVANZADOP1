@@ -35,7 +35,7 @@ export class PedidosjsonService {
   eliminarPedido(id: HeaderPedido): Observable<void> {
     return this.http.delete<void>(`${this.jsonUrlHeader}/${id.id}`);
   }
-  getHeaderPedidoSearch(id?: string, cedula?: string): Observable<HeaderPedido[]> {
+  getHeaderPedidoSearch(id?: number, cedula?: string): Observable<HeaderPedido[]> {
     return this.http.get<HeaderPedido[]>(this.jsonUrlHeader).pipe(
       map((pedidos) =>
         pedidos.filter((pedido) =>

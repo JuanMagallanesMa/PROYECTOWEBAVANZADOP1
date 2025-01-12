@@ -10,35 +10,17 @@
          
           <div mat-subheader>Datos Personales</div>
            <!-- Campos del formulario -->
-          <div class="oneInputs">
-              <mat-form-field appearance="fill" class="idpedido">
-                  <mat-label>Pedido</mat-label>
-                  <input type="text" matInput  formControlName="pedidoNumber">
-                  <mat-error>
-                    @if(form.get('pedidoNumber')?.invalid &&(form.get('pedidoNumber')?.dirty || form.get('pedidoNumber')?.touched)){
-                        @if(form.get('pedidoNumber')?.errors?.['required']) {
-                        Numero de pedido es requerido
-                        }
-                        @else if(form.get('pedidoNumber')?.errors?. ['pattern']){
-                        El titulo solo debe contener numeros
-                        }
-                    }
-                  </mat-error>
-                        
-                        
-              </mat-form-field>
-          </div>
-          
+        
           <div class="twoInputs">
               <mat-form-field>
                   <mat-label>Nombres Completos</mat-label>
-                  <input matInput required type="text" formControlName="nombres">
+                  <input matInput required type="text" formControlName="name">
                   <mat-error>
-                    @if(form.get('nombres')?.invalid &&(form.get('nombres')?.dirty || form.get('nombres')?.touched)){
-                        @if(form.get('nombres')?.errors?.['required']) {
-                        Nombres completos es requerido
+                    @if(form.get('name')?.invalid &&(form.get('name')?.dirty || form.get('name')?.touched)){
+                        @if(form.get('name')?.errors?.['required']) {
+                        name completos es requerido
                         }
-                        @else if(form.get('nombres')?.errors?. ['pattern']){
+                        @else if(form.get('name')?.errors?. ['pattern']){
                         Los nommbres solo debe contener letras
                         }
                     }
@@ -78,11 +60,12 @@
           </div>
           <div class="oneInputs">
               <mat-form-field>
-                  <mat-label>Provincia</mat-label>
-                  <mat-select [(value)]="provinciaSeleccionada" formControlName="provincia">
-                      <mat-option value="Guayas">Guayas</mat-option>
-                      <mat-option value="Pichincha">Pichincha</mat-option>
-                  </mat-select>
+                    <mat-label>Provincia</mat-label>
+                    <mat-select formControlName="provincia">
+                        @for (provincia of provincias; track $index) {
+                            <mat-option [value]="provincia">{{provincia}}</mat-option>
+                        }  
+                    </mat-select>
               </mat-form-field>
               
           </div>
@@ -91,19 +74,20 @@
           <div class="oneInputs">
               <mat-form-field class="example-full-width">
                   <mat-label>Dirección</mat-label>
-                  <textarea matInput placeholder="Ej... Mapasingue Este" formControlName="direccion"></textarea>
+                  <textarea matInput placeholder="Ej... Mapasingue Este" formControlName="address"></textarea>
                   <mat-error>
-                    @if(form.get('direccion')?.invalid &&(form.get('direccion')?.dirty || form.get('direccion')?.touched)){
-                        @if(form.get('direccion')?.errors?.['required']) {
+                    @if(form.get('address')?.invalid &&(form.get('address')?.dirty || form.get('address')?.touched)){
+                        @if(form.get('address')?.errors?.['address']) {
                         Direccion es requerido
                         }
-                        @else if(form.get('direccion')?.errors?. ['direccion']){
+                        @else if(form.get('address')?.errors?. ['address']){
                         Direccion debe contener letras y numeros
                         }
                     }
                     </mat-error>
               </mat-form-field>
           </div>
+          <mat-label formControlName="Total">Total: {{  total| currency: 'USD' }}</mat-label>
 
           <div class="acciones-form">
             <button mat-flat-button type="submit">Agregar</button>
@@ -113,7 +97,8 @@
       </form>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
-  <div class="row" id="scroll">
+<!-- <div class="row" id="scroll">
+
       <div mat-subheader>Carrito</div>
       <mat-list class="centered-list">
           <ng-container *ngIf="header.productos.length; else noProducts">
@@ -138,7 +123,10 @@
       <div class="total">
           <h3>Total: {{ total | currency: 'USD' }}</h3>
       </div>
-  </div>
+    
+    </div>
+    -->
+    
 </div>
 <mat-divider></mat-divider>
 <div class="ver-info">
@@ -147,12 +135,12 @@
         <mat-form-field>
             <mat-label>Buscar: </mat-label>
             <input matInput type="search" placeholder="Numero de pedido" #searchInput 
-            (keyup)="search(searchInput)"/>
+            />
         </mat-form-field>
-        <button mat-flat-button (click)="search(searchInput)">Buscar</button>
+        <button mat-flat-button >Buscar</button>
       </div>
     <app-table
-        [dataSource]="dataSource" 
+        [dataSource]="dataSourceHeader" 
         [displayedColumns]="displayedColumns" 
         [columnAliases]="columnAliases" 
         (onEdit)="handleEdit($event)" 
