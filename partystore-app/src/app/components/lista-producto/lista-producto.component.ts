@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PedidosjsonService } from '../../services/pedidosjson.service';
 import { CartService } from '../../services/cart.service';
-import { Cart } from '../../interface/cart';
 
 @Component({
   selector: 'app-lista-producto',

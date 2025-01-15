@@ -23,6 +23,7 @@ import { MatRadioButton } from '@angular/material/radio';
 import { HeaderpedidoApiService } from '../../services/headerpedido-api.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -57,7 +58,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   //inicializacion del formgroup
   form!: FormGroup;
   estate:boolean=true;
-  total:number=10;
+  
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   
   headerPedido: HeaderPedido[]=[];
@@ -80,7 +81,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   constructor(
     private fb: FormBuilder,
     private servicioHeaderPedido: HeaderpedidoApiService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private servicioCart: CartService
   ) { 
     
     
@@ -98,7 +100,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       //email: ["", [Validators.required, Validators.email]],
        provincia: ["", Validators.required], 
        isActive: [true],
-       address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]]
+       address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
+       total: [this.servicioCart.getTotal()]
   });
   
     
@@ -134,6 +137,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       telephone: '', 
        provincia:'', 
        address:'',
+       total:0 
     });
     this.currentId = 0;
     this.isEditMode = false;
