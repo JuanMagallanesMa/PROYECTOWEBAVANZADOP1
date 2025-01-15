@@ -1,0 +1,24 @@
+<div *ngIf="(cartItems$ | async) as cartItems; else emptyCart">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <h3>{{ item.nombre }}</h3>
+      <p>Precio unitario: ${{ item.precio }}</p>
+      <p>
+        Cantidad:
+        <input
+          type="number"
+          [value]="item.cantidadVenta"
+          (change)="updateQuantity(item.id, $event.target.valueAsNumber)"
+          min="1"
+        />
+      </p>
+      <p>Total: ${{ item.cantidadVenta * item.precio }}</p>
+      <button (click)="removeFromCart(item.id)">Eliminar</button>
+    </div>
+    <h3>Total del carrito: ${{ total }}</h3>
+    <button (click)="clearCart()">Vaciar carrito</button>
+  </div>
+  
+  <ng-template #emptyCart>
+    <p>El carrito está vacío</p>
+  </ng-template>
+  

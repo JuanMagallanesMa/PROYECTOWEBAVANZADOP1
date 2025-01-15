@@ -1,36 +1,28 @@
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import {ChangeDetectionStrategy,  signal} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import { FormBuilder, FormsModule,  Validators} from '@angular/forms';
-
-import {merge} from 'rxjs';
-import { UsuarioService } from '../../services/usuario.service';
-import { Usuario } from '../../models/Usuario';
+import { CartComponent } from '../cart/cart.component';
 import { TableComponent } from '../shared/table/table.component';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { map, Observable, startWith } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import { Producto } from '../../models/Producto';
-import { ProductoService } from '../../services/producto.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderPedido } from '../../models/HeaderPedido';
-import { PedidosjsonService } from '../../services/pedidosjson.service';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatRadioButton } from '@angular/material/radio';
 import { HeaderpedidoApiService } from '../../services/headerpedido-api.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -54,6 +46,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     TableComponent,
     MatRadioButton,
     MatCheckboxModule,
+    CartComponent,
   ]
 })
 export class CrudPedidosComponent implements OnInit , AfterViewInit{

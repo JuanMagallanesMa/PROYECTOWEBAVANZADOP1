@@ -97,38 +97,11 @@
       </form>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
-<!-- <div class="row" id="scroll">
 
-      <div mat-subheader>Carrito</div>
-      <mat-list class="centered-list">
-          <ng-container *ngIf="header.productos.length; else noProducts">
-              <mat-card class="card-productos" appearance="outlined" *ngFor="let prod of header.productos; track: $prod">
-                  <mat-card-header>
-                      <mat-card-title-group>
-                          <img mat-card-sm-image [src]="prod.imagen">
-                          <mat-card-title>{{prod.nombre}}</mat-card-title>
-                          <mat-card-subtitle>{{prod.precio | currency: 'USD'}}</mat-card-subtitle>
-                      </mat-card-title-group>
-                  </mat-card-header>
-                  <mat-card-content>
-                      {{prod.descripcion}}
-                  </mat-card-content>
-                 
-              </mat-card>
-          </ng-container>
-          <ng-template #noProducts>
-              <p>No hay productos</p>
-          </ng-template>
-      </mat-list>
-      <div class="total">
-          <h3>Total: {{ total | currency: 'USD' }}</h3>
-      </div>
-    
-    </div>
-    -->
     
 </div>
 <mat-divider></mat-divider>
+<app-cart></app-cart>
 <div class="ver-info">
     <!-- Buscador -->
     <div class="search-container">
