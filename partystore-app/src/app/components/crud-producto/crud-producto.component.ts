@@ -116,7 +116,7 @@ export class CrudProductoComponent implements OnInit {
 
   editar(producto: Producto): void {
     this.isEditMode = true;
-    this.currentID = producto.id; // Cambié idProducto por id
+    this.currentID = producto.id; 
 
     this.form.setValue({
       nombre: producto.nombre,
@@ -135,7 +135,7 @@ export class CrudProductoComponent implements OnInit {
 
     const nuevoProducto: Producto = this.form.value;
     if (this.isEditMode) {
-      nuevoProducto.id = this.currentID; // Cambié idProducto por id
+      nuevoProducto.id = this.currentID; 
       this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
         alert('Producto actualizado');
         this.getProductos();
