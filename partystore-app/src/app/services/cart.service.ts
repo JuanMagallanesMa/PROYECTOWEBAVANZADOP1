@@ -20,9 +20,9 @@ export class CartService {
   addToCart(producto: Producto, cantidad: number = 1): void {
     if (this.cartItems.has(producto.id)) {
       const existing = this.cartItems.get(producto.id)!;
-      existing.cantidadVenta += cantidad;
+      existing.stock += cantidad;
     } else {
-      this.cartItems.set(producto.id, { ...producto, cantidadVenta: cantidad });
+      this.cartItems.set(producto.id, { ...producto, stock: cantidad });
     }
     this.updateCart();
   }
@@ -32,7 +32,7 @@ export class CartService {
     if (this.cartItems.has(productId)) {
       const item = this.cartItems.get(productId)!;
       if (cantidad > 0) {
-        item.cantidadVenta = cantidad;
+        item.stock = cantidad;
       } else {
         this.cartItems.delete(productId); // Si la cantidad es 0, eliminar del carrito
       }
@@ -57,7 +57,7 @@ export class CartService {
   // Obtener el total del carrito
   getTotal(): number {
     return Array.from(this.cartItems.values()).reduce(
-      (total, item) => total + item.precio * item.cantidadVenta,
+      (total, item) => total + item.precio * item.stock,
       0
     );
   }

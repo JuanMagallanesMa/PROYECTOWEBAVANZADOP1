@@ -6,13 +6,13 @@
         Cantidad:
         <input
           type="number"
-          [value]="item.cantidadVenta"
+          [value]="item.stock"
           #quantityInput
           (change)="updateQuantity(item.id, quantityInput.valueAsNumber)"
           min="1"
         />
       </p>
-      <p>Total: ${{ item.cantidadVenta * item.precio }}</p>
+      <p>Total: ${{ item.stock * item.precio }}</p>
       <button (click)="removeFromCart(item.id)">Eliminar</button>
     </div>
     <h3>Total del carrito: ${{ total }}</h3>
