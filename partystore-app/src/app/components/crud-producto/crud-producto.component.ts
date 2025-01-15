@@ -39,13 +39,14 @@ export class CrudProductoComponent implements OnInit {
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'estado', 'acciones']; 
+  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'estado','stock', 'acciones' ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
     categoria: 'Categoría',
     estado: 'Estado',
+    stock: 'Stock',
     acciones: 'Acciones',
   };
   categoriasDisponibles: any;
@@ -116,12 +117,13 @@ export class CrudProductoComponent implements OnInit {
 
   editar(producto: Producto): void {
     this.isEditMode = true;
-    this.currentID = producto.id; // Cambié idProducto por id
+    this.currentID = producto.id; 
 
     this.form.setValue({
       nombre: producto.nombre,
       descripcion: producto.descripcion,
       precio: producto.precio,
+      stock: producto.stock,
       estado: producto.estado,
       categoria: producto.categoria,
     });
@@ -135,7 +137,7 @@ export class CrudProductoComponent implements OnInit {
 
     const nuevoProducto: Producto = this.form.value;
     if (this.isEditMode) {
-      nuevoProducto.id = this.currentID; // Cambié idProducto por id
+      nuevoProducto.id = this.currentID; 
       this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
         alert('Producto actualizado');
         this.getProductos();
@@ -155,6 +157,7 @@ export class CrudProductoComponent implements OnInit {
       nombre: '',
       descripcion: '',
       precio: '',
+      stock: '',
       estado: 'activo',
       categoria: '',
     });
