@@ -9,6 +9,6 @@ import { CartService } from './services/cart.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(),
-    provideHttpClient(), provideAnimationsAsync(),CartService
+    provideHttpClient(), provideAnimationsAsync(),CartService, provideAnimationsAsync()
   ]
 };

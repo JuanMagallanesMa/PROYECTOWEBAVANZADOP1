@@ -1,10 +1,11 @@
 export interface Producto {
   id: number;
   nombre: string;
-  categoria: string;
+  categoria: category;
+  categoryId: number;
   precio: number;
   descripcion: string;
   imagen: string;
   stock: number;
-  estado: string;
+  isActive: boolean;
 }
