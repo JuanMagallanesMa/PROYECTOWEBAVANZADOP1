@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
+import { ProductoApiService } from '../../services/producto-api.service';
 
 @Component({
   selector: 'app-crud-producto', 
@@ -39,13 +40,13 @@ export class CrudProductoComponent implements OnInit {
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'estado','stock', 'acciones' ]; 
+  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones' ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
     categoria: 'Categoría',
-    estado: 'Estado',
+    isActive: 'isActive',
     stock: 'Stock',
     acciones: 'Acciones',
   };
@@ -54,12 +55,12 @@ export class CrudProductoComponent implements OnInit {
   inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoService,
+    private productoService: ProductoApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) {
     this.form = this.fb.group({
-      estado: [[]],
+      isActive: [[]],
     });
   }
 
@@ -70,7 +71,7 @@ export class CrudProductoComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
       precio: ['', [Validators.required, Validators.min(0)]],
-      estado: ['activo', Validators.required],
+      isActive: ['activo', Validators.required],
       categoria: ['', Validators.required], 
     });
 
@@ -124,7 +125,7 @@ export class CrudProductoComponent implements OnInit {
       descripcion: producto.descripcion,
       precio: producto.precio,
       stock: producto.stock,
-      estado: producto.estado,
+      isActive: producto.isActive,
       categoria: producto.categoria,
     });
   }
@@ -158,7 +159,7 @@ export class CrudProductoComponent implements OnInit {
       descripcion: '',
       precio: '',
       stock: '',
-      estado: 'activo',
+      isActive: 'activo',
       categoria: '',
     });
     this.currentID = 0;
