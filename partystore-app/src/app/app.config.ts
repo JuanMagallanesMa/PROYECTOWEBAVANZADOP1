@@ -9,10 +9,6 @@ import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(),
-<<<<<<< HEAD
     provideHttpClient(), provideAnimationsAsync()
-=======
-    provideHttpClient(), provideAnimationsAsync(),CartService, provideAnimationsAsync()
->>>>>>> 51da6a3b50a31dc147e59a98a0f23064ea430ef6
   ]
 };
