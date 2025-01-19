@@ -80,8 +80,8 @@ export class CrudProductoComponent implements OnInit {
       const searchTerm = filter.trim().toLowerCase();
       return (
         data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) ||
-        (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
+        data.descripcion.toLowerCase().includes(searchTerm) 
+        //|| (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
       );
     };
   }
