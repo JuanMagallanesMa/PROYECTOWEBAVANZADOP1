@@ -2,13 +2,13 @@ import { HeaderPedido } from "./HeaderPedido";
 import { Producto } from "./Producto";
 
 export interface DetailPedido{
-    id:number;
+    id?:number;
     orderId: number;
-    order: HeaderPedido;
+    order?: HeaderPedido;
     productId: number;
-    Product: Producto;
+    Product?: Producto;
     cantidad: number;
     subtotal: number;
-    isActive: true;
+    isActive: boolean;
     
 }

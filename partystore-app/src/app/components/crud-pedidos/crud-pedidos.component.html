@@ -97,11 +97,58 @@
       </form>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
+  <div *ngIf="cart.length > 0">
+    <h2>Carrito de Compras</h2>
+    
+    <!-- Usamos mat-table en lugar de la tabla HTML tradicional -->
+    <mat-table [dataSource]="cart" class="mat-elevation-z8">
+      
+      <!-- Definimos las columnas -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>Producto</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.nombre }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.precio | currency }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="subtotal">
+        <mat-header-cell *matHeaderCellDef>Subtotal</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.subtotal | currency }}</mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">
+          <button mat-raised-button color="warn" (click)="removeFromCart(item.productId)">
+            Remover
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Filas de la tabla -->
+      <mat-header-row *matHeaderRowDef="displayedColumnsCart"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsCart;"></mat-row>
+    </mat-table>
+    
+  
+    <!-- Total -->
+    <h3>Total: {{ cartTotal | currency }}</h3>
+  
+    <!-- Botón para guardar el pedido -->
+    <button mat-raised-button color="primary" (click)="onSubmit()">Guardar Pedido</button>
+  </div>
+  
     
 </div>
 <mat-divider></mat-divider>
-<app-cart></app-cart>
 <div class="ver-info">
     <!-- Buscador -->
     <div class="search-container">
