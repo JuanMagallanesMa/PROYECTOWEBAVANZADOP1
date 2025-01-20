@@ -75,13 +75,14 @@ export class CrudProductoComponent implements OnInit {
       categoria: ['', Validators.required], 
     });
 
-    // Configuración del filtro de MatTableDataSource
     this.dataSource.filterPredicate = (data: Producto, filter: string) => {
       const searchTerm = filter.trim().toLowerCase();
       return (
-        data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) ||
-        (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
+        data.nombre?.toLowerCase().includes(searchTerm) ||
+        data.descripcion?.toLowerCase().includes(searchTerm) || 
+        (data.categoria 
+          ? String(data.categoria).toLowerCase().includes(searchTerm)
+          : false)
       );
     };
   }
@@ -89,6 +90,8 @@ export class CrudProductoComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchValue = filterValue.trim().toLowerCase();
+
+    
     this.dataSource.filter = this.searchValue; 
   }
 
