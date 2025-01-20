@@ -8,9 +8,32 @@
       <mat-card-title>{{ prod.nombre }}</mat-card-title>
       <mat-card-subtitle>{{ prod.precio | currency: 'USD' }}</mat-card-subtitle>
       <p>{{ prod.descripcion }}</p>
+
+      <!-- Selector de cantidad -->
+      <mat-form-field appearance="fill" class="quantity-select">
+        <mat-label>Cantidad</mat-label>
+        <mat-select
+          [(ngModel)]="cantidades[prod.id]"
+          [disabled]="prod.stock === 0"
+          placeholder="Seleccione cantidad"
+        >
+          <mat-option
+            *ngFor="let qty of generarArrayDeStock(prod.stock)"
+            [value]="qty"
+          >
+            {{ qty }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-card-content>
+
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="agregarAlCarrito(prod)">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="agregarAlCarrito(prod)"
+        [disabled]="!cantidades[prod.id]"
+      >
         Agregar al carrito
       </button>
     </mat-card-actions>

@@ -2,70 +2,51 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Producto } from '../models/Producto';
+import { CartItem } from '../interface/CartItem';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems: Map<number, Producto> = new Map();
-  private cartSubject = new BehaviorSubject<Producto[]>([]);
+  private cartKey = 'shoppingCart';
 
-  // Obtener los ítems del carrito como observable
-  getCartItems(): Observable<Producto[]> {
-    return this.cartSubject.asObservable();
+  constructor() {}
+
+  getCart(): CartItem[] {
+    const cart = localStorage.getItem(this.cartKey);
+    return cart ? JSON.parse(cart) : [];
   }
 
-  // Agregar un producto al carrito (aumentar cantidad si ya existe)
-  addToCart(producto: Producto, cantidad: number = 1): void {
-    if (this.cartItems.has(producto.id)) {
-      const existing = this.cartItems.get(producto.id)!;
-      existing.stock += cantidad;
+  saveCart(cart: CartItem[]): void {
+    localStorage.setItem(this.cartKey, JSON.stringify(cart));
+  }
+
+  addToCart(item: CartItem): void {
+    const cart = this.getCart();
+    const existingItem = cart.find((i) => i.productId === item.productId);
+
+    if (existingItem) {
+      existingItem.cantidad = item.cantidad;
+      existingItem.subtotal = existingItem.cantidad * existingItem.precio;
     } else {
-      this.cartItems.set(producto.id, { ...producto, stock: cantidad });
+      cart.push(item);
     }
-    this.updateCart();
+
+    this.saveCart(cart);
   }
 
-  // Actualizar la cantidad de un producto en el carrito
-  updateQuantity(productId: number, cantidad: number): void {
-    if (this.cartItems.has(productId)) {
-      const item = this.cartItems.get(productId)!;
-      if (cantidad > 0) {
-        item.stock = cantidad;
-      } else {
-        this.cartItems.delete(productId); // Si la cantidad es 0, eliminar del carrito
-      }
-      this.updateCart();
-    }
-  }
-
-  // Eliminar un producto del carrito
   removeFromCart(productId: number): void {
-    if (this.cartItems.has(productId)) {
-      this.cartItems.delete(productId);
-      this.updateCart();
-    }
+    const cart = this.getCart(); // Obtener el carrito actual
+    const updatedCart = cart.filter((item) => item.productId !== productId);
+    this.saveCart(updatedCart);
+    this.getCart();
   }
 
-  // Vaciar el carrito
   clearCart(): void {
-    this.cartItems.clear();
-    this.updateCart();
+    localStorage.removeItem(this.cartKey);
   }
-
-  // Obtener el total del carrito
-  getTotal(): number {
-    return Array.from(this.cartItems.values()).reduce(
-      (total, item) => total + item.precio * item.stock,
-      0
-    );
-  }
-
-  // Actualizar el carrito
-  private updateCart(): void {
-    this.cartSubject.next(Array.from(this.cartItems.values()));
-  }
+  
 }
 
 

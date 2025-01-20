@@ -78,11 +78,9 @@ export class CrudProductoComponent implements OnInit {
     this.dataSource.filterPredicate = (data: Producto, filter: string) => {
       const searchTerm = filter.trim().toLowerCase();
       return (
-        data.nombre?.toLowerCase().includes(searchTerm) ||
-        data.descripcion?.toLowerCase().includes(searchTerm) || 
-        (data.categoria 
-          ? String(data.categoria).toLowerCase().includes(searchTerm)
-          : false)
+        data.nombre.toLowerCase().includes(searchTerm) ||
+        data.descripcion.toLowerCase().includes(searchTerm) ||
+        (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
       );
     };
   }
