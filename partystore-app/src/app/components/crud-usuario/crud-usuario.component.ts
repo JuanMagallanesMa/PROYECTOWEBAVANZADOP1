@@ -37,12 +37,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
       MatFormField,
       FormsModule,
       MatSelect,
-      MatListModule, MatDividerModule, DatePipe,
+      MatListModule, MatDividerModule, 
       MatCardModule,
       MatIconModule,
       MatButtonModule  ,
       TableComponent,
-      MatRadioButton,
       MatCheckboxModule
     ],
   templateUrl: './crud-usuario.component.html',

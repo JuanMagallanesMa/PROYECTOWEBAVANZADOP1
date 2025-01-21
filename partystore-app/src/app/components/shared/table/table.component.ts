@@ -24,7 +24,6 @@ export class TableComponent<T> implements AfterViewInit {
     this.dataSource.sort = this.sort; // Añadí la asignación del sort 
     
   } 
-    
   edit(item: T): void { 
     this.onEdit.emit(item); 
   } 

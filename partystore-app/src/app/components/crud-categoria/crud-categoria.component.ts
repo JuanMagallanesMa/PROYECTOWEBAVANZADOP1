@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Categoria } from '../../models/Categoria';
-import { CategoriajsonService } from '../../services/categoriajson.service';
+import { CategoriaApiService } from '../../services/categoria-api.service'; // Importa el servicio actualizado
 import { TableComponent } from '../shared/table/table.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,11 +14,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
-import { CategoriaApiService } from '../../services/categoria-api.service';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-
-
 
 @Component({
   selector: 'app-crud-categoria',
@@ -33,59 +28,58 @@ import { MatTableModule } from '@angular/material/table';
     MatSelectModule,
     MatButtonModule,
     MatRadioModule,
-    MatSortModule,
-    MatTableModule,
+    TableComponent,
   ],
 })
 export class CrudCategoriaComponent implements OnInit {
   form!: FormGroup;
-  isEditMode: boolean = false;
-  currentId!: number; 
+  isEditMode = false;
+  currentID!: number;
   dataSource = new MatTableDataSource<Categoria>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns: string[] = ['nombre', 'descripcion', 'tiposEvento', 'edadesAplicables', 'estado', 'acciones'];
+  columnAliases = {
+    nombre: 'Nombre',
+    descripcion: 'Descripción',
+    tiposEvento: 'Tipos de Evento',
+    edadesAplicables: 'Edades Aplicables',
+    estado: 'Estado',
+    acciones: 'Acciones',
+  };
 
   constructor(
-    private categoriaService: CategoriaApiService,
+    private categoriaService: CategoriaApiService, // Se actualiza la inyección del servicio
     private fb: FormBuilder,
-    private mydialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getCategorias();
+
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
+      descripcion: ['', [Validators.required, Validators.minLength(5)]],
       estado: ['activo', Validators.required],
-      edadesAplicables: [[]], // Lista de edades
-      tiposEvento: [[]] // Lista de tipos de evento
+      edadesAplicables: [[], Validators.required],
+      tiposEvento: [[], Validators.required],
     });
   }
 
-  // Obtener todas las categorías
   getCategorias(): void {
-    this.categoriaService.obtenerCategorias().subscribe((categorias: Categoria[]) => {
-      this.dataSource.data = categorias;
+    this.categoriaService.obtenerCategorias().subscribe((datos: Categoria[]) => {
+      this.dataSource.data = datos;
     });
   }
 
-  // Buscar categorías
-  search(searchInput: HTMLInputElement, edad: string, tipo: string, estado: string): void {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    // Aquí implementa la lógica para filtrar los datos según los parámetros.
-    console.log('Búsqueda:', { searchTerm, edad, tipo, estado });
-  }
-  
-
-  // Eliminar categoría
   eliminar(categoria: Categoria): void {
-    const dialogRef = this.mydialog.open(MyDialogComponent, {
+    const dialogRef = this.dialog.open(MyDialogComponent, {
       data: {
-        titulo: 'Eliminación de categoría',
-        contenido: `¿Estás seguro de eliminar la categoría: ${categoria.nombre}?`
+        titulo: 'Eliminación de Categoría',
+        contenido: `¿Estás seguro de eliminar la categoría ${categoria.nombre}?`,
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'aceptar') {
         this.categoriaService.eliminarCategoria(categoria.id).subscribe(() => {
           alert('Categoría eliminada exitosamente');
@@ -95,56 +89,68 @@ export class CrudCategoriaComponent implements OnInit {
     });
   }
 
-  // Editar categoría
   editar(categoria: Categoria): void {
     this.isEditMode = true;
-    if (categoria && categoria.id) {
-      this.currentId = categoria.id;
-      this.form.setValue({
-        nombre: categoria.nombre,
-        descripcion: categoria.descripcion,
-        estado: categoria.estado,
-        edadesAplicables: categoria.edadesAplicables,
-        tiposEvento: categoria.tiposEvento
-      });
-    }
+    this.currentID = categoria.id;
+
+    this.form.setValue({
+      nombre: categoria.nombre,
+      descripcion: categoria.descripcion,
+      estado: categoria.estado,
+      edadesAplicables: categoria.edadesAplicables,
+      tiposEvento: categoria.tiposEvento,
+    });
   }
 
-  // Enviar el formulario para agregar o actualizar la categoría
   onSubmit(): void {
     if (this.form.invalid) {
+      alert('Formulario inválido');
       return;
     }
 
-    const categoria: Categoria = this.form.value;
+    const nuevaCategoria: Categoria = {
+      ...this.form.value,
+      id: this.isEditMode ? this.currentID : this.generateId(),
+    };
+
     if (this.isEditMode) {
-      categoria.id = this.currentId;
-      this.categoriaService.actualizarCategoria(categoria).subscribe(() => {
-        alert('Categoría editada exitosamente');
+      this.categoriaService.actualizarCategoria(nuevaCategoria).subscribe(() => {
+        alert('Categoría actualizada');
         this.getCategorias();
+        this.clearForm();
       });
     } else {
-      this.categoriaService.crearCategoria(categoria).subscribe(() => {
-        alert('Categoría agregada exitosamente');
+      this.categoriaService.crearCategoria(nuevaCategoria).subscribe(() => {
+        alert('Categoría creada');
         this.getCategorias();
+        this.clearForm();
       });
     }
-
-    this.clearForm();
   }
 
-  // Limpiar el formulario
+  generateId(): number {
+    const maxId = this.dataSource.data.reduce((max, item) => (item.id > max ? item.id : max), 0);
+    return maxId + 1;
+  }
+
   clearForm(): void {
     this.form.reset({
       nombre: '',
       descripcion: '',
       estado: 'activo',
       edadesAplicables: [],
-      tiposEvento: []
+      tiposEvento: [],
     });
-    this.currentId = 0;
+    this.currentID = 0;
     this.isEditMode = false;
   }
-  displayedColumns: string[] = ['nombre', 'descripcion', 'estado', 'acciones'];
 
+  search(searchInput: HTMLInputElement, edadesAplicables?: string, tiposEvento?: string, estado?: string): void {
+    const searchTerm = searchInput.value.trim();
+    this.categoriaService
+      .buscarCategorias(searchTerm, edadesAplicables, tiposEvento, estado)
+      .subscribe((categorias: Categoria[]) => {
+        this.dataSource.data = categorias;
+      });
+  }
 }
