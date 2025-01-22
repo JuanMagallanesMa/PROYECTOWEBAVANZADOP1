@@ -51,14 +51,32 @@ export class CategoriaApiService {
     );
   }
 
-  // Crear una nueva categoría
-  crearCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.apiURL, categoria);
-  }
+// Crear una nueva categoría
+crearCategoria(categoria: Categoria): Observable<Categoria> {
+  // Convertir las propiedades al formato esperado
+  categoria.edadesAplicables = Array.isArray(categoria.edadesAplicables)
+    ? categoria.edadesAplicables
+    : JSON.parse(categoria.edadesAplicables as unknown as string);
+
+  categoria.tiposEvento = Array.isArray(categoria.tiposEvento)
+    ? categoria.tiposEvento
+    : JSON.parse(categoria.tiposEvento as unknown as string);
+
+  categoria.estado = typeof categoria.estado === 'boolean'
+    ? categoria.estado
+    : JSON.parse(categoria.estado as unknown as string);
+
+  return this.http.post<Categoria>(this.apiURL, categoria);
+}
+
 
   // Actualizar una categoría existente
   actualizarCategoria(categoria: Categoria): Observable<Categoria> {
-    const urlCategoria = `${this.apiURL}/${categoria.id}`; // URL: http://localhost:3000/categoria/id
+    // Asegúrate de que los valores sean arreglos si no lo son
+    categoria.edadesAplicables = Array.isArray(categoria.edadesAplicables) ? categoria.edadesAplicables : JSON.parse(categoria.edadesAplicables);
+    categoria.tiposEvento = Array.isArray(categoria.tiposEvento) ? categoria.tiposEvento : JSON.parse(categoria.tiposEvento);
+  
+    const urlCategoria = `${this.apiURL}/${categoria.id}`;
     return this.http.put<Categoria>(urlCategoria, categoria);
   }
 
