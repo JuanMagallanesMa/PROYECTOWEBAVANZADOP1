@@ -53,22 +53,17 @@ export class CategoriaApiService {
 
 // Crear una nueva categoría
 crearCategoria(categoria: Categoria): Observable<Categoria> {
-  // Convertir las propiedades al formato esperado
+  // Verifica que edadesAplicables y tiposEvento sean arreglos
   categoria.edadesAplicables = Array.isArray(categoria.edadesAplicables)
-    ? categoria.edadesAplicables
-    : JSON.parse(categoria.edadesAplicables as unknown as string);
+  ? categoria.edadesAplicables
+  : JSON.parse(categoria.edadesAplicables || '[]');
 
-  categoria.tiposEvento = Array.isArray(categoria.tiposEvento)
-    ? categoria.tiposEvento
-    : JSON.parse(categoria.tiposEvento as unknown as string);
-
-  categoria.estado = typeof categoria.estado === 'boolean'
-    ? categoria.estado
-    : JSON.parse(categoria.estado as unknown as string);
+categoria.tiposEvento = Array.isArray(categoria.tiposEvento)
+  ? categoria.tiposEvento
+  : JSON.parse(categoria.tiposEvento || '[]');
 
   return this.http.post<Categoria>(this.apiURL, categoria);
 }
-
 
   // Actualizar una categoría existente
   actualizarCategoria(categoria: Categoria): Observable<Categoria> {

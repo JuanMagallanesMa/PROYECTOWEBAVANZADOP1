@@ -115,7 +115,7 @@ export class CrudCategoriaComponent implements OnInit {
 
     const nuevaCategoria: Categoria = {
       ...this.form.value,
-      id: this.isEditMode ? this.currentID : this.generateId(),
+      id: this.isEditMode ? this.currentID : undefined,  // No incluir el id al crear una nueva categoría
     };
 
     if (this.isEditMode) {
@@ -144,7 +144,7 @@ export class CrudCategoriaComponent implements OnInit {
     this.form.reset({
       nombre: '',
       descripcion: '',
-      estado: '',
+      estado: 'activo',
       edadesAplicables: [],
       tiposEvento: [],
     });

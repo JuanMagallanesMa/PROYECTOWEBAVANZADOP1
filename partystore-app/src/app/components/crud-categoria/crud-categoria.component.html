@@ -22,9 +22,10 @@
   </mat-form-field>
 
   <mat-radio-group formControlName="estado" class="form-element">
-    <mat-radio-button [value]="'true'">Activo</mat-radio-button>
-    <mat-radio-button [value]="'false'">Inactivo</mat-radio-button>
+    <mat-radio-button [value]="true">Activo</mat-radio-button> <!-- Booleano verdadero -->
+    <mat-radio-button [value]="false">Inactivo</mat-radio-button> <!-- Booleano falso -->
   </mat-radio-group>
+  
 
   <mat-form-field appearance="fill" class="form-element">
     <mat-label>Edades Aplicables</mat-label>
@@ -87,9 +88,9 @@
   <mat-form-field>
     <mat-label>Estado</mat-label>
     <mat-select #estadoSelect (selectionChange)="search(searchInput, edadSelect.value, tipoSelect.value, estadoSelect.value)">
-      <mat-option value="">Todos</mat-option>
-      <mat-option value="true">Activo</mat-option>
-      <mat-option value="false">Inactivo</mat-option>
+      <mat-option [value]="null">Todos</mat-option> <!-- Usa `null` para "Todos" -->
+      <mat-option [value]="true">Activo</mat-option> <!-- Booleano verdadero -->
+      <mat-option [value]="false">Inactivo</mat-option> <!-- Booleano falso -->
     </mat-select>
   </mat-form-field>
 </div>
