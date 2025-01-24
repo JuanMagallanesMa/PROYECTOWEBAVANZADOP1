@@ -1,0 +1,40 @@
+<!--<p>crud-promociones works!</p>-->
+<!DOCTYPE html>
+<html lang="es">
+<main>
+    <section class="promo-form">
+      <h1> Nuevas Promociones</h1>
+  
+      <fieldset>
+        <legend>Información de la Promoción</legend>
+        <div class="form-group">
+          <label for="nombre">Nombre-Producto:</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+        </div>
+      </fieldset>
+  
+      <fieldset>
+        <legend>Detalles de la Promoción</legend>
+        <div class="form-group">
+          <label for="categoria">Categoría:</label>
+          <select id="categoria" name="categoria">
+            <option value="1">Decoración</option>
+            <option value="2">Disfraces</option>
+            <option value="3">Temáticas/Personajes</option>
+            <option value="4">Comida y bebida</option>
+            <option value="5">Juegos y Actividades</option>
+        </select>
+        </div>
+        <div class="form-group">
+          <label for="fecha_fin">Fin de Promo:</label>
+          <input type="date" id="fecha_fin" name="fecha_fin">
+        </div>
+      </fieldset>
+  
+      <button type="submit">Crear Promoción</button>
+    </section>
+  </main>

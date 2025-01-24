@@ -1,4 +1,5 @@
 export interface Categoria {
+  toLowerCase(): unknown;
   id: number; // Identificador único de la categoría
   nombre: string; // Nombre de la categoría
   descripcion: string; // Descripción de la categoría

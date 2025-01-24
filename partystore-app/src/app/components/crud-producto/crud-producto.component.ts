@@ -81,7 +81,7 @@ export class CrudProductoComponent implements OnInit {
       return (
         data.nombre.toLowerCase().includes(searchTerm) ||
         data.descripcion.toLowerCase().includes(searchTerm) ||
-        (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
+        (data.categoria ? data.categoryId. toLowerCase().includes(searchTerm) : false)
       );
     };
   }
@@ -166,3 +166,7 @@ export class CrudProductoComponent implements OnInit {
     this.isEditMode = false;
   }
 }
+function toLowerCase() {
+  throw new Error('Function not implemented.');
+}
+
