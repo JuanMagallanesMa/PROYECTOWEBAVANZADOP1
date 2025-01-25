@@ -15,7 +15,4 @@ export class CrudPromocionesComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   promociones: Promociones[] = [
-    ];
-}
-
-
+    ];}
