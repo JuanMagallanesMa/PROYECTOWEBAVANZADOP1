@@ -127,46 +127,62 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       name: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
       cedula: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       telefono: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
-      //email: ["", [Validators.required, Validators.email]],
+      
        provincia: ["", Validators.required], 
        isActive: [true],
        address: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
-       //total: [{ value: this.servicioCart.getTotal(), disabled: true }]
+       
     });
   
     
    // this.verCarrito();
 
   }
- 
+  loadCart(): void {
+    this.cart = this.cartService.getCart();
+    this.updateCartTotal();
+  }
   calculateTotal(): void {
     this.cartTotal = this.cart.reduce((sum, item) => sum + item.subtotal, 0);
   }
-  onSubmit():void{
-    
-    if(this.form.invalid){
-      console.log("invalid")
+  onSubmit(): void {
+    console.log('Contenido del carrito al presionar:', this.cart);
+  
+    if (this.form.invalid) {
+      console.log('Formulario inválido:', this.form.errors);
+      console.log('Estado de cada campo:', this.form.controls);
+      console.log('Invalid');
       return;
     }
+  
+    // Capturar el carrito actual en una variable local
+    const cartSnapshot = [...this.cart]; // Crear una copia del carrito
+    console.log('Snapshot del carrito:', cartSnapshot);
+  
     const newHeaderPedido: HeaderPedido = {
       ...this.form.value,
-      total: this.cartTotal, 
+      total: this.cartTotal,
     };
-    if(this.isEditMode){
+  
+    if (this.isEditMode) {
       newHeaderPedido.id = this.currentId;
-      this.servicioHeaderPedido.updateHeaderPedido(newHeaderPedido).subscribe((updatepedido)=>{
-        alert("Pedido editado");
+      this.servicioHeaderPedido.updateHeaderPedido(newHeaderPedido).subscribe(() => {
+        alert('Pedido editado');
         this.cargarHeader();
       });
-    }else{
+    } else {
       this.servicioHeaderPedido.addHeaderPedido(newHeaderPedido).subscribe((updatepedido) => {
-        const orderDetails = this.cart.map((item) => ({
+        console.log('Contenido del carrito antes de mapear los detalles:', cartSnapshot);
+  
+        const orderDetails = cartSnapshot.map((item) => ({
           orderId: updatepedido.id, // ID del pedido recién creado
           isActive: true,
           cantidad: item.cantidad,
           productId: item.productId,
           subtotal: item.subtotal,
         }));
+  
+        console.log('Detalles del pedido generados:', orderDetails);
   
         // Utiliza forkJoin para manejar todas las solicitudes de detalle
         const detailRequests = orderDetails.map((detail) =>
@@ -175,22 +191,22 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   
         forkJoin(detailRequests).subscribe(
           () => {
-            alert("Pedido agregado con todos los detalles");
+            alert('Pedido agregado con todos los detalles');
             this.cartService.clearCart(); // Limpia el carrito después de guardar
             this.loadCart();
             this.cargarHeader();
           },
           (error) => {
-            console.error("Error al guardar los detalles del pedido:", error);
-            alert("Hubo un error al guardar los detalles del pedido.");
+            console.error('Error al guardar los detalles del pedido:', error);
+            alert('Hubo un error al guardar los detalles del pedido.');
           }
         );
       });
     }
-    
+  
     this.clearForm();
-    
   }
+  
   clearForm():void{
     this.form.reset({
       name: '', 
@@ -222,10 +238,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       this.dataSourceHeader.data = datos;
     });
   }
-  loadCart(): void {
-    this.cart = this.cartService.getCart();
-    this.updateCartTotal();
-  }
+ 
 
   handleEdit(pedido: HeaderPedido) { 
     this.isEditMode = true;

@@ -141,7 +141,7 @@ export class CrudProductoComponent implements OnInit {
       precio: producto.precio,
       stock: producto.stock,
       isActive: producto.isActive,
-      categoria: producto.categoria,
+      categoria: producto.category,
     });
   }
 

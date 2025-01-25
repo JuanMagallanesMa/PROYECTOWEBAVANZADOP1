@@ -80,7 +80,7 @@ export class CrudUsuarioComponent {
       name: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/)]], 
       telephone: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]], 
       email: ["", [Validators.required, Validators.email]],
-      password: ["", Validators.required],
+      password: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]+$/), Validators.minLength(8), Validators.maxLength(10)]],
       isAviable: [true],
       role: ["", Validators.required]
       });

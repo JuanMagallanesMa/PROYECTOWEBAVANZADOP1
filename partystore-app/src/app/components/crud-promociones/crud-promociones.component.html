@@ -1,35 +1,77 @@
-<section class="promo-form">
-  <h1> Nuevas Promociones</h1>
+<h3>Agregar Promocion a Categoria</h3>
+<div class="container-productos">
+  
 
-  <fieldset>
-    <legend>Información de la Promoción</legend>
-    <div class="form-group">
-      <label for="nombre">Nombre-Producto:</label>
-      <input type="text" id="nombre" name="nombre" required>
-    </div>
-    <div class="form-group">
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-    </div>
-  </fieldset>
+  <!-- Formulario para agregar/editar productos -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingrese el nombre de la categoria" />
+      <mat-error *ngIf="form.get('nombre')?.invalid">El nombre es obligatorio y debe tener al menos 3 caracteres</mat-error>
+    </mat-form-field>
 
-  <fieldset>
-    <legend>Detalles de la Promoción</legend>
-    <div class="form-group">
-      <label for="categoria">Categoría:</label>
-      <select id="categoria" name="categoria">
-        <option value="1">Decoración</option>
-        <option value="2">Disfraces</option>
-        <option value="3">Temáticas/Personajes</option>
-        <option value="4">Comida y bebida</option>
-        <option value="5">Juegos y Actividades</option>
-    </select>
-    </div>
-    <div class="form-group">
-      <label for="fecha_fin">Fin de Promo:</label>
-      <input type="date" id="fecha_fin" name="fecha_fin">
-    </div>
-  </fieldset>
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Ingrese la descripción"></textarea>
+      <mat-error *ngIf="form.get('descripcion')?.invalid">La descripción es obligatoria y debe tener al menos 5 caracteres</mat-error>
+    </mat-form-field>
 
-  <button type="submit">Crear Promoción</button>
-</section>
+   
+    <div class="form-group">
+      <label for="categoria">Categoría</label>
+      <mat-form-field class="formElement">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoria">
+         
+            @for(categoria of categoria; track $index){
+                <mat-option [value]="categoria">{{categoria.nombre}}</mat-option>
+            }
+        </mat-select>
+        <mat-error *ngIf="form.get('categoria')?.invalid">La categoría es obligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Descuento en porcentaje</mat-label>
+        <textarea matInput formControlName="descuentoPorcentaje" placeholder="Escriba el descuento"></textarea>
+        
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de finalizacion</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaFin')?.invalid">La descripción es obligatoria </mat-error>
+      </mat-form-field>
+    </div>
+
+    
+
+    <button mat-flat-button color="accent" type="submit">
+      {{ isEditMode ? 'Actualizar' : 'Crear' }}
+    </button>
+    <button mat-stroked-button color="warn" type="button" (click)="clearForm()">Limpiar</button>
+  </form>
+  
+<!-- Barra de búsqueda -->
+<div class="search-container">
+  <mat-form-field appearance="fill" class="search-bar">
+    <mat-label>Buscar Producto</mat-label>
+    <input 
+      matInput 
+      placeholder="Buscar por nombre, descripción o categoría"
+      (input)="applyFilter($event)" />
+  </mat-form-field>
+</div>
+  <!-- Tabla de productos -->
+  <app-table
+  [dataSource]="dataSource"
+  [displayedColumns]="displayedColumns"
+  [columnAliases]="columnAliases"
+  (onEdit)="editar($event)"
+  (onDelete)="eliminar($event)">
+</app-table>
+</div>

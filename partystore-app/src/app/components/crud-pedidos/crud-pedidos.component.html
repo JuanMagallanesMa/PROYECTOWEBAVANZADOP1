@@ -81,50 +81,50 @@
               </mat-form-field>
           </div>
           <mat-divider [vertical]="false"></mat-divider>
-  <div *ngIf="cart.length > 0">
-    <h2>Carrito de Compras</h2>
-    <!-- Usamos mat-table en lugar de la tabla HTML tradicional -->
-    <mat-table [dataSource]="cart" class="mat-elevation-z8">
-      <!-- Definimos las columnas -->
-      <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef>Producto</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{ item.nombre }}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="precio">
-        <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{ item.precio | currency }}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="cantidad">
-        <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="subtotal">
-        <mat-header-cell *matHeaderCellDef>Subtotal</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{ item.subtotal | currency }}</mat-cell>
-      </ng-container>
+          <div *ngIf="cart.length > 0">
+            <h2>Carrito de Compras</h2>
+            <!-- Usamos mat-table en lugar de la tabla HTML tradicional -->
+            <mat-table [dataSource]="cart" class="mat-elevation-z8">
+              <!-- Definimos las columnas -->
+              <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef>Producto</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{ item.nombre }}</mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="precio">
+                <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{ item.precio | currency }}</mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="subtotal">
+                <mat-header-cell *matHeaderCellDef>Subtotal</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{ item.subtotal | currency }}</mat-cell>
+              </ng-container>
 
-      <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let item">
-          <button mat-raised-button color="warn" (click)="removeFromCart(item.productId)">
-            Remover
-          </button>
-        </mat-cell>
-      </ng-container>
-  
-      <!-- Filas de la tabla -->
-      <mat-header-row *matHeaderRowDef="displayedColumnsCart"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumnsCart;"></mat-row>
-    </mat-table>
-    
-  
-    <!-- Total -->
-    <h3>Total: {{ cartTotal | currency }}</h3>
+              <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let item">
+                  <button mat-raised-button color="warn" (click)="removeFromCart(item.productId)">
+                    Remover
+                  </button>
+                </mat-cell>
+              </ng-container>
+          
+              <!-- Filas de la tabla -->
+              <mat-header-row *matHeaderRowDef="displayedColumnsCart"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsCart;"></mat-row>
+            </mat-table>
+            
+          
+            <!-- Total -->
+            <h3>Total: {{ cartTotal | currency }}</h3>
 
-  </div>
+          </div>
           <div class="acciones-form">
 
             <button mat-flat-button type="submit">Agregar</button>
