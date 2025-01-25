@@ -27,6 +27,8 @@ import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../interface/CartItem';
 import { DetailpedidoApiService } from '../../services/detailpedido-api.service';
 import { forkJoin } from 'rxjs';
+import { DebugTracingFeature } from '@angular/router';
+import { DetailPedido } from '../../models/DetailPedido';
 
 @Component({
   selector: 'app-crud-pedidos',
@@ -59,6 +61,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas"]
   isEditMode:boolean=false;
   currentId!:number;
+  viewOrderDetail:boolean = false;
+  isEmpty:boolean =false;
   //inicializacion del formgroup
   form!: FormGroup;
   estate:boolean=true;
@@ -72,8 +76,9 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   
   //datasources para la tabla
   dataSourceHeader = new MatTableDataSource<HeaderPedido>(); 
+  dataSourceDetail = new MatTableDataSource<DetailPedido>();
   //definir las columnas a mostrar en la tabla
-  displayedColumns: string[] = ['id', 'name', 'cedula','telefono', 'provincia', 'address','total','isActive', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'cedula','telefono', 'provincia', 'address','total','isActive', 'acciones', 'view'];
   columnAliases = {
     id: 'id', 
     name: 'Nombres', 
@@ -83,7 +88,20 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     address:'Direccion',
     total:'Total', 
     isActive: 'Estado',
-    acciones: 'Acciones' };
+    acciones: 'Acciones',
+    view: 'View', 
+  };
+  displayedColumnsDetail: string[] = ['id', 'orderId', 'isActive','cantidad', 'productId', 'subtotal', 'accionesdetail'];
+  columnAliasesDetail = {
+    id: 'id', 
+    orderId: 'Order', 
+    isActive:'Estado', 
+    cantidad: 'Cantidad',
+    productId:'ProductId', 
+    subtotal:'Subtotal',
+    accionesdetail: 'Acciones',
+    
+  };
   //constructor con los servicios
   constructor(
     private fb: FormBuilder,
@@ -120,10 +138,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
    // this.verCarrito();
 
   }
-  saveOrder(): void {
-    // Lógica para guardar el pedido
-    console.log('Pedido guardado');
-  }
+ 
   calculateTotal(): void {
     this.cartTotal = this.cart.reduce((sum, item) => sum + item.subtotal, 0);
   }
@@ -187,6 +202,8 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     });
     this.currentId = 0;
     this.isEditMode = false;
+    this.cartService.clearCart();
+    this.loadCart();
   }
   removeFromCart(productId: number){
     if (productId === undefined || productId === null) {
@@ -263,4 +280,54 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       this.cargarHeader();
     }
   }
+  handleView(detalle: HeaderPedido) {
+    this.viewOrderDetail = true;
+    this.servicioDetailPedido.getOrderDetailsByOrderId(detalle.id).subscribe((datos: DetailPedido[]) => {
+      if (datos && datos.length > 0) {
+        // Si los datos no están vacíos, se asignan al dataSource
+        this.dataSourceDetail.data = datos;
+      } else {
+        // Si los datos están vacíos, manejar la situación (por ejemplo, mostrar un mensaje)
+        this.dataSourceDetail.data = []; // Puede asignar un array vacío o mostrar un mensaje de "No se encontraron detalles"
+        console.log('No se encontraron detalles para esta orden.');
+        // También puedes mostrar un mensaje en la UI si lo deseas
+      }
+    }, err => {
+      // Manejo de errores, si la llamada falla
+      if (err.status === 404) {
+        // Si se recibe un 404 Not Found
+        this.dataSourceDetail.data = [];
+        this.isEmpty = true; // Cambiar a true si no se encuentran detalles
+        console.log('No se encontraron detalles para esta orden (404)');
+      } else {
+        // Si hay otros errores
+        this.dataSourceDetail.data = [];
+        this.isEmpty = true; // Cambiar a true por error
+        console.error('Error al obtener los detalles de la orden:', err);
+      }
+    });
+  }
+  
+  
+  handleDeleteDetail(detalle: DetailPedido){
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      data: {
+        titulo: 'Eliminación de Pedido',
+        contenido: `¿Estás seguro de eliminar el pedido ${detalle.id} ?`,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'aceptar') {
+        this.servicioDetailPedido.desactiveDetailPedido(detalle).subscribe(() => {
+          
+        });
+      }else if(result ==="cancelar"){
+        
+      }
+    });
+
+    
+    console.log('Eliminar usuario:', detalle);
+  }
+  
 }
