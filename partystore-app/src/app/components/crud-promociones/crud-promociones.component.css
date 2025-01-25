@@ -1,120 +1,64 @@
-/* Contenedor de la página de productos */
-.container-productos {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    
-  }
-  
-  /* Títulos */
-  h3 {
-    font-size: 34px;
-    color: #000000;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  /* Barra de búsqueda */
-  .search-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  
-  /* Estilo del campo de búsqueda */
-  .search-bar {
-    flex: 1;
-  }
-  
-  /* Campos del formulario */
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  mat-form-field mat-label {
-    font-weight: 500;
-  }
-  
-  /* Estilo de los botones */
-  button.mat-raised-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-    margin-top: 16px;
-    background-color: #6200ea;
-    color: white;
-    border-radius: 4px;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  button.mat-raised-button:hover {
-    background-color: #3700b3;
-  }
-  
-  /* Contenedor de la tabla de productos */
-  .crud-table {
-    margin-top: 40px;
-  }
-  
-  .crud-table app-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .crud-table app-table th,
-  .crud-table app-table td {
-    padding: 12px;
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .crud-table app-table th {
-    background-color: #f5f5f5;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .crud-table app-table tr:nth-child(even) {
-    background-color: #fafafa;
-  }
-  
-  /* Estilo para botones dentro de la tabla */
-  button.mat-icon-button {
-    padding: 5px;
-    color: #6200ea;
-  }
-  
-  /* Estilo del radio group */
-  .estado-container {
-    margin-bottom: 20px;
-  }
-  
-  /* Mat-select y mat-radio-button */
-  .mat-select,
-  .mat-radio-button {
-    width: 100%;
-  }
-  
-  /* Campo de entrada de texto */
-  textarea.mat-input-element {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    padding: 12px;
-  }
-  
-  /* Estilo para el campo de URL de la imagen */
-  .mat-form-field.mat-url-input {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  /* Mensajes de error (si fuera necesario) */
-  .error-message {
-    color: #b00020;
-    font-size: 0.875rem;
-    margin-top: 5px;
-  }
-  
+/* promociones.component.css */
+/* Títulos */
+h3 {
+  font-size: 34px;
+  color: #000000;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.promo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: row;
+  padding: 100px;
+  background-color: #ffffff; /* Fondo claro */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+fieldset {
+  border: 2px solid #f5803c; /* Color de borde */
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #f7f7f7; /* Fondo  para mayor contraste */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold; /* Texto del label en negrita */
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc; /* Borde más suave */
+  border-radius: 5px;
+  font-size: 16px; /* Tamaño de fuente más legible */
+}
+
+button {
+  background-color: orange; /* Color del botón */
+  color: #fff;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Transición suave al pasar puntero */
+}
+
+button:hover {
+  background-color: orangered; /* Color del botón al pasar el mouse */
+}
