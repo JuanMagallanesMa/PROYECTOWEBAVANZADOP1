@@ -1,9 +1,8 @@
 export interface Categoria {
-  toLowerCase(): unknown;
-  id: number; // Identificador único de la categoría
-  nombre: string; // Nombre de la categoría
-  descripcion: string; // Descripción de la categoría
-  estado: 'activo' | 'inactivo'; // Estado de la categoría (activa o inactiva)
-  edadesAplicables: string[]; // Rango de edades para los productos de esta categoría
-  tiposEvento: string[]; // Tipos de eventos asociados (ej., cumpleaños, bautizos, etc.)
+  id: number;
+  nombre: string; // Este debe ser string
+  descripcion: string; // Este debe ser string
+  estado: 'activo' | 'inactivo'; // Esto no tiene toLowerCase
+  edadesAplicables: string[]; // Esto es un arreglo de strings
+  tiposEvento: string[]; // Esto es un arreglo de strings
 }

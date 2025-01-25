@@ -80,8 +80,8 @@ export class CrudProductoComponent implements OnInit {
       const searchTerm = filter.trim().toLowerCase();
       return (
         data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) ||
-        (data.categoria ? data.categoryId. toLowerCase().includes(searchTerm) : false)
+        data.descripcion.toLowerCase().includes(searchTerm) 
+        //|| (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
       );
     };
   }
@@ -89,6 +89,8 @@ export class CrudProductoComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchValue = filterValue.trim().toLowerCase();
+
+    
     this.dataSource.filter = this.searchValue; 
   }
 
