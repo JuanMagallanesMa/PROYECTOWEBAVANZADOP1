@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { ProductoApiService } from '../../services/producto-api.service';
+import { Categoria } from '../../models/Categoria';
+import { CategoriaApiService } from '../../services/categoria-api.service';
 
 @Component({
   selector: 'app-crud-producto', 
@@ -39,6 +41,7 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
+  categoria!: Categoria[];
 
   displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones', 'imagen', ]; 
   columnAliases = {
@@ -57,6 +60,7 @@ export class CrudProductoComponent implements OnInit {
 
   constructor(
     private productoService: ProductoApiService, //Servicio Actualizado
+    private categoryService:CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) {
@@ -67,6 +71,7 @@ export class CrudProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductos();
+    this.getCategoria();
 
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -99,6 +104,12 @@ export class CrudProductoComponent implements OnInit {
   getProductos(): void {
     this.productoService.obtenerProductos().subscribe((datos: Producto[]) => {
       this.dataSource.data = datos;
+    });
+  }
+
+  getCategoria(): void {
+    this.categoryService.obtenerCategorias().subscribe((datos: Categoria[]) => {
+      this.categoria = datos;
     });
   }
 
