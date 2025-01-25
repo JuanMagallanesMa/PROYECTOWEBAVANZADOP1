@@ -1,30 +1,64 @@
 /* promociones.component.css */
+/* Títulos */
+h3 {
+  font-size: 34px;
+  color: #000000;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
 .promo-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  fieldset {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-  }
-  
-  input, textarea, select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: row;
+  padding: 100px;
+  background-color: #ffffff; /* Fondo claro */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+fieldset {
+  border: 2px solid #f5803c; /* Color de borde */
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #f7f7f7; /* Fondo  para mayor contraste */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold; /* Texto del label en negrita */
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc; /* Borde más suave */
+  border-radius: 5px;
+  font-size: 16px; /* Tamaño de fuente más legible */
+}
+
+button {
+  background-color: orange; /* Color del botón */
+  color: #fff;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Transición suave al pasar puntero */
+}
+
+button:hover {
+  background-color: orangered; /* Color del botón al pasar el mouse */
+}
