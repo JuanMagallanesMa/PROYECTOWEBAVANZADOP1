@@ -45,12 +45,12 @@ import { DetailPedido } from '../../models/DetailPedido';
     MatFormField,
     FormsModule,
     MatSelect,
-    MatListModule, MatDividerModule, DatePipe,
+    MatListModule, MatDividerModule, 
     MatCardModule,
     MatIconModule,
     MatButtonModule  ,
     TableComponent,
-    MatRadioButton,
+  
     MatCheckboxModule,
     MatTableModule
     

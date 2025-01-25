@@ -40,7 +40,7 @@ export class CrudProductoComponent implements OnInit {
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones' ]; 
+  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones', 'imagen', ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
@@ -49,13 +49,14 @@ export class CrudProductoComponent implements OnInit {
     isActive: 'isActive',
     stock: 'Stock',
     acciones: 'Acciones',
+    imagen: 'Imagen',
   };
   categoriasDisponibles: any;
   activoSeleccionado: boolean = false;
   inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoApiService,
+    private productoService: ProductoApiService, //Servicio Actualizado
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) {
@@ -73,6 +74,7 @@ export class CrudProductoComponent implements OnInit {
       precio: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
       categoria: ['', Validators.required], 
+      imagen: ['', Validators.required],
     });
 
     // Configuración del filtro de MatTableDataSource
@@ -89,6 +91,8 @@ export class CrudProductoComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchValue = filterValue.trim().toLowerCase();
+
+    
     this.dataSource.filter = this.searchValue; 
   }
 
