@@ -39,7 +39,7 @@
           <mat-option value="Suministro para actividades">Suministro para actividades</mat-option>
           <mat-option value="Juegos">Juegos</mat-option>
         -->
-            @for(categoria of categoria; track $index){
+            @for(categoria of categoriasDisponibles; track $index){
                 <mat-option [value]="categoria">{{categoria.nombre}}</mat-option>
             }
         </mat-select>
