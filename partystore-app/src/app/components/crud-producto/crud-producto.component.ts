@@ -48,7 +48,7 @@ export class CrudProductoComponent implements OnInit {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
-    categoria: 'Categoría',
+    categoriaid: 'Categoría',
     isActive: 'isActive',
     stock: 'Stock',
     acciones: 'Acciones',
@@ -59,7 +59,7 @@ export class CrudProductoComponent implements OnInit {
   inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoApiService, //Servicio Actualizado
+    private productoService: ProductoApiService, 
     private categoryService:CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -151,22 +151,26 @@ export class CrudProductoComponent implements OnInit {
       return;
     }
 
-    const nuevoProducto: Producto = this.form.value;
-    if (this.isEditMode) {
-      nuevoProducto.id = this.currentID; 
-      this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
+    const nuevoProducto: Producto = {
+      ...this.form.value,
+      id: this.isEditMode ? this.currentID: undefined,
+    };
+
+    if (this.isEditMode){
+      this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
         alert('Producto actualizado');
         this.getProductos();
         this.clearForm();
       });
-    } else {
-      this.productoService.crearProducto(nuevoProducto).subscribe(() => {
+    }else{
+      this.productoService.crearProducto(nuevoProducto).subscribe(()=>{
         alert('Producto creado');
         this.getProductos();
         this.clearForm();
       });
     }
   }
+
 
   clearForm(): void {
     this.form.reset({
@@ -182,7 +186,3 @@ export class CrudProductoComponent implements OnInit {
     this.isEditMode = false;
   }
 }
-function toLowerCase() {
-  throw new Error('Function not implemented.');
-}
-
