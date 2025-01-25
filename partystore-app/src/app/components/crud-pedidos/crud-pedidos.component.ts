@@ -294,12 +294,14 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
     }
   }
   handleView(detalle: HeaderPedido) {
-    this.viewOrderDetail = true;
+    
     this.servicioDetailPedido.getOrderDetailsByOrderId(detalle.id).subscribe((datos: DetailPedido[]) => {
       if (datos && datos.length > 0) {
         // Si los datos no están vacíos, se asignan al dataSource
+        this.viewOrderDetail = true;
         this.dataSourceDetail.data = datos;
       } else {
+        this.isEmpty = true;
         // Si los datos están vacíos, manejar la situación (por ejemplo, mostrar un mensaje)
         this.dataSourceDetail.data = []; // Puede asignar un array vacío o mostrar un mensaje de "No se encontraron detalles"
         console.log('No se encontraron detalles para esta orden.');
@@ -309,6 +311,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       // Manejo de errores, si la llamada falla
       if (err.status === 404) {
         // Si se recibe un 404 Not Found
+        this.viewOrderDetail = true;
         this.dataSourceDetail.data = [];
         this.isEmpty = true; // Cambiar a true si no se encuentran detalles
         console.log('No se encontraron detalles para esta orden (404)');

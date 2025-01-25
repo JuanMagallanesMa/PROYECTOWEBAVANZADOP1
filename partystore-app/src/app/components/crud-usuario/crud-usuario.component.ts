@@ -98,13 +98,13 @@ export class CrudUsuarioComponent {
     if(this.isEditMode){ // editar
       newUser.id= this.currentId;
       this.usuarioService.updateUsuario(newUser).subscribe(()=>{
-        alert("Pelicula fue editada exitosamente");
+        alert("Usuario fue editada exitosamente");
         this.cargarUsuarios();//actualizar el datasource de la table de peliculas
       });
 
     }else{ //agregar
       this.usuarioService.addUsuario(newUser).subscribe(()=>{
-        alert("Pelicula fue agregada exitosamente");
+        alert("Usuario fue agregada exitosamente");
         this.cargarUsuarios();
       });
     }
