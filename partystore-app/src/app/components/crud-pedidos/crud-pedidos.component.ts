@@ -145,67 +145,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
   calculateTotal(): void {
     this.cartTotal = this.cart.reduce((sum, item) => sum + item.subtotal, 0);
   }
-  onSubmit(): void {
-    console.log('Contenido del carrito al presionar:', this.cart);
   
-    if (this.form.invalid) {
-      console.log('Formulario inválido:', this.form.errors);
-      console.log('Estado de cada campo:', this.form.controls);
-      console.log('Invalid');
-      return;
-    }
-  
-    // Capturar el carrito actual en una variable local
-    const cartSnapshot = [...this.cart]; // Crear una copia del carrito
-    console.log('Snapshot del carrito:', cartSnapshot);
-  
-    const newHeaderPedido: HeaderPedido = {
-      ...this.form.value,
-      total: this.cartTotal,
-    };
-  
-    if (this.isEditMode) {
-      newHeaderPedido.id = this.currentId;
-      this.servicioHeaderPedido.updateHeaderPedido(newHeaderPedido).subscribe(() => {
-        alert('Pedido editado');
-        this.cargarHeader();
-      });
-    } else {
-      this.servicioHeaderPedido.addHeaderPedido(newHeaderPedido).subscribe((updatepedido) => {
-        console.log('Contenido del carrito antes de mapear los detalles:', cartSnapshot);
-  
-        const orderDetails = cartSnapshot.map((item) => ({
-          orderId: updatepedido.id, // ID del pedido recién creado
-          isActive: true,
-          cantidad: item.cantidad,
-          productId: item.productId,
-          subtotal: item.subtotal,
-        }));
-  
-        console.log('Detalles del pedido generados:', orderDetails);
-  
-        // Utiliza forkJoin para manejar todas las solicitudes de detalle
-        const detailRequests = orderDetails.map((detail) =>
-          this.servicioDetailPedido.addDetailPedido(detail)
-        );
-  
-        forkJoin(detailRequests).subscribe(
-          () => {
-            alert('Pedido agregado con todos los detalles');
-            this.cartService.clearCart(); // Limpia el carrito después de guardar
-            this.loadCart();
-            this.cargarHeader();
-          },
-          (error) => {
-            console.error('Error al guardar los detalles del pedido:', error);
-            alert('Hubo un error al guardar los detalles del pedido.');
-          }
-        );
-      });
-    }
-  
-    this.clearForm();
-  }
   
   clearForm():void{
     this.form.reset({
@@ -214,7 +154,7 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       telephone: '', 
        provincia:'', 
        address:'',
-       total:0 
+       
     });
     this.currentId = 0;
     this.isEditMode = false;
@@ -242,24 +182,87 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
 
   handleEdit(pedido: HeaderPedido) { 
     this.isEditMode = true;
-    if(pedido && pedido.id){
-      this.currentId= pedido.id;
-    }else{
-    console.log("Header o el id del header estan undefined");
-   }
+    
+    if (pedido && pedido.id) {
+      this.currentId = pedido.id;
+    } else {
+      console.error("HeaderPedido o el ID del HeaderPedido están undefined");
+      return;
+    }
+  
+    // Establecer los valores del formulario
     this.form.setValue({
-      
-      name: pedido.name, 
-      cedula: pedido.cedula, 
-      telefono: pedido.telefono, 
-       
-       address:pedido.address,
-       provincia:pedido.provincia, 
-       isActive:pedido.isActive,
-       //total:this.servicioCart.getTotal()
+      name: pedido.name,
+      cedula: pedido.cedula,
+      telefono: pedido.telefono,
+      provincia: pedido.provincia,
+      address: pedido.address,
+      isActive: pedido.isActive,
     });
+  
+    // Asegurar que se conserve el total al editar
+    this.cartTotal = pedido.total || 0;
+  
     console.log('Editar header:', pedido);
   } 
+  
+  onSubmit(): void {
+    if (this.form.invalid) {
+      console.log('Formulario inválido:', this.form.errors);
+      return;
+    }
+    const cartSnapshot = [...this.cart]; // Crear una copia del carrito
+    console.log('Snapshot del carrito:', cartSnapshot);
+
+    const newHeaderPedido: HeaderPedido = {
+      ...this.form.value,
+      total: this.cartTotal, // Usar el valor actual del total calculado
+    };
+  
+    if (this.isEditMode) {
+      if (this.cartTotal === 0) {
+        alert('No se puede guardar un pedido con total 0.');
+        return;
+      }
+  
+      newHeaderPedido.id = this.currentId;
+      this.servicioHeaderPedido.updateHeaderPedido(newHeaderPedido).subscribe(() => {
+        alert('Pedido editado correctamente.');
+        this.cargarHeader();
+      });
+    } else {
+      if (this.cartTotal === 0) {
+        alert('El carrito está vacío. Agrega productos antes de guardar.');
+        return;
+      }
+  
+      this.servicioHeaderPedido.addHeaderPedido(newHeaderPedido).subscribe((updatePedido) => {
+        const orderDetails = cartSnapshot.map((item) => ({
+          orderId: updatePedido.id,
+          isActive: true,
+          cantidad: item.cantidad,
+          productId: item.productId,
+          subtotal: item.subtotal,
+        }));
+  
+        forkJoin(orderDetails.map((detail) => this.servicioDetailPedido.addDetailPedido(detail))).subscribe(
+          () => {
+            alert('Pedido agregado correctamente.');
+            this.cartService.clearCart();
+            this.loadCart();
+            this.cargarHeader();
+          },
+          (error) => {
+            console.error('Error al guardar los detalles del pedido:', error);
+            alert('Hubo un error al guardar los detalles del pedido.');
+          }
+        );
+      });
+    }
+  
+    this.clearForm();
+  }
+  
   
   handleDelete(pedido: HeaderPedido) { 
     const dialogRef = this.dialog.open(MyDialogComponent, {
@@ -293,36 +296,41 @@ export class CrudPedidosComponent implements OnInit , AfterViewInit{
       this.cargarHeader();
     }
   }
-  handleView(detalle: HeaderPedido) {
-    
-    this.servicioDetailPedido.getOrderDetailsByOrderId(detalle.id).subscribe((datos: DetailPedido[]) => {
-      if (datos && datos.length > 0) {
-        // Si los datos no están vacíos, se asignan al dataSource
-        this.viewOrderDetail = true;
-        this.dataSourceDetail.data = datos;
-      } else {
-        this.isEmpty = true;
-        // Si los datos están vacíos, manejar la situación (por ejemplo, mostrar un mensaje)
-        this.dataSourceDetail.data = []; // Puede asignar un array vacío o mostrar un mensaje de "No se encontraron detalles"
-        console.log('No se encontraron detalles para esta orden.');
-        // También puedes mostrar un mensaje en la UI si lo deseas
-      }
-    }, err => {
-      // Manejo de errores, si la llamada falla
-      if (err.status === 404) {
-        // Si se recibe un 404 Not Found
-        this.viewOrderDetail = true;
+  handleView(detalle: HeaderPedido): void {
+    // Reinicia los estados antes de realizar la llamada
+    this.viewOrderDetail = false;
+    this.isEmpty = false;
+    this.dataSourceDetail.data = [];
+  
+    this.servicioDetailPedido.getOrderDetailsByOrderId(detalle.id).subscribe(
+      (datos: DetailPedido[]) => {
+        if (datos && datos.length > 0) {
+          // Si los datos no están vacíos, se asignan al dataSource
+          this.viewOrderDetail = true;
+          this.isEmpty = false; // Asegurarse de que no se marque como vacío
+          this.dataSourceDetail.data = datos;
+        } else {
+          // Si los datos están vacíos
+          this.viewOrderDetail = true;
+          this.isEmpty = true;
+          console.log('No se encontraron detalles para esta orden.');
+        }
+      },
+      (err) => {
+        // Manejo de errores, si la llamada falla
+        this.viewOrderDetail = true; // Mostrar la vista de detalle incluso si hay error
         this.dataSourceDetail.data = [];
-        this.isEmpty = true; // Cambiar a true si no se encuentran detalles
-        console.log('No se encontraron detalles para esta orden (404)');
-      } else {
-        // Si hay otros errores
-        this.dataSourceDetail.data = [];
-        this.isEmpty = true; // Cambiar a true por error
-        console.error('Error al obtener los detalles de la orden:', err);
+        this.isEmpty = true; // Marcar como vacío para mostrar el mensaje correspondiente
+  
+        if (err.status === 404) {
+          console.log('No se encontraron detalles para esta orden (404)');
+        } else {
+          console.error('Error al obtener los detalles de la orden:', err);
+        }
       }
-    });
+    );
   }
+  
   
   
   handleDeleteDetail(detalle: DetailPedido){

@@ -30,7 +30,7 @@
                         Cedula es requerido
                         }
                         @else if(form.get('cedula')?.errors?. ['pattern']){
-                        Cedula debe contener numeros
+                        Cedula debe contener 10 numeros
                         }
                     }
                     </mat-error>
@@ -46,7 +46,7 @@
                         Telefono es requerido
                         }
                         @else if(form.get('telefono')?.errors?. ['pattern']){
-                        Telefono debe contener numeros
+                        Telefono debe contener 10 numeros
                         }
                     }
                     </mat-error>
@@ -62,7 +62,6 @@
                         }  
                     </mat-select>
               </mat-form-field>
-              
           </div>
           <div class="oneInputs">
               <mat-form-field class="example-full-width">
@@ -123,14 +122,14 @@
           
             <!-- Total -->
             <h3>Total: {{ cartTotal | currency }}</h3>
-
+            
           </div>
           <div class="acciones-form">
 
             <button mat-flat-button type="submit">Agregar</button>
             <button mat-stroked-button type="reset" (click)="clearForm()">Cancelar</button>
           </div>
-          
+         
       </form>
   </div>
   
@@ -158,16 +157,16 @@
       (onView)="handleView($event)"
   ></app-table>
 <br>
-  @if(viewOrderDetail && isEmpty===false){
-    <h4>Productos del pedido</h4>
-    <app-table
-      [dataSource]="dataSourceDetail" 
-      [displayedColumns]="displayedColumnsDetail" 
-      [columnAliases]="columnAliasesDetail" 
-      
-      (onDelete)="handleDeleteDetail($event)"
-    ></app-table>
-  }@else if (isEmpty) {
-    <p>No se encontraron productos asignados al pedido</p>
-  }
+<div *ngIf="viewOrderDetail">
+  <h4 *ngIf="!isEmpty">Productos del pedido</h4>
+  <app-table
+    *ngIf="!isEmpty"
+    [dataSource]="dataSourceDetail"
+    [displayedColumns]="displayedColumnsDetail"
+    [columnAliases]="columnAliasesDetail"
+    (onDelete)="handleDeleteDetail($event)"
+  ></app-table>
+  <p *ngIf="isEmpty">No se encontraron productos asignados al pedido.</p>
+</div>
+
 </div>
