@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Promociones } from "./promociones.service.spec";
+import { Promociones } from '../models/Promociones';
+
 @Injectable({
   providedIn: 'root'
 })

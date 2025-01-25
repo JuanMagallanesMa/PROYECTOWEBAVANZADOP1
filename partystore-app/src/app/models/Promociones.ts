@@ -1,5 +1,5 @@
 // models/Promociones.ts
-export interface Promocion {
+export interface Promociones {
     id: number;
     nombre: string;
     descripcion: string;
