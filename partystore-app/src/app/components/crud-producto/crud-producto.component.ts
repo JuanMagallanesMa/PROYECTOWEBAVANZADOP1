@@ -41,89 +41,109 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
-  categoria!: Categoria[];
+  categoriasDisponibles: Categoria[] = [];
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones', 'imagen', ]; 
+  displayedColumns: string[] = [
+    'nombre', 
+    'descripcion', 
+    'precio', 
+    'categoria', 
+    'isActive', 
+    'stock', 
+    'imagen', 
+    'acciones'
+  ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
     categoria: 'Categoría',
-    isActive: 'isActive',
+    isActive: 'Activo',
     stock: 'Stock',
-    acciones: 'Acciones',
     imagen: 'Imagen',
+    acciones: 'Acciones',
   };
-  categoriasDisponibles: any;
-  activoSeleccionado: boolean = false;
-  inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoApiService, //Servicio Actualizado
-    private categoryService:CategoriaApiService,
+    private productoService: ProductoService, 
+    private categoriaService: CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-  ) {
-    this.form = this.fb.group({
-      isActive: [[]],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.initForm();
     this.getProductos();
-    this.getCategoria();
+    this.getCategorias();
+    this.configurarFiltroTabla();
+  }
 
+  private initForm(): void {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
       precio: ['', [Validators.required, Validators.min(0)]],
+      stock: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
       categoria: ['', Validators.required], 
       imagen: ['', Validators.required],
     });
+  }
 
-    // Configuración del filtro de MatTableDataSource
+  private configurarFiltroTabla(): void {
     this.dataSource.filterPredicate = (data: Producto, filter: string) => {
       const searchTerm = filter.trim().toLowerCase();
+      const categoriaNombre = this.categoriasDisponibles.find(
+        (categoria) => categoria.id === data.categoryId
+      )?.nombre || ''; 
+    
       return (
         data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) 
-        //|| (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
+        data.descripcion.toLowerCase().includes(searchTerm) ||
+        categoriaNombre.toLowerCase().includes(searchTerm) 
       );
     };
   }
 
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.searchValue = filterValue.trim().toLowerCase();
-
-    
-    this.dataSource.filter = this.searchValue; 
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.searchValue = filterValue;
+    this.dataSource.filter = filterValue;
   }
 
   getProductos(): void {
-    this.productoService.obtenerProductos().subscribe((datos: Producto[]) => {
-      this.dataSource.data = datos;
+    this.productoService.obtenerProductos().subscribe((productos: Producto[]) => {
+      this.dataSource.data = productos;
     });
   }
 
-  getCategoria(): void {
-    this.categoryService.obtenerCategorias().subscribe((datos: Categoria[]) => {
-      this.categoria = datos;
+  getCategorias(): void {
+    this.categoriaService.obtenerCategorias().subscribe((categorias: Categoria[]) => {
+      this.categoriasDisponibles = categorias;
     });
+  }
+
+  /**
+   * Método para obtener el ID de la categoría seleccionada
+   */
+  obtenerCategoriaId(categoriaNombre: string): number | null {
+    const categoria = this.categoriasDisponibles.find(
+      (cat) => cat.nombre === categoriaNombre
+    );
+    return categoria ? categoria.id : null;
   }
 
   eliminar(producto: Producto): void {
-    const dialogRef = this.dialog.open(MyDialogComponent,{
-      data:{
-        titulo: 'Eliminación del Producto',
-        contenido: `¿Estás seguro de eliminar el producto ${producto.nombre}?`,
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      data: {
+        titulo: 'Eliminar Producto',
+        contenido: `¿Estás seguro de eliminar el producto "${producto.nombre}"?`,
       },
     });
-    
-    dialogRef.afterClosed().subscribe((result)=>{
-      if(result === 'aceptar'){
-        this.productoService.eliminarProducto(producto.id).subscribe(()=>{
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'aceptar') {
+        this.productoService.eliminarProducto(producto.id).subscribe(() => {
           alert('Producto eliminado exitosamente');
           this.getProductos();
         });
@@ -135,33 +155,39 @@ export class CrudProductoComponent implements OnInit {
     this.isEditMode = true;
     this.currentID = producto.id; 
 
-    this.form.setValue({
+    this.form.patchValue({
       nombre: producto.nombre,
       descripcion: producto.descripcion,
       precio: producto.precio,
       stock: producto.stock,
-      isActive: producto.isActive,
-      categoria: producto.category,
+      isActive: producto.isActive ? 'activo' : 'inactivo',
+      categoria: producto.categoryId, 
+      imagen: producto.imagen,
+      
     });
   }
 
   onSubmit(): void {
     if (this.form.invalid) {
-      alert('Formulario inválido');
+      alert('Por favor, completa todos los campos correctamente.');
       return;
     }
 
-    const nuevoProducto: Producto = this.form.value;
+    const producto: Producto = {
+      ...this.form.value,
+      id: this.isEditMode ? this.currentID : undefined,
+      categoriaId: this.form.value.categoria, 
+    };
+
     if (this.isEditMode) {
-      nuevoProducto.id = this.currentID; 
-      this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
-        alert('Producto actualizado');
+      this.productoService.actualizarProducto(producto).subscribe(() => {
+        alert('Producto actualizado exitosamente');
         this.getProductos();
         this.clearForm();
       });
     } else {
-      this.productoService.crearProducto(nuevoProducto).subscribe(() => {
-        alert('Producto creado');
+      this.productoService.crearProducto(producto).subscribe(() => {
+        alert('Producto creado exitosamente');
         this.getProductos();
         this.clearForm();
       });
@@ -176,13 +202,9 @@ export class CrudProductoComponent implements OnInit {
       stock: '',
       isActive: 'activo',
       categoria: '',
-      imagen:'',
+      imagen: '',
     });
-    this.currentID = 0;
     this.isEditMode = false;
+    this.currentID = 0;
   }
 }
-function toLowerCase() {
-  throw new Error('Function not implemented.');
-}
-
