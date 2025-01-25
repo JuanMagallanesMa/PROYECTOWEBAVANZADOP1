@@ -47,7 +47,7 @@ export class CrudProductoComponent implements OnInit {
     'nombre', 
     'descripcion', 
     'precio', 
-    'categoria', 
+    'categoryId', 
     'isActive', 
     'stock', 
     'imagen', 
