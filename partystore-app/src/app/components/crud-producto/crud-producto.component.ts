@@ -41,8 +41,8 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
-  categoryId!: Categoria[];
-
+  categoria!: Categoria[];
+  selectedValueCategoria: string = '';
   displayedColumns: string[] = [
     'nombre', 
     'descripcion', 
@@ -65,7 +65,7 @@ export class CrudProductoComponent implements OnInit {
   };
 
   constructor(
-    private productoService: ProductoService, 
+    private productoService: ProductoApiService, 
     private categoriaService: CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -81,11 +81,13 @@ export class CrudProductoComponent implements OnInit {
       precio: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
-      categoryId: [null, Validators.required], 
+      category: [null, Validators.required], 
       imagen: ['', Validators.required],
     });
   }
-  
+  onCategoryChange(){
+
+  }
   //Obtener los productos desde el servicio
   getProductos(): void {
     this.productoService.obtenerProductos().subscribe((datos: Producto[])=>{
@@ -95,7 +97,7 @@ export class CrudProductoComponent implements OnInit {
 
   getcategoryId(): void {
     this.categoriaService.obtenerCategorias().subscribe((datos: Categoria[])=>{
-      this.categoryId=datos;
+      this.categoria=datos;
     });
   }
 
@@ -129,7 +131,7 @@ export class CrudProductoComponent implements OnInit {
       isActive: producto.isActive,
       precio: producto.precio,
       imagen: producto.imagen,
-      categoryId : producto.categoryId,
+      category : producto.category?.nombre,
       stock : producto.stock,
     });
   }
@@ -143,7 +145,9 @@ export class CrudProductoComponent implements OnInit {
 
       const nuevoProducto: Producto={
         ...this.form.value,
+
         id: this.isEditMode ? this.currentID: undefined,
+        
         
       };
 
@@ -170,7 +174,7 @@ export class CrudProductoComponent implements OnInit {
         isActive: 'activo',
         precio: '',
         imagen: '',
-        categoryId: '',
+        category: '',
         stock: '',
       });
       this.currentID = 0;
