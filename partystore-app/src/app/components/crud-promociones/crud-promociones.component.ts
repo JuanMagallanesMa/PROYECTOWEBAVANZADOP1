@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PromocionesService } from '../../services/promociones.service';
-import { Promociones } from "../../services/promociones.service.spec";
+import { Promociones } from '../../models/Promociones';
+
 
 @Component({
   selector: 'app-crud-promociones',
