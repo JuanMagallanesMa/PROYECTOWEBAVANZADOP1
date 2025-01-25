@@ -3,7 +3,7 @@
   
 
   <!-- Formulario para agregar/editar productos -->
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onsubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" placeholder="Ingrese el nombre del producto" />
@@ -67,7 +67,8 @@
     <input 
       matInput 
       placeholder="Buscar por nombre, descripción o categoría"
-      (input)="applyFilter($event)" />
+      [(ngModel)]="searchValue"
+      (input)="applyFilter()" />
   </mat-form-field>
 </div>
   <!-- Tabla de productos -->

@@ -63,7 +63,6 @@ export class CrudProductoComponent implements OnInit {
     imagen: 'Imagen',
     acciones: 'Acciones',
   };
-categoria: any;
 
   constructor(
     private productoService: ProductoService, 
@@ -73,13 +72,8 @@ categoria: any;
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
     this.getProductos();
-    this.getCategorias();
-    this.configurarFiltroTabla();
-  }
-
-  private initForm(): void {
+  
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
@@ -90,61 +84,26 @@ categoria: any;
       imagen: ['', Validators.required],
     });
   }
-
-  private configurarFiltroTabla(): void {
-    this.dataSource.filterPredicate = (data: Producto, filter: string) => {
-      const searchTerm = filter.trim().toLowerCase();
-      const categoriaNombre = this.categoriasDisponibles.find(
-        (categoria) => categoria.id === data.categoryId
-      )?.nombre || ''; 
-    
-      return (
-        data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) ||
-        categoriaNombre.toLowerCase().includes(searchTerm) 
-      );
-    };
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.searchValue = filterValue;
-    this.dataSource.filter = filterValue;
-  }
-
+  
+  //Obtener los productos desde el servicio
   getProductos(): void {
-    this.productoService.obtenerProductos().subscribe((productos: Producto[]) => {
-      this.dataSource.data = productos;
+    this.productoService.obtenerProductos().subscribe((datos: Producto[])=>{
+      this.dataSource.data=datos;
     });
   }
 
-  getCategorias(): void {
-    this.categoriaService.obtenerCategorias().subscribe((categorias: Categoria[]) => {
-      this.categoriasDisponibles = categorias;
-    });
-  }
-
-  /**
-   * Método para obtener el ID de la categoría seleccionada
-   */
-  obtenerCategoriaId(categoriaNombre: string): number | null {
-    const categoria = this.categoriasDisponibles.find(
-      (cat) => cat.nombre === categoriaNombre
-    );
-    return categoria ? categoria.id : null;
-  }
-
-  eliminar(producto: Producto): void {
-    const dialogRef = this.dialog.open(MyDialogComponent, {
+  //Eliminar un producto
+  eliminar(producto: Producto): void{
+    const dialogRef = this.dialog.open(MyDialogComponent,{
       data: {
-        titulo: 'Eliminar Producto',
-        contenido: `¿Estás seguro de eliminar el producto "${producto.nombre}"?`,
+        titulo: 'Eliminación de Producto',
+        contenido: `¿Estás seguro de eliminar la categoría ${producto.nombre}?`,
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'aceptar') {
-        this.productoService.eliminarProducto(producto.id).subscribe(() => {
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result==='aceptar'){
+        this.productoService.eliminarProducto(producto.id).subscribe(()=>{
           alert('Producto eliminado exitosamente');
           this.getProductos();
         });
@@ -152,59 +111,69 @@ categoria: any;
     });
   }
 
-  editar(producto: Producto): void {
+  //Editar un producto
+  editar(producto: Producto): void{
     this.isEditMode = true;
-    this.currentID = producto.id; 
+    this.currentID = producto.id;
 
-    this.form.patchValue({
+    this.form.setValue({
       nombre: producto.nombre,
       descripcion: producto.descripcion,
+      isActive: producto.isActive,
       precio: producto.precio,
-      stock: producto.stock,
-      isActive: producto.isActive ? 'activo' : 'inactivo',
-      categoria: producto.categoryId, 
       imagen: producto.imagen,
+      categoryId : producto.categoryId,
+      stock : producto.stock,
     });
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      alert('Por favor, completa todos los campos correctamente.');
-      return;
-    }
-  
-    const producto: Producto = {
-      ...this.form.value,
-      id: this.isEditMode ? this.currentID : undefined,
-      categoriaId: this.form.value.categoria, // Asegúrate de que la categoría esté asignada correctamente
-    };
-  
-    if (this.isEditMode) {
-      this.productoService.actualizarProducto(producto).subscribe(() => {
-        alert('Producto actualizado');
-        this.getProductos(); // Actualiza la lista de productos
-        this.clearForm();
-      });
-    } else {
-      this.productoService.crearProducto(producto).subscribe(() => {
-        alert('Producto creado');
-        this.getProductos(); // Actualiza la lista de productos
-        this.clearForm();
-      });
-    }
-  }
+    //Enciar formulario para crear o actualziar
+    onsubmit(): void{
+      if(this.form.invalid){
+        alert('Formulario inválido');
+        return;
+      }
 
-  clearForm(): void {
-    this.form.reset({
-      nombre: '',
-      descripcion: '',
-      precio: '',
-      stock: '',
-      isActive: 'activo',
-      categoria: '',
-      imagen: '',
-    });
-    this.isEditMode = false;
-    this.currentID = 0;
-  }
+      const nuevoProducto: Producto={
+        ...this.form.value,
+        id: this.isEditMode ? this.currentID: undefined,
+      };
+
+      if(this.isEditMode){
+        this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
+          alert('Producto actualizado');
+          this.getProductos();
+          this.clearForm();
+        });
+      }else{
+        this.productoService.crearProducto(nuevoProducto).subscribe(()=>{
+          alert();
+          this.getProductos();
+          this.clearForm();
+        });
+      }
+    }
+
+    //Limpiar el formulario
+    clearForm(): void{
+      this.form.reset({
+        nombre: '',
+        descripcion: '',
+        isActive: 'activo',
+        precio: '',
+        imagen: '',
+        categoryId: '',
+        stock: '',
+      });
+      this.currentID = 0;
+      this.isEditMode= false;
+    }
+
+    applyFilter(): void{
+      this.dataSource.filter = this.searchValue.trim().toLowerCase();
+      if(this.dataSource.paginator){
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
 }
