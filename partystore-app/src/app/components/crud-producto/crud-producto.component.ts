@@ -48,7 +48,7 @@ export class CrudProductoComponent implements OnInit {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
-    categoriaid: 'Categoría',
+    categoryId: 'Categoría',
     isActive: 'isActive',
     stock: 'Stock',
     acciones: 'Acciones',
@@ -78,7 +78,7 @@ export class CrudProductoComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
       precio: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
-      categoria: ['', Validators.required], 
+      categoryId: ['', Validators.required], 
       imagen: ['', Validators.required],
     });
 
@@ -141,7 +141,7 @@ export class CrudProductoComponent implements OnInit {
       precio: producto.precio,
       stock: producto.stock,
       isActive: producto.isActive,
-      categoria: producto.categoria,
+      categoria: producto.categoryId,
     });
   }
 
