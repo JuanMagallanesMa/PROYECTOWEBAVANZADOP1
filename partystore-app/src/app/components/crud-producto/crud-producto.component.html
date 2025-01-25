@@ -39,8 +39,8 @@
           <mat-option value="Suministro para actividades">Suministro para actividades</mat-option>
           <mat-option value="Juegos">Juegos</mat-option>
         -->
-            @for(category of categoryId; track $index){
-                <mat-option [value]="categoryId">{{category.nombre}}</mat-option>
+            @for(categoriaId of categoryId; track $index){
+                <mat-option [value]="categoryId">{{categoriaId.nombre}}</mat-option>
             }
         </mat-select>
         <mat-error *ngIf="form.get('categoria')?.invalid">La categoría es obligatoria</mat-error>

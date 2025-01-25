@@ -41,7 +41,7 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
-  categoryId: Categoria[] = [];
+  categoryId!: Categoria[];
 
   displayedColumns: string[] = [
     'nombre', 
