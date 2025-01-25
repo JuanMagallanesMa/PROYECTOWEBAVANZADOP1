@@ -81,7 +81,7 @@ export class CrudProductoComponent implements OnInit {
       precio: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
-      categoryId: ['', Validators.required], 
+      categoryId: [null, Validators.required], 
       imagen: ['', Validators.required],
     });
   }
@@ -144,6 +144,7 @@ export class CrudProductoComponent implements OnInit {
       const nuevoProducto: Producto={
         ...this.form.value,
         id: this.isEditMode ? this.currentID: undefined,
+        
       };
 
       if(this.isEditMode){
