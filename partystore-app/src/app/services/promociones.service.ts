@@ -6,12 +6,12 @@ import { Promociones } from "./promociones.service.spec";
   providedIn: 'root'
 })
 export class PromocionesService {
-  private baseUrl = 'http://localhost:5169/promociones'; // URL del API
+  private baseUrl = 'http://localhost:5169/api/Promociones'; // URL del API
 
   constructor(private http: HttpClient) { }
 
   getPromociones(): Observable<Promociones[]> {
-    return this.http.get<Promociones[]>(`${this.baseUrl}?_embed=categoria`);
+    return this.http.get<Promociones[]>(`${this.baseUrl}`);
   }
 
   crearPromocion(promocion: Promociones): Observable<Promociones> {
