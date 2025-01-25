@@ -9,13 +9,22 @@
             <button mat-raised-button color="accent" (click)="edit(element)">Editar</button> 
             <button mat-raised-button color="warn" (click)="delete(element)">Eliminar</button>
           </ng-container>
-          <ng-container *ngSwitchCase="'productos'"> 
+          <ng-container *ngSwitchCase="'accionesdetail'" class="contenedor-acciones">
+            
+            <button mat-raised-button color="warn" (click)="delete(element)">Eliminar</button>
+          </ng-container>
+          <ng-container *ngSwitchCase="'view'"> 
             <ul> 
-              <li *ngFor="let producto of element[column]"> {{ producto.nombre }} </li> 
+              <button mat-raised-button color="accent" (click)="view(element)">View</button> 
             </ul> 
           </ng-container>
           <ng-container *ngSwitchDefault>
-            {{ element[column] }}
+            <ng-container *ngIf="column === 'productId'; else defaultContent">
+              {{ element.product?.nombre || 'Sin nombre' }}
+            </ng-container>
+            <ng-template #defaultContent>
+              {{ element[column] }}
+            </ng-template>
           </ng-container>
         </ng-container>
       </td>

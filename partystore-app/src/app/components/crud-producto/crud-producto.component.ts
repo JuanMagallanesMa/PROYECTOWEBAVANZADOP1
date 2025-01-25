@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { ProductoApiService } from '../../services/producto-api.service';
+import { Categoria } from '../../models/Categoria';
+import { CategoriaApiService } from '../../services/categoria-api.service';
 
 @Component({
   selector: 'app-crud-producto', 
@@ -39,8 +41,9 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
+  categoria!: Categoria[];
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones' ]; 
+  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones', 'imagen', ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
@@ -49,13 +52,15 @@ export class CrudProductoComponent implements OnInit {
     isActive: 'isActive',
     stock: 'Stock',
     acciones: 'Acciones',
+    imagen: 'Imagen',
   };
   categoriasDisponibles: any;
   activoSeleccionado: boolean = false;
   inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoApiService,
+    private productoService: ProductoApiService, //Servicio Actualizado
+    private categoryService:CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) {
@@ -66,6 +71,7 @@ export class CrudProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductos();
+    this.getCategoria();
 
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -73,6 +79,7 @@ export class CrudProductoComponent implements OnInit {
       precio: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
       categoria: ['', Validators.required], 
+      imagen: ['', Validators.required],
     });
 
     // Configuración del filtro de MatTableDataSource
@@ -97,6 +104,12 @@ export class CrudProductoComponent implements OnInit {
   getProductos(): void {
     this.productoService.obtenerProductos().subscribe((datos: Producto[]) => {
       this.dataSource.data = datos;
+    });
+  }
+
+  getCategoria(): void {
+    this.categoryService.obtenerCategorias().subscribe((datos: Categoria[]) => {
+      this.categoria = datos;
     });
   }
 
@@ -163,6 +176,7 @@ export class CrudProductoComponent implements OnInit {
       stock: '',
       isActive: 'activo',
       categoria: '',
+      imagen:'',
     });
     this.currentID = 0;
     this.isEditMode = false;

@@ -15,12 +15,11 @@ export class HeaderpedidoApiService {
     return this.http.get<HeaderPedido[]>(this.apiUrlHeader); //get para leer
   }
   //buscar
-  getHeaderPedidoSearch(usuario?:string, idPedido?:number):Observable<HeaderPedido[]>{
+  getHeaderPedidoSearch(cedula?:string):Observable<HeaderPedido[]>{
     return this.http.get<HeaderPedido[]>(this.apiUrlHeader).pipe(
       map((headers)=>
         headers.filter((header)=>
-        (usuario ? header.name.toLowerCase().includes(usuario.toLowerCase()):true) &&
-        (idPedido ? header.id===idPedido:true)
+        (cedula ? header.cedula.toLowerCase().includes(cedula.toLowerCase()):true) 
         )
       )
     );
