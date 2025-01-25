@@ -165,6 +165,7 @@ export class CrudProductoComponent implements OnInit {
       stock: '',
       isActive: 'activo',
       categoria: '',
+      imagen:'',
     });
     this.currentID = 0;
     this.isEditMode = false;
