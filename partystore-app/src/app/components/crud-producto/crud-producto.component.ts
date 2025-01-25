@@ -41,7 +41,7 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
-  categoriasDisponibles: Categoria[] = [];
+  categoryId: Categoria[] = [];
 
   displayedColumns: string[] = [
     'nombre', 
@@ -57,7 +57,7 @@ export class CrudProductoComponent implements OnInit {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
-    categoria: 'Categoría',
+    categoryId: 'Categoría',
     isActive: 'Activo',
     stock: 'Stock',
     imagen: 'Imagen',
@@ -80,7 +80,7 @@ export class CrudProductoComponent implements OnInit {
       precio: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
-      categoria: ['', Validators.required], 
+      categoryId: ['', Validators.required], 
       imagen: ['', Validators.required],
     });
   }
@@ -127,7 +127,7 @@ export class CrudProductoComponent implements OnInit {
     });
   }
 
-    //Enciar formulario para crear o actualziar
+    //Enviar formulario para crear o actualziar
     onsubmit(): void{
       if(this.form.invalid){
         alert('Formulario inválido');

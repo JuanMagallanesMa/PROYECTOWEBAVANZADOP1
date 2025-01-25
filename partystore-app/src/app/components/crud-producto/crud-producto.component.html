@@ -32,15 +32,15 @@
       <label for="categoria">Categoría</label>
       <mat-form-field class="formElement">
         <mat-label>Categoría</mat-label>
-        <mat-select formControlName="categoria">
+        <mat-select formControlName="categoryId">
           <!--<mat-option value="Decoraciones">Decoraciones</mat-option>
           <mat-option value="Invitaciones">Invitaciones</mat-option>
           <mat-option value="Disfraces">Disfraces</mat-option>
           <mat-option value="Suministro para actividades">Suministro para actividades</mat-option>
           <mat-option value="Juegos">Juegos</mat-option>
         -->
-            @for(categoria of categoriasDisponibles; track $index){
-                <mat-option [value]="categoria">{{categoria.nombre}}</mat-option>
+            @for(category of categoryId; track $index){
+                <mat-option [value]="categoryId">{{category.nombre}}</mat-option>
             }
         </mat-select>
         <mat-error *ngIf="form.get('categoria')?.invalid">La categoría es obligatoria</mat-error>
