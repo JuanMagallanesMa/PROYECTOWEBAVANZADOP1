@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PromocionesService } from '../../services/promociones.service';
 import { Promociones } from '../../models/Promociones';
 
@@ -15,7 +15,4 @@ export class CrudPromocionesComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   promociones: Promociones[] = [
-    ];
-}
-
-
+    ];}
