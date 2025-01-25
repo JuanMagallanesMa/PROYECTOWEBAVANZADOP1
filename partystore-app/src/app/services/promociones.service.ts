@@ -19,8 +19,9 @@ export class PromocionesService {
     return this.http.post<Promociones>(this.baseUrl, promocion);
   }
 
-  actualizarPromocion(id: number, promocion: Promociones): Observable<Promociones> {
-    return this.http.put<Promociones>(`${this.baseUrl}/${id}`, promocion);
+  actualizarPromocion(promocion: Promociones): Observable<Promociones> {
+    const urlProducto = `${this.baseUrl}/${promocion.id}`; 
+        return this.http.put<Promociones>(urlProducto, promocion);
   }
 
   eliminarPromocion(id: number): Observable<void> {

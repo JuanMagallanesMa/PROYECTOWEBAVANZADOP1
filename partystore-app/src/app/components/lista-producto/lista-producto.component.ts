@@ -13,6 +13,7 @@ import { PedidosjsonService } from '../../services/pedidosjson.service';
 import { CartService } from '../../services/cart.service';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ProductoApiService } from '../../services/producto-api.service';
 
 @Component({
   selector: 'app-lista-producto',
@@ -37,7 +38,7 @@ export class ListaProductoComponent implements OnInit {
   @Input() productos: Producto[] = [];
   cantidades: { [productId: number]: number } = {}; // Cambié el nombre de la propiedad a plural
   
-  constructor(private productoService: ProductoService, private pedidoService:PedidosjsonService, private router: Router
+  constructor(private productoService: ProductoApiService,  private router: Router
     ,private cartService: CartService
   ) {}
 

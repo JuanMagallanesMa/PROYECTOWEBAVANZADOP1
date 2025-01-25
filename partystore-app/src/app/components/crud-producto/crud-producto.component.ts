@@ -41,88 +41,75 @@ export class CrudProductoComponent implements OnInit {
   currentID!: number;
   dataSource = new MatTableDataSource<Producto>(); 
   searchValue: string = ''; 
-  categoria!: Categoria[];
+  categoryId!: Categoria[];
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'categoria', 'isActive','stock', 'acciones', 'imagen', ]; 
+  displayedColumns: string[] = [
+    'nombre', 
+    'descripcion', 
+    'precio', 
+    'categoria', 
+    'isActive', 
+    'stock', 
+    'imagen', 
+    'acciones'
+  ]; 
   columnAliases = {
     nombre: 'Nombre',
     descripcion: 'Descripción',
     precio: 'Precio',
-    categoria: 'Categoría',
-    isActive: 'isActive',
+    categoryId: 'Categoría',
+    isActive: 'Activo',
     stock: 'Stock',
-    acciones: 'Acciones',
     imagen: 'Imagen',
+    acciones: 'Acciones',
   };
-  categoriasDisponibles: any;
-  activoSeleccionado: boolean = false;
-  inactivoSeleccionado: boolean = false;
 
   constructor(
-    private productoService: ProductoApiService, //Servicio Actualizado
-    private categoryService:CategoriaApiService,
+    private productoService: ProductoService, 
+    private categoriaService: CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-  ) {
-    this.form = this.fb.group({
-      isActive: [[]],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getProductos();
-    this.getCategoria();
-
+    this.getcategoryId();
+  
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
       precio: ['', [Validators.required, Validators.min(0)]],
+      stock: ['', [Validators.required, Validators.min(0)]],
       isActive: ['activo', Validators.required],
-      categoria: ['', Validators.required], 
+      categoryId: ['', Validators.required], 
       imagen: ['', Validators.required],
     });
-
-    // Configuración del filtro de MatTableDataSource
-    this.dataSource.filterPredicate = (data: Producto, filter: string) => {
-      const searchTerm = filter.trim().toLowerCase();
-      return (
-        data.nombre.toLowerCase().includes(searchTerm) ||
-        data.descripcion.toLowerCase().includes(searchTerm) 
-        //|| (data.categoria ? data.categoria.toLowerCase().includes(searchTerm) : false)
-      );
-    };
   }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.searchValue = filterValue.trim().toLowerCase();
-
-    
-    this.dataSource.filter = this.searchValue; 
-  }
-
+  
+  //Obtener los productos desde el servicio
   getProductos(): void {
-    this.productoService.obtenerProductos().subscribe((datos: Producto[]) => {
-      this.dataSource.data = datos;
+    this.productoService.obtenerProductos().subscribe((datos: Producto[])=>{
+      this.dataSource.data=datos;
     });
   }
 
-  getCategoria(): void {
-    this.categoryService.obtenerCategorias().subscribe((datos: Categoria[]) => {
-      this.categoria = datos;
+  getcategoryId(): void {
+    this.categoriaService.obtenerCategorias().subscribe((datos: Categoria[])=>{
+      this.categoryId=datos;
     });
   }
 
-  eliminar(producto: Producto): void {
+  //Eliminar un producto
+  eliminar(producto: Producto): void{
     const dialogRef = this.dialog.open(MyDialogComponent,{
-      data:{
-        titulo: 'Eliminación del Producto',
-        contenido: `¿Estás seguro de eliminar el producto ${producto.nombre}?`,
+      data: {
+        titulo: 'Eliminación de Producto',
+        contenido: `¿Estás seguro de eliminar la categoría ${producto.nombre}?`,
       },
     });
-    
+
     dialogRef.afterClosed().subscribe((result)=>{
-      if(result === 'aceptar'){
+      if(result==='aceptar'){
         this.productoService.eliminarProducto(producto.id).subscribe(()=>{
           alert('Producto eliminado exitosamente');
           this.getProductos();
@@ -131,58 +118,69 @@ export class CrudProductoComponent implements OnInit {
     });
   }
 
-  editar(producto: Producto): void {
+  //Editar un producto
+  editar(producto: Producto): void{
     this.isEditMode = true;
-    this.currentID = producto.id; 
+    this.currentID = producto.id;
 
     this.form.setValue({
       nombre: producto.nombre,
       descripcion: producto.descripcion,
-      precio: producto.precio,
-      stock: producto.stock,
       isActive: producto.isActive,
-      categoria: producto.categoria,
+      precio: producto.precio,
+      imagen: producto.imagen,
+      categoryId : producto.categoryId,
+      stock : producto.stock,
     });
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      alert('Formulario inválido');
-      return;
+    //Enviar formulario para crear o actualziar
+    onsubmit(): void{
+      if(this.form.invalid){
+        alert('Formulario inválido');
+        return;
+      }
+
+      const nuevoProducto: Producto={
+        ...this.form.value,
+        id: this.isEditMode ? this.currentID: undefined,
+      };
+
+      if(this.isEditMode){
+        this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
+          alert('Producto actualizado');
+          this.getProductos();
+          this.clearForm();
+        });
+      }else{
+        this.productoService.crearProducto(nuevoProducto).subscribe(()=>{
+          alert();
+          this.getProductos();
+          this.clearForm();
+        });
+      }
     }
 
-    const nuevoProducto: Producto = this.form.value;
-    if (this.isEditMode) {
-      nuevoProducto.id = this.currentID; 
-      this.productoService.actualizarProducto(nuevoProducto).subscribe(() => {
-        alert('Producto actualizado');
-        this.getProductos();
-        this.clearForm();
+    //Limpiar el formulario
+    clearForm(): void{
+      this.form.reset({
+        nombre: '',
+        descripcion: '',
+        isActive: 'activo',
+        precio: '',
+        imagen: '',
+        categoryId: '',
+        stock: '',
       });
-    } else {
-      this.productoService.crearProducto(nuevoProducto).subscribe(() => {
-        alert('Producto creado');
-        this.getProductos();
-        this.clearForm();
-      });
+      this.currentID = 0;
+      this.isEditMode= false;
     }
-  }
 
-  clearForm(): void {
-    this.form.reset({
-      nombre: '',
-      descripcion: '',
-      precio: '',
-      stock: '',
-      isActive: 'activo',
-      categoria: '',
-      imagen:'',
-    });
-    this.currentID = 0;
-    this.isEditMode = false;
-  }
-}
-function toLowerCase() {
-  throw new Error('Function not implemented.');
-}
+    applyFilter(): void{
+      this.dataSource.filter = this.searchValue.trim().toLowerCase();
+      if(this.dataSource.paginator){
+        this.dataSource.paginator.firstPage();
+      }
+    }
 
+}

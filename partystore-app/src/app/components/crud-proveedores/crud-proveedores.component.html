@@ -1,0 +1,137 @@
+<div class="container mt-4">
+    <div class="row">
+      <!-- Formulario -->
+      <div class="col-md-5">
+        <h4>{{ proveedorEnEdicion ? 'Editar Proveedor' : 'Registrar Proveedor' }}</h4>
+        <form (ngSubmit)="guardarProveedor()" #proveedorForm="ngForm" class="form-container">
+          
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Id</mat-label>
+            <input
+              matInput
+              type="text"
+              name="id"
+              [(ngModel)]="nuevoProveedor.id"
+              placeholder="Ingrese el ID"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              type="text"
+              name="nombre"
+              [(ngModel)]="nuevoProveedor.nombre"
+              placeholder="Ingrese el nombre"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              name="email"
+              [(ngModel)]="nuevoProveedor.email"
+              placeholder="Ingrese el correo electrónico"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Teléfono</mat-label>
+            <input
+              matInput
+              type="text"
+              name="telefono"
+              [(ngModel)]="nuevoProveedor.telefono"
+              placeholder="Ingrese el teléfono"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Dirección</mat-label>
+            <input
+              matInput
+              type="text"
+              name="direccion"
+              [(ngModel)]="nuevoProveedor.direccion"
+              placeholder="Ingrese la dirección"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Rating</mat-label>
+            <input
+              matInput
+              type="number"
+              name="rating"
+              [(ngModel)]="nuevoProveedor.rating"
+              placeholder="Ingrese la calificación"
+              min="0"
+              max="5"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Activo</mat-label>
+            <mat-select name="isActive" [(ngModel)]="nuevoProveedor.isActive" required>
+              <mat-option [value]="true">Sí</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <button
+            mat-flat-button
+            color="primary"
+            class="submit-button"
+            type="submit"
+          >
+            {{ proveedorEnEdicion ? 'Guardar cambios' : 'Registrar' }}
+          </button>
+        </form>
+      </div>
+  
+      <!-- Tabla -->
+      <div class="col-md-7">
+        <h4>Lista de Proveedores</h4>
+  
+        <!-- Buscador -->
+        <div class="search-container">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar proveedor</mat-label>
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="buscador"
+              placeholder="Buscar por nombre o email"
+            />
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            class="search-button"
+            (click)="buscarProveedores()"
+          >
+            Buscar
+          </button>
+        </div>
+  
+        <!-- Tabla -->
+        <app-table 
+          [dataSource]="dataSource" 
+          [displayedColumns]="displayedColumns" 
+          [columnAliases]="columnAliases" 
+          (onEdit)="handleEdit($event)" 
+          (onDelete)="handleDelete($event)">
+        </app-table>
+      </div>
+    </div>
+  </div>
+  

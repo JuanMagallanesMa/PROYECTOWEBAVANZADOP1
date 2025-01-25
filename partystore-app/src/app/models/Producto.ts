@@ -1,8 +1,9 @@
 import { Categoria } from "./Categoria";
 export interface Producto {
+  toLowerCase(): unknown;
   id: number;
   nombre: string;
-  categoria: Categoria;
+  category: Categoria;
   categoryId: number;
   precio: number;
   descripcion: string;

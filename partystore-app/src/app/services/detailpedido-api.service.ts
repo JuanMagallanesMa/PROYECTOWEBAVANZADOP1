@@ -18,7 +18,7 @@ export class DetailpedidoApiService {
     return this.http.get<any[]>(`${this.apiUrlDetail}/ObtenerOrder/${orderId}`);
   }
   // agregar
-  addDetailPedido(Detail:Partial<DetailPedido>):Observable<DetailPedido>{
+  addDetailPedido(Detail:DetailPedido):Observable<DetailPedido>{
     return this.http.post<DetailPedido>(this.apiUrlDetail, Detail); // post para agregar algo nuevo
   }
 
