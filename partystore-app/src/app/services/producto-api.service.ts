@@ -9,7 +9,7 @@ import { map, Observable } from 'rxjs';
 })
 export class ProductoApiService {
 
-  private apiURL = 'http://localhost:5169/api/Productos'; // URL del API backend
+  private apiURL = 'http://localhost:5169/api/Product'; // URL del API backend
 
   constructor(private http: HttpClient) {}
 
