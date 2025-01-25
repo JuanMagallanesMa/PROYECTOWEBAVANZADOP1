@@ -4,6 +4,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { ProductoApiService } from '../../../services/producto-api.service';
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -17,18 +18,23 @@ export class TableComponent<T> implements AfterViewInit {
   @Input() columnAliases: { [key: string]: string } = {}; 
   @Output() onEdit = new EventEmitter<T>(); 
   @Output() onDelete = new EventEmitter<T>(); 
+  @Output() onView = new EventEmitter<T>(); 
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
   @ViewChild(MatSort) sort!: MatSort; // Añadí el ViewChild para MatSort 
+ 
   ngAfterViewInit(): void { 
     this.dataSource.paginator = this.paginator; 
     this.dataSource.sort = this.sort; // Añadí la asignación del sort 
     
   } 
-    
+  
   edit(item: T): void { 
     this.onEdit.emit(item); 
   } 
   delete(item: T ): void { 
     this.onDelete.emit(item); 
+  }
+  view(item: T): void { 
+    this.onView.emit(item); 
   }
 }

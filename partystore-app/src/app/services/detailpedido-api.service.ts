@@ -14,7 +14,9 @@ export class DetailpedidoApiService {
   getDetailPedido():Observable<DetailPedido[]>{
     return this.http.get<DetailPedido[]>(this.apiUrlDetail); //get para leer
   }
-  
+  getOrderDetailsByOrderId(orderId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlDetail}/ObtenerOrder/${orderId}`);
+  }
   // agregar
   addDetailPedido(Detail:Partial<DetailPedido>):Observable<DetailPedido>{
     return this.http.post<DetailPedido>(this.apiUrlDetail, Detail); // post para agregar algo nuevo

@@ -6,7 +6,7 @@ export interface DetailPedido{
     orderId: number;
     order?: HeaderPedido;
     productId: number;
-    Product?: Producto;
+    product?: Producto;
     cantidad: number;
     subtotal: number;
     isActive: boolean;

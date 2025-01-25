@@ -16,6 +16,9 @@ export class ProductoApiService {
     obtenerProductos(): Observable<Producto[]> {
       return this.http.get<Producto[]>(this.apiweUrl);
     }
+    getProductById(id: string): Observable<any> {
+      return this.http.get<any>(`${this.apiweUrl}/${id}`);
+    }
   
     eliminarProducto(id: number): Observable<void> {
       const urlProducto = `${this.apiweUrl}/${id}`;  
@@ -31,11 +34,7 @@ export class ProductoApiService {
       return this.http.put<Producto>(urlProducto, producto);
     }
   
-    // Método adicional para agregar productos al carrito 
-    agregarProductoCart(producto: Producto): Observable<Producto> {
-      throw new Error('Method not implemented.');
-    }
-
+    
     //eliminacion logica
     deactiveProducto(id: number): Observable<void> {
       const urlProducto = `${this.apiweUrl}/deactive/${id}`;  
