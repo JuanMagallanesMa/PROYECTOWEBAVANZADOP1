@@ -11,56 +11,23 @@ export class ProductoApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener todos los productos
-  obtenerProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiweUrl);
-  }
-
-  // Obtener producto por ID
-  getProductById(id: string): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiweUrl}/${id}`);
-  }
-
   // Crear un nuevo producto
   crearProducto(producto: Producto): Observable<Producto> {
-    
-    if (!producto.nombre || !producto.precio || !producto.categoryId) {
-      throw new Error(
-        'El producto debe tener un nombre, precio y categoría asignados.'
-      );
-    }
-
-    
-    const body = {
-      nombre: producto.nombre,
-      descripcion: producto.descripcion || '', 
-      precio: producto.precio,
-      stock: producto.stock || 0, 
-      categoriaId: producto.categoryId,
-    };
-
-    return this.http.post<Producto>(this.apiweUrl, body);
+    return this.http.post<Producto>(this.apiweUrl, producto);
   }
 
-  // Actualizar producto existente
+  // Actualizar un producto existente
   actualizarProducto(producto: Producto): Observable<Producto> {
-    if (!producto.id) {
-      throw new Error('El producto debe tener un ID para ser actualizado.');
-    }
-
-    const urlProducto = `${this.apiweUrl}/${producto.id}`;
-    return this.http.put<Producto>(urlProducto, producto);
+    return this.http.put<Producto>(`${this.apiweUrl}/${producto.id}`, producto);
   }
 
   // Eliminar un producto
   eliminarProducto(id: number): Observable<void> {
-    const urlProducto = `${this.apiweUrl}/${id}`;
-    return this.http.delete<void>(urlProducto);
+    return this.http.delete<void>(`${this.apiweUrl}/${id}`);
   }
 
-  // Eliminación lógica de un producto
-  deactiveProducto(id: number): Observable<void> {
-    const urlProducto = `${this.apiweUrl}/deactive/${id}`;
-    return this.http.delete<void>(urlProducto);
+  // Obtener todos los productos
+  obtenerProductos(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.apiweUrl);
   }
 }

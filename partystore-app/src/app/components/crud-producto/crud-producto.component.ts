@@ -63,6 +63,7 @@ export class CrudProductoComponent implements OnInit {
     imagen: 'Imagen',
     acciones: 'Acciones',
   };
+categoria: any;
 
   constructor(
     private productoService: ProductoService, 
@@ -163,7 +164,6 @@ export class CrudProductoComponent implements OnInit {
       isActive: producto.isActive ? 'activo' : 'inactivo',
       categoria: producto.categoryId, 
       imagen: producto.imagen,
-      
     });
   }
 
@@ -172,23 +172,23 @@ export class CrudProductoComponent implements OnInit {
       alert('Por favor, completa todos los campos correctamente.');
       return;
     }
-
+  
     const producto: Producto = {
       ...this.form.value,
       id: this.isEditMode ? this.currentID : undefined,
-      categoriaId: this.form.value.categoria, 
+      categoriaId: this.form.value.categoria, // Asegúrate de que la categoría esté asignada correctamente
     };
-
+  
     if (this.isEditMode) {
       this.productoService.actualizarProducto(producto).subscribe(() => {
-        alert('Producto actualizado exitosamente');
-        this.getProductos();
+        alert('Producto actualizado');
+        this.getProductos(); // Actualiza la lista de productos
         this.clearForm();
       });
     } else {
       this.productoService.crearProducto(producto).subscribe(() => {
-        alert('Producto creado exitosamente');
-        this.getProductos();
+        alert('Producto creado');
+        this.getProductos(); // Actualiza la lista de productos
         this.clearForm();
       });
     }

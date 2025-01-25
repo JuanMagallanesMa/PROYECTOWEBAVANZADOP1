@@ -19,7 +19,6 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './crud-proveedores.component.css'
 })
 export class CrudProveedoresComponent {
-  title: string = 'Gestión de Proveedores';
   proveedores: Proveedor[] = [];
   nuevoProveedor: Proveedor = {
     id: '',
