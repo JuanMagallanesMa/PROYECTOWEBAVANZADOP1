@@ -73,6 +73,7 @@ export class CrudProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductos();
+    this.getcategoryId();
   
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -89,6 +90,12 @@ export class CrudProductoComponent implements OnInit {
   getProductos(): void {
     this.productoService.obtenerProductos().subscribe((datos: Producto[])=>{
       this.dataSource.data=datos;
+    });
+  }
+
+  getcategoryId(): void {
+    this.categoriaService.obtenerCategorias().subscribe((datos: Categoria[])=>{
+      this.categoryId=datos;
     });
   }
 
