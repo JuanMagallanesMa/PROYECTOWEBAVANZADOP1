@@ -65,7 +65,7 @@ export class CrudProductoComponent implements OnInit {
   };
 
   constructor(
-    private productoService: ProductoService, 
+    private productoService: ProductoApiService, 
     private categoriaService: CategoriaApiService,
     private fb: FormBuilder,
     private dialog: MatDialog,
