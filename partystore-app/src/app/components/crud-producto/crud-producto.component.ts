@@ -122,8 +122,12 @@ export class CrudProductoComponent implements OnInit {
 
   //Editar un producto
   editar(producto: Producto): void{
-    this.isEditMode = true;
+    this.isEditMode =true;
+   if(producto && producto.id){
     this.currentID = producto.id;
+   }else{
+    console.log("Usuario o id de Usuario estan undefined");
+   }
     const categoriaSeleccionada = this.categoria.find((cat) => cat.id === producto.categoryId);
     this.form.setValue({
       nombre: producto.nombre,
@@ -151,6 +155,7 @@ export class CrudProductoComponent implements OnInit {
       console.log(nuevoProducto);
 
       if(this.isEditMode){
+        nuevoProducto.id=this.currentID;
         this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
           alert('Producto actualizado');
           this.getProductos();

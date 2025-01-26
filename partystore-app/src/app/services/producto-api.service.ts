@@ -63,4 +63,5 @@ export class ProductoApiService {
     const urlProducto = `${this.apiURL}/${id}`;
     return this.http.delete<void>(urlProducto);
   }
+  
 }
