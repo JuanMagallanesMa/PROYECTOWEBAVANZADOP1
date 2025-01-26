@@ -1,0 +1,49 @@
+<div class="container rounded-0">
+    <main class="shadow-sm">
+        <h2 class="title">Detalle Promoción</h2>
+        <form [formGroup]="form">
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Nombre de la promoción</mat-label>
+                    <input matInput placeholder="Ingrese el nombre" formControlName="nombre" readonly />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Fecha de Finalización</mat-label>
+                    <input matInput type="date" formControlName="fechaFin" readonly/>                    
+                </mat-form-field>
+            </div>
+    
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select formControlName="id_categoria" readonly>
+                        @for (item of categorias; track $index) {
+                        <mat-option [value]="item.id">
+                            {{item.nombre}}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Descuento (%)</mat-label>
+                    <input matInput type="number" placeholder="Ingrese el porcentaje"
+                        formControlName="descuentoPorcentaje" readonly/>                    
+                </mat-form-field>
+            </div>
+    
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="Ingrese el nombre" formControlName="descripcion" readonly/>                   
+                </mat-form-field>               
+            </div>
+    
+            <div class="button-group">
+                <button class="btn btn-outline-secondary rounded-0" type="button" (click)="onCancel()">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </main>
+</div>

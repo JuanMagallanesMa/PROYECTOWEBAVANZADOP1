@@ -1,0 +1,67 @@
+<div class="container rounded-0">
+    <main class="shadow-sm">
+        <h2 class="title">Actualizar Promoción</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Nombre de la promoción</mat-label>
+                    <input matInput placeholder="Ingrese el nombre" formControlName="nombre" />
+                    @if (nombre.invalid && nombre.touched) {
+                        <mat-error>Este campo es obligatorio.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Fecha de Finalización</mat-label>
+                    <input matInput type="date" formControlName="fechaFin" />
+                    @if (fechaFin.invalid && fechaFin.touched) {
+                    <mat-error>Seleccione una fecha válida.</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+    
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select formControlName="id_categoria">
+                        @for (item of categorias; track $index) {
+                        <mat-option [value]="item.id">
+                            {{item.nombre}}
+                        </mat-option>
+                        }
+                    </mat-select>
+                    @if (id_categoria.invalid && id_categoria.touched) {
+                    <mat-error>Seleccione una categoría.</mat-error>
+                    }
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Descuento (%)</mat-label>
+                    <input matInput type="number" placeholder="Ingrese el porcentaje"
+                        formControlName="descuentoPorcentaje" />
+                    @if (descuentoPorcentaje.invalid && descuentoPorcentaje.touched) {
+                    <mat-error>Debe ser un valor entre 1 y 100.</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+    
+            <div class="row">
+                <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="Ingrese el nombre" formControlName="descripcion" />
+                    @if (descripcion.invalid && descripcion.touched) {
+                    <mat-error>Este campo es obligatorio.</mat-error>
+                    }
+                </mat-form-field>               
+            </div>
+    
+            <div class="button-group">
+                <button class="btn btn-outline-secondary rounded-0" type="button" (click)="onCancel()">
+                    Cancelar
+                </button>
+                <button class="btn btn-success rounded-0" type="submit">
+                    Modificar
+                </button>
+            </div>
+        </form>
+    </main>
+</div>
