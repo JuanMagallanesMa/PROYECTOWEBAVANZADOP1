@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Proveedor } from '../../models/Proveedor';
 import { ProveedorService } from '../../services/proveedor.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { TableComponent } from '../shared/table/table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MyDialogComponent } from '../shared/my-dialog/my-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,35 +15,48 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-crud-proveedores',
   standalone: true,
-  imports: [FormsModule, RouterModule, TableComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatSelectModule
+  ],
   templateUrl: './crud-proveedores.component.html',
-  styleUrl: './crud-proveedores.component.css'
+  styleUrls: ['./crud-proveedores.component.css']
 })
 export class CrudProveedoresComponent {
   title: string = 'Gestión de Proveedores';
   proveedores: Proveedor[] = [];
-  nuevoProveedor: Proveedor = {
-    id: '',
-    nombre: '',
-    email: '',
-    telefono: '',
-    direccion: '',
-    rating: 0,
-    isActive: true,
-  };
+  form!: FormGroup;
+  isEditMode: boolean = false;
+  currentId!: string; 
   buscador: string = '';
-  proveedorEnEdicion: Proveedor | null = null;
-
-  constructor(private proveedorService: ProveedorService, private http: HttpClient) {}
   dataSource = new MatTableDataSource<Proveedor>();
-  
+
   displayedColumns: string[] = ['nombre', 'email', 'telefono', 'direccion', 'acciones'];
   columnAliases = { nombre: 'Nombre', email: 'Correo', telefono: 'Teléfono', direccion: 'Dirección', acciones: 'Acciones' };
 
+  constructor(
+    private proveedorService: ProveedorService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {}
+
   ngOnInit() {
     this.cargarProveedores();
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      direccion: ['', Validators.required],
+      rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
+      isActive: [true]
+    });
   }
-  
+
   cargarProveedores(): void {
     this.proveedorService.getProveedores().subscribe(proveedores => {
       this.proveedores = proveedores;
@@ -51,40 +65,45 @@ export class CrudProveedoresComponent {
   }
 
   guardarProveedor(): void {
-    if (this.proveedorEnEdicion) {
-      this.proveedorService.editarProveedor(this.nuevoProveedor).subscribe(() => {
-        const index = this.dataSource.data.findIndex(p => p.id === this.nuevoProveedor.id);
-        if (index > -1) {
-          this.dataSource.data[index] = { ...this.nuevoProveedor };
-          this.dataSource.data = [...this.dataSource.data];
-        }
-        this.proveedorEnEdicion = null;
-        this.resetProveedor();
+    if (this.form.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
+
+    const nuevoProveedor: Proveedor = this.form.value;
+
+    if (this.isEditMode) {
+      nuevoProveedor.id = this.currentId;
+      this.proveedorService.editarProveedor(nuevoProveedor).subscribe(() => {
+        alert('Proveedor editado exitosamente');
+        this.cargarProveedores();
+        this.resetForm();
       });
     } else {
-      this.proveedorService.agregarProveedor(this.nuevoProveedor).subscribe(nuevoProveedor => {
-        this.dataSource.data = [...this.dataSource.data, nuevoProveedor];
-        this.resetProveedor();
+      this.proveedorService.agregarProveedor(nuevoProveedor).subscribe(() => {
+        alert('Proveedor agregado exitosamente');
+        this.cargarProveedores();
+        this.resetForm();
       });
     }
   }
 
   eliminarProveedor(id: string): void {
-    this.proveedorService.eliminarProveedor(id).subscribe(() => {
-      this.cargarProveedores();
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      data: {
+        titulo: 'Eliminación de proveedor',
+        contenido: `¿Estás seguro de eliminar al proveedor con ID ${id}?`
+      }
     });
-  }
 
-  resetProveedor(): void {
-    this.nuevoProveedor = {
-      id: '',
-      nombre: '',
-      email: '',
-      telefono: '',
-      direccion: '',
-      rating: 0,
-      isActive: true,
-    };
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'aceptar') {
+        this.proveedorService.eliminarProveedor(id).subscribe(() => {
+          alert('Proveedor eliminado exitosamente');
+          this.cargarProveedores();
+        });
+      }
+    });
   }
 
   buscarProveedores(): void {
@@ -95,23 +114,41 @@ export class CrudProveedoresComponent {
       );
       this.dataSource.data = proveedoresFiltrados;
     } else {
-      this.resetProveedor();
       this.dataSource.data = this.proveedores;
     }
   }
 
   editarProveedor(proveedor: Proveedor): void {
-    this.proveedorEnEdicion = { ...proveedor };
-    this.nuevoProveedor = { ...proveedor };
+    this.isEditMode = true;
+    this.currentId = proveedor.id;
+    this.form.setValue({
+      nombre: proveedor.nombre,
+      email: proveedor.email,
+      telefono: proveedor.telefono,
+      direccion: proveedor.direccion,
+      rating: proveedor.rating,
+      isActive: proveedor.isActive
+    });
+  }
+
+  resetForm(): void {
+    this.form.reset({
+      nombre: '',
+      email: '',
+      telefono: '',
+      direccion: '',
+      rating: 0,
+      isActive: true
+    });
+    this.currentId = '';
+    this.isEditMode = false;
   }
 
   handleEdit(proveedor: Proveedor): void {
     this.editarProveedor(proveedor);
-    console.log('Editar proveedor:', proveedor);
   }
 
   handleDelete(proveedor: Proveedor): void {
     this.eliminarProveedor(proveedor.id);
-    console.log('Eliminar proveedor:', proveedor.id);
   }
 }

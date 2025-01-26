@@ -52,7 +52,7 @@ export class ProveedorService {
     );
   }
 
-  eliminarProveedor(id: number): Observable<number> {
+  eliminarProveedor(id: string): Observable<string> {
     return of(id).pipe(
       map(deletedId => {
         console.log('Proveedor eliminado con ID:', deletedId);
