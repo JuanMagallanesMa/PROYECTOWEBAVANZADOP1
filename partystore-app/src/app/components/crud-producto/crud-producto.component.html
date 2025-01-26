@@ -28,6 +28,14 @@
       <mat-error *ngIf="form.get('imagen')?.invalid">La url de la imagen es obligatorio</mat-error>
     </mat-form-field>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Stock</mat-label>
+      <input matInput type="number" formControlName="stock" placeholder="Ingrese el stock disponible" />
+      <mat-error *ngIf="form.get('stock')?.invalid">
+        El stock es obligatorio y debe ser un número mayor o igual a 0
+      </mat-error>
+    </mat-form-field>
+    
     <div class="form-group">
       <label for="categoria">Categoría</label>
       <mat-form-field class="formElement">
