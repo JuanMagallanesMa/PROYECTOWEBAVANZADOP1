@@ -78,8 +78,8 @@ export class CrudProductoComponent implements OnInit {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
-      precio: ['', [Validators.required, Validators.min(0)]],
-      stock: ['', [Validators.required, Validators.min(0)]],
+      precio: [0, [Validators.required, Validators.min(0)]],
+      stock: [0, [Validators.required, Validators.min(0)]],
       isActive: ['true', Validators.required],
       categoryId: ['', Validators.required], 
       imagen: ['', Validators.required],
@@ -122,16 +122,20 @@ export class CrudProductoComponent implements OnInit {
 
   //Editar un producto
   editar(producto: Producto): void{
-    this.isEditMode = true;
+    this.isEditMode =true;
+   if(producto && producto.id){
     this.currentID = producto.id;
-
+   }else{
+    console.log("Usuario o id de Usuario estan undefined");
+   }
+    const categoriaSeleccionada = this.categoria.find((cat) => cat.id === producto.categoryId);
     this.form.setValue({
       nombre: producto.nombre,
       descripcion: producto.descripcion,
       isActive: producto.isActive,
       precio: producto.precio,
       imagen: producto.imagen,
-      categoryId : producto.category?.nombre,
+      categoryId: categoriaSeleccionada ? categoriaSeleccionada.id : '',
       stock : producto.stock,
     });
   }
@@ -146,31 +150,32 @@ export class CrudProductoComponent implements OnInit {
 
       const nuevoProducto: Producto={
         ...this.form.value,
-       
+        isActive: this.form.value.isActive === 'true',
       };
       console.log(nuevoProducto);
 
-     if(this.isEditMode){
+      if(this.isEditMode){
+        nuevoProducto.id=this.currentID;
         this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
           alert('Producto actualizado');
           this.getProductos();
-         this.clearForm();
+          this.clearForm();
         });
       }else{
         this.productoService.crearProducto(nuevoProducto).subscribe(()=>{
-        alert();
-        this.getProductos();
-        this.clearForm();
-       });
-     }
-   }
+          alert();
+          this.getProductos();
+          this.clearForm();
+        });
+      }
+    }
 
     //Limpiar el formulario
     clearForm(): void{
       this.form.reset({
         nombre: '',
         descripcion: '',
-        isActive: 'activo',
+        isActive: 'true',
         precio: '',
         imagen: '',
         categoryId: '',
