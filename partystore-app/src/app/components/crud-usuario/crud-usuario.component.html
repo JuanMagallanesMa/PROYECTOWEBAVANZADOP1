@@ -14,6 +14,16 @@
               placeholder="Ingresa tu nombre"
               required
             />
+            <mat-error>
+              @if(form.get('name')?.invalid &&(form.get('name')?.dirty || form.get('name')?.touched)){
+                  @if(form.get('name')?.errors?.['required']) {
+                  name completos es requerido
+                  }
+                  @else if(form.get('name')?.errors?. ['pattern']){
+                  Los nombres solo debe contener letras
+                  }
+              }
+            </mat-error>
           </mat-form-field>
         
           <mat-form-field appearance="fill" class="form-field">
@@ -25,6 +35,16 @@
               placeholder="Ingresa tu email"
               required
             />
+            <mat-error>
+              @if(form.get('email')?.invalid &&(form.get('email')?.dirty || form.get('email')?.touched)){
+                  @if(form.get('email')?.errors?.['required']) {
+                  Email es requerido
+                  }
+                  @else if(form.get('email')?.errors?. ['pattern']){
+                  Email solo debe contener letras
+                  }
+              }
+            </mat-error>
           </mat-form-field>
           
           <mat-form-field appearance="fill" class="form-field">
@@ -36,6 +56,16 @@
               placeholder="Ingresa tu contraseña"
               required
             />
+            <mat-error>
+              @if(form.get('password')?.invalid &&(form.get('password')?.dirty || form.get('password')?.touched)){
+                  @if(form.get('password')?.errors?.['required']) {
+                    password es requerido
+                  }
+                  @else if(form.get('password')?.errors?. ['pattern']){
+                    password debe contener letras y numeros
+                  }
+              }
+            </mat-error>
           </mat-form-field>
         
           <mat-form-field appearance="fill" class="form-field">
@@ -47,6 +77,20 @@
               placeholder="Ingresa tu teléfono"
               required
             />
+            <mat-error>
+              @if(form.get('telephone')?.invalid &&(form.get('telephone')?.dirty || form.get('telephone')?.touched)){
+                  @if(form.get('telephone')?.errors?.['required']) {
+                    telephone es requerido
+                  }
+                  @else if(form.get('telephone')?.errors?. ['pattern']){
+                    telephone debe contener  numeros
+                  } @else if(form.get('telephone')?.errors?. ['minLength']){
+                    telephone debe contener minimo 8 numeros
+                  }@else if(form.get('telephone')?.errors?. ['maxLength']){
+                    telephone debe contener minimo 10 numeros
+                  }
+              }
+            </mat-error>
           </mat-form-field>
         
           <mat-form-field appearance="fill" class="form-field">
