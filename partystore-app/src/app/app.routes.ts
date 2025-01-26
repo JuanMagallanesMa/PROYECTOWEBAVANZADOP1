@@ -5,7 +5,7 @@ import { CrudProductoComponent } from './components/crud-producto/crud-producto.
 import { CrudCategoriaComponent } from './components/crud-categoria/crud-categoria.component';
 import { ListaProductoComponent } from './components/lista-producto/lista-producto.component';
 import { CrudPromocionesComponent } from './components/crud-promociones/crud-promociones.component';
-
+import { CrudProveedoresComponent} from './components/crud-proveedores/crud-proveedores.component';
 export const routes: Routes = [
 
     {path:"pedidos", component: CrudPedidosComponent},
@@ -14,6 +14,7 @@ export const routes: Routes = [
     {path: "categoria",component:CrudCategoriaComponent},
     {path: "marketplace", component:ListaProductoComponent},
     {path: "promociones", component:CrudPromocionesComponent},
+    {path: "proveedores", component:CrudProveedoresComponent},
 
     //rutas por defecto
     {path: " ", redirectTo:"pedidos", pathMatch: 'full'},
