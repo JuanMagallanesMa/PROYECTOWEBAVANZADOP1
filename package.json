@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/jasmine": "^5.1.5"
+  },
+  "dependencies": {
+    "@angular/common": "^19.1.3"
+  }
+}
