@@ -32,19 +32,16 @@
       <mat-error *ngIf="form.get('imagen')?.invalid">La url de la imagen es obligatorio</mat-error>
     </mat-form-field>
 
-    <div class="form-group">
-      <label for="categoria">Categoría</label>
-      <mat-form-field class="formElement">
-        <mat-label>Categoría</mat-label>
-        <mat-select formControlName="categoryId" >
-          @for(category of categoria; track $index){
-          <mat-option [value]="category.id">{{category.nombre}}</mat-option>
-                
-          }
-        </mat-select>
-        <mat-error *ngIf="form.get('categoria')?.invalid">La categoría es obligatoria</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Categoría</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of categoria" [value]="category.id">
+          {{ category.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('categoryId')?.invalid">La categoría es obligatoria</mat-error>
+    </mat-form-field>
+    
     
     <div class="isActive-container">
       <mat-radio-group formControlName="isActive">
