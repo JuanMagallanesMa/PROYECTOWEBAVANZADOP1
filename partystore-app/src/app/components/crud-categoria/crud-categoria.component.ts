@@ -57,8 +57,8 @@ export class CrudCategoriaComponent implements OnInit {
     this.getCategorias();
 
     this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      descripcion: ['', [Validators.required, Validators.minLength(5)]],
+      nombre: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern(/^[a-zA-Z0-9 ]+$/),Validators.pattern(/^\S.*$/),],],
+      descripcion: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(200),Validators.pattern(/^\S.*$/),],],
       estado: ['activo', Validators.required], // Valor por defecto
       edadesAplicables: [[], Validators.required], // Asegurarse de que sea un arreglo
       tiposEvento: [[], Validators.required], // Asegurarse de que sea un arreglo
