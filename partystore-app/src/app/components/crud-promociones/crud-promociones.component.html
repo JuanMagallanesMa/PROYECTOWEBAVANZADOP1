@@ -1,38 +1,61 @@
-<section class="promo-form">
-  
-  <h3> Promociones Exclusivas</h3>
+<div class="container-fluid w-100 py-0">
 
-  <fieldset>
-    <legend>⭐ Información de la Promoción</legend>
-    <div class="form-group">
-      <label for="nombre">Nombre del producto:</label>
-      <input type="text" id="nombre" name="nombre" required>
-    </div>
-    <div class="form-group">
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-    </div>
-  </fieldset>
+    <header class="d-flex py-3">
+        <div class="input-group border border-1 border-black">
+            <span class="input-group-text rounded-0 border-0" style="background-color: #FDB813;">Buscar</span>
+            <input type="text" class="form-control rounded-0"  (keyup)="applyFilter($event)" #input>
+        </div>
+        <button type="submit" class="btn btn-success rounded-0 ms-2 border border-1 border-black" style="width: 100px;" (click)="openAdd()">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </header>
 
-  <fieldset>
-    <legend>⭐ Detalles de la Promoción</legend>
-    <div class="form-group">
-      <label for="categoria">Categorías:</label>
-      <select id="categoria" name="categoria">
-        <option value="1">Seleccionar Todos</option>
-        <option value="2">Decoraciones</option>
-        <option value="3">Invitaciones</option>
-        <option value="4">Disfraces</option>
-        <option value="5">Suministro para actividades</option>
-        <option value="6">Juegos</option>
-    </select>
-    </div>
-    <div class="form-group">
-      <label for="fecha_fin">Fin de Promo:</label>
-      <input type="date" id="fecha_fin" name="fecha_fin">
-    </div>
-  </fieldset>
+    @if (loading()) {
+        <mat-progress-bar color="warn" mode="indeterminate"></mat-progress-bar>
+    }
 
-  <button type="submit">Crear Promoción</button>
-</section>
-<!-- Tabla de PROMO-->
+    <main class="container-table mt-1">
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.nombre }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="descuentoPorcentaje">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.descuentoPorcentaje }}%</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaFin">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Fin</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.fechaFin | date: 'dd-MM-yyyy' }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef class="text-center">
+                    <div class="w-100">
+                        <span>Acciones</span>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="d-flex justify-content-center">
+                    <section class="actions row row-cols-3 gap-1 flex-nowrap">
+                        <button class="actions__button" type="submit" (click)="openDetails(element)">
+                            <i class="fa-solid fa-eye"></i>
+                        </button> 
+                        <button class="actions__button" type="submit" (click)="openEdit(element)">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="actions__button" type="submit" (click)="openEliminar(element)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </section>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="table-header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[25]" [pageSizeOptions]="[25, 50, 75, 100]"></mat-paginator>
+    </main>
+
+</div>
