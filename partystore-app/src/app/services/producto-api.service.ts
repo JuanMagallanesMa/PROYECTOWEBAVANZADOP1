@@ -64,4 +64,9 @@ export class ProductoApiService {
     return this.http.delete<void>(urlProducto);
   }
   
+  // eliminar logicamente
+  deactivateProducto(Producto:Producto):Observable<Producto>{
+      const urlDelProducto =`${this.apiURL}/deactivate/${Producto.id}`; 
+      return this.http.put<Producto>(urlDelProducto, Producto); 
+    }
 }
