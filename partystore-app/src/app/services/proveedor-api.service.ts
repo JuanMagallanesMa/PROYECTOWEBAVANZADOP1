@@ -19,7 +19,7 @@ export class ProveedorApiService {
   // Buscar proveedores
   getProveedorSearch(
     nombre?: string,
-    idProveedor?: number,
+    idProveedor?: string,
     email?: string
   ): Observable<Proveedor[]> {
     return this.http.get<Proveedor[]>(this.apiUrlProveedor).pipe(
