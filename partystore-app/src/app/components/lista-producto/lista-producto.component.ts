@@ -3,13 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ProductoService } from '../../services/producto.service';
+
 import { MatListModule } from '@angular/material/list';
 import { Producto } from '../../models/Producto';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PedidosjsonService } from '../../services/pedidosjson.service';
+
 import { CartService } from '../../services/cart.service';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
