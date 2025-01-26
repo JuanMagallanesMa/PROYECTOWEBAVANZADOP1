@@ -80,8 +80,8 @@ export class CrudProductoComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(5)]],
       precio: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
-      isActive: ['activo', Validators.required],
-      category: [null, Validators.required], 
+      isActive: ['true', Validators.required],
+      categoryId: ['', Validators.required], 
       imagen: ['', Validators.required],
     });
   }
@@ -131,13 +131,14 @@ export class CrudProductoComponent implements OnInit {
       isActive: producto.isActive,
       precio: producto.precio,
       imagen: producto.imagen,
-      category : producto.category?.nombre,
+      categoryId : producto.category?.nombre,
       stock : producto.stock,
     });
   }
 
     //Enviar formulario para crear o actualziar
     onsubmit(): void{
+      console.log('Formulario:', this.form.value);
       if(this.form.invalid){
         alert('Formulario inválido');
         return;
@@ -145,11 +146,9 @@ export class CrudProductoComponent implements OnInit {
 
       const nuevoProducto: Producto={
         ...this.form.value,
-
-        id: this.isEditMode ? this.currentID: undefined,
-        
-        
+       
       };
+      console.log(nuevoProducto);
 
       if(this.isEditMode){
         this.productoService.actualizarProducto(nuevoProducto).subscribe(()=>{
@@ -174,7 +173,7 @@ export class CrudProductoComponent implements OnInit {
         isActive: 'activo',
         precio: '',
         imagen: '',
-        category: '',
+        categoryId: '',
         stock: '',
       });
       this.currentID = 0;

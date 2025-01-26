@@ -49,7 +49,7 @@ export class ProductoApiService {
 
   // Crear un nuevo producto
   crearProducto(producto: Producto): Observable<Producto> {
-    return this.http.post<Producto>(`${this.apiURL}/productos`, producto);
+    return this.http.post<Producto>(`${this.apiURL}`, producto);
   }
 
   // Actualizar un producto existente
